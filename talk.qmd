@@ -141,25 +141,25 @@ $$center = \Delta x (indices + 0.5)$$
 ## Identify the different types of cells
 
 ```{=html}
-<video data-autoplay src="videos/identify_0000.mp4" />
+<video data-autoplay src="figures/videos/identify_0000.mp4" />
 ```
 
 ## Identify the different types of cells
 
 ```{=html}
-<video data-autoplay src="videos/identify_0001.mp4" />
+<video data-autoplay src="figures/videos/identify_0001.mp4" />
 ```
 
 ## Identify the different types of cells
 
 ```{=html}
-<video data-autoplay src="videos/identify_0002.mp4" />
+<video data-autoplay src="figures/videos/identify_0002.mp4" />
 ```
 
 ## Identify the different types of cells
 
 ```{=html}
-<video data-autoplay src="videos/identify_0003.mp4" />
+<video data-autoplay src="figures/videos/identify_0003.mp4" />
 ```
 
 ## Algebra of sets
@@ -243,7 +243,7 @@ samurai::for_each_cell(mesh, [&](auto cell)
 
 ## An example
 
-<video data-autoplay src="videos/projection.mp4" />
+<video data-autoplay src="figures/videos/projection.mp4" />
 
 ## The implementation
 
@@ -497,7 +497,7 @@ for(std::size_t ite=0; ite<200; ++ite)
 ::::
 
 ::::{.col .align-self-center}
-<video data-autoplay loop="true" src="videos/ignition_Re1000.mov" />
+<video data-autoplay loop="true" src="figures/videos/ignition_Re1000.mov" />
 
 ![](figures/splitting_time_steps.jpg)
 ::::
@@ -701,7 +701,7 @@ and
 
 :::{.row .align-items-center}
 ::::{.col-4}
-<video data-autoplay loop="true" src="videos/ink.mp4" />
+<video data-autoplay loop="true" src="figures/videos/ink.mp4" />
 ::::
 ::::{.col}
 ![](figures/human.png)
@@ -713,7 +713,7 @@ and
 
 :::{.row .align-items-center}
 ::::{.col-4}
-<video data-autoplay loop="true" src="videos/bubble.mp4" />::::
+<video data-autoplay loop="true" src="figures/videos/bubble.mp4" />::::
 ::::{.col}
 ![](figures/plasma.png)
 ::::
