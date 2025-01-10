@@ -499,8 +499,9 @@ for(std::size_t ite=0; ite<200; ++ite)
 ::::
 
 ::::{.col .align-self-center}
+<div>
 <video data-autoplay loop="true" src="videos/ignition_Re1000.mov" />
-
+</div>
 ![](figures/splitting_time_steps.jpg)
 ::::
 :::
