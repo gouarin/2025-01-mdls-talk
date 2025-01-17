@@ -39,6 +39,18 @@ Loic Gouarin & Marc Massot
 
 # Context
 
+---
+
+:::{.text-center}
+```{=html}
+<video data-autoplay src="videos/upwind_without_portion.mp4" />
+```
+:::
+
+---
+
+![](figures/compression.png){fig-align=center}
+
 ## Mesh adaptation
 
 ::: {.row}

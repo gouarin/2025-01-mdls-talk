@@ -274,7 +274,7 @@ section.has-dark-background h6 {
     font-style: italic;
 }
 
-.reveal pre {
+/* .reveal pre {
     display: block;
     position: relative;
     width: 90%;
@@ -284,10 +284,10 @@ section.has-dark-background h6 {
     font-family: var(--r-code-font);
     line-height: 1.2em;
     word-wrap: break-word;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
-}
+    /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); */
+} */
 
-.reveal code {
+/* .reveal code {
     font-family: var(--r-code-font);
     text-transform: none;
     tab-size: 2;
@@ -307,9 +307,9 @@ section.has-dark-background h6 {
 
 .reveal .code-wrapper code {
     white-space: pre;
-}
+} */
 
-.reveal table {
+/* .reveal table {
     margin: auto;
     border-collapse: collapse;
     border-spacing: 0;
@@ -339,7 +339,7 @@ section.has-dark-background h6 {
 .reveal table tbody tr:last-child th,
 .reveal table tbody tr:last-child td {
     border-bottom: none;
-}
+} */
 
 .reveal sup {
     vertical-align: super;
@@ -478,26 +478,6 @@ section.has-dark-background h6 {
   top: 50%;
   margin-top: -50px;
 } */
-
-.sl-block {
-    display: grid;
-    grid-template-rows: 70px 550px 50px;
-}
-
-.header {
-    grid-row: 1;
-    align-self: end;
-}
-
-.main {
-    grid-row: 2;
-    align-self: center;
-    text-align: left;
-}
-
-.footer {
-    grid-row: 3;
-}
 
 .reveal .title-talk {
     margin: 0 !important;
