@@ -509,6 +509,142 @@
 <li>the <span>extension</span> of a set.</li>
 </ul>
 </section>
+<section id="algebra-of-sets-usage-to-mra" class="slide level2">
+<h2>Algebra of sets: Usage to MRA</h2>
+<div>
+<video src="videos/mra_construction/mesh_0000_unnamed.mp4">
+</video></div>
+<div class="text-center">
+<p>initial mesh</p>
+</div>
+</section>
+<section id="algebra-of-sets-usage-to-mra-1" class="slide level2">
+<h2>Algebra of sets: Usage to MRA</h2>
+<div>
+<video data-autoplay="" src="videos/mra_construction/mesh_0000_unnamed.mp4">
+</video></div>
+<div class="text-center">
+<p>initial mesh</p>
+</div>
+</section>
+<section id="algebra-of-sets-usage-to-mra-2" class="slide level2">
+<h2>Algebra of sets: Usage to MRA</h2>
+<div>
+<video data-autoplay="" src="videos/mra_construction/mesh_0001_unnamed.mp4">
+</video></div>
+<div class="text-center">
+<p>ghost cells used by the numerical scheme</p>
+</div>
+</section>
+<section id="algebra-of-sets-usage-to-mra-3" class="slide level2">
+<h2>Algebra of sets: Usage to MRA</h2>
+<div>
+<video data-autoplay="" src="videos/mra_construction/mesh_0002_unnamed.mp4">
+</video></div>
+<div class="text-center">
+<p>cells needed to compute the details (all tree)</p>
+</div>
+</section>
+<section id="algebra-of-sets-usage-to-mra-4" class="slide level2">
+<h2>Algebra of sets: Usage to MRA</h2>
+<div>
+<video data-autoplay="" src="videos/mra_construction/mesh_0003_unnamed.mp4">
+</video></div>
+<div class="text-center">
+<p>cells needed to compute the details (iterative way)</p>
+</div>
+</section>
+<section id="algebra-of-sets-usage-to-mra-5" class="slide level2">
+<h2>Algebra of sets: Usage to MRA</h2>
+<div>
+<video data-autoplay="" src="videos/mra_construction/mesh_0004_unnamed.mp4">
+</video></div>
+<div class="text-center">
+<p>cells needed to compute the details (iterative way)</p>
+</div>
+</section>
+<section id="algebra-of-sets-usage-to-mra-6" class="slide level2">
+<h2>Algebra of sets: Usage to MRA</h2>
+<div>
+<video data-autoplay="" src="videos/mra_construction/mesh_0005_unnamed.mp4">
+</video></div>
+<div class="text-center">
+<p>cells needed to compute the details (iterative way)</p>
+</div>
+</section>
+<section id="algebra-of-sets-usage-to-mra-7" class="slide level2">
+<h2>Algebra of sets: Usage to MRA</h2>
+<div>
+<video data-autoplay="" src="videos/mra_construction/mesh_0006_unnamed.mp4">
+</video></div>
+<div class="text-center">
+<p>cells needed to compute the details (iterative way)</p>
+</div>
+</section>
+<section id="algebra-of-sets-usage-to-mra-8" class="slide level2">
+<h2>Algebra of sets: Usage to MRA</h2>
+<div>
+<video data-autoplay="" src="videos/mra_construction/mesh_0007_unnamed.mp4">
+</video></div>
+<div class="text-center">
+<p>cells needed to compute the details (iterative way)</p>
+</div>
+</section>
+<section id="meshes-description-with-samurai" class="slide level2">
+<h2>Meshes description with samurai</h2>
+<p>Given a mesh with all the leaves called <code>cells</code></p>
+<ul>
+<li>ghosts for the numerical scheme</li>
+</ul>
+<!-- $$
+ghosts^l = \text{extend} \; cells^l \; \text{about the stencil size in each direction}
+$$ -->
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a href=""></a>samurai<span class="op">::</span>for_each_interval<span class="op">(</span>mesh<span class="op">[</span>cells<span class="op">],</span> <span class="op">[&amp;](</span><span class="bu">std::</span>size_t level<span class="op">,</span> <span class="kw">auto</span><span class="op">&amp;</span> i<span class="op">)</span></span>
+<span id="cb1-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb1-3"><a href=""></a>    mesh<span class="op">[</span>cells_and_ghosts<span class="op">][</span>level<span class="op">].</span>add_interval<span class="op">({</span>i<span class="op">.</span>start <span class="op">-</span> stencil_size<span class="op">,</span> i<span class="op">.</span>end <span class="op">+</span> stencil_size<span class="op">});</span></span>
+<span id="cb1-4"><a href=""></a><span class="op">})</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="meshes-description-with-samurai-1" class="slide level2">
+<h2>Meshes description with samurai</h2>
+<p>Given a mesh with all the leaves called <code>cells</code></p>
+<ul>
+<li>ghosts for the detail computation</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t level <span class="op">=</span> min_level <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> level <span class="op">&lt;=</span> max_level<span class="op">;</span> <span class="op">++</span>level<span class="op">)</span></span>
+<span id="cb2-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb2-3"><a href=""></a>    <span class="kw">auto</span> subset <span class="op">=</span> difference<span class="op">(</span>mesh<span class="op">[</span>cells_and_ghosts<span class="op">][</span>level<span class="op">],</span> <span class="kw">union</span><span class="op">()[</span>level<span class="op">]);</span></span>
+<span id="cb2-4"><a href=""></a></span>
+<span id="cb2-5"><a href=""></a>    subset<span class="op">([&amp;](</span><span class="bu">std::</span>size_t level<span class="op">,</span> <span class="kw">auto</span><span class="op">&amp;</span> i<span class="op">)</span></span>
+<span id="cb2-6"><a href=""></a>    <span class="op">{</span></span>
+<span id="cb2-7"><a href=""></a>        <span class="kw">auto</span> i_above <span class="op">=</span> i <span class="op">&gt;&gt;</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-8"><a href=""></a>        mesh<span class="op">[</span>pred<span class="op">][</span>level <span class="op">-</span> <span class="dv">1</span><span class="op">].</span>add_interval<span class="op">({</span>i_above<span class="op">.</span>start <span class="op">-</span> prediction_size<span class="op">,</span> i_above<span class="op">.</span>end <span class="op">+</span> prediction_size<span class="op">});</span></span>
+<span id="cb2-9"><a href=""></a>    <span class="op">})</span></span>
+<span id="cb2-10"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t level <span class="op">=</span> min_level <span class="op">+</span> <span class="dv">2</span><span class="op">;</span> level <span class="op">&lt;=</span> max_level<span class="op">;</span> <span class="op">++</span>level<span class="op">)</span></span>
+<span id="cb3-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb3-3"><a href=""></a>    samurai<span class="op">::</span>for_each_interval<span class="op">(</span>mesh<span class="op">[</span>cells<span class="op">][</span>level<span class="op">],</span> <span class="op">[&amp;](</span><span class="bu">std::</span>size_t level<span class="op">,</span> <span class="kw">auto</span><span class="op">&amp;</span> i<span class="op">)</span></span>
+<span id="cb3-4"><a href=""></a>    <span class="op">{</span></span>
+<span id="cb3-5"><a href=""></a>        <span class="kw">auto</span> i_above <span class="op">=</span> i <span class="op">&gt;&gt;</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb3-6"><a href=""></a>        mesh<span class="op">[</span>pred<span class="op">][</span>level <span class="op">-</span> <span class="dv">2</span><span class="op">].</span>add_interval<span class="op">({</span>i_above<span class="op">.</span>start <span class="op">-</span> prediction_size<span class="op">,</span> i_above<span class="op">.</span>end <span class="op">+</span> prediction_size<span class="op">});</span></span>
+<span id="cb3-7"><a href=""></a>    <span class="op">})</span></span>
+<span id="cb3-8"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="meshes-description-with-samurai-2" class="slide level2">
+<h2>Meshes description with samurai</h2>
+<p>Given a mesh with all the leaves called <code>cells</code></p>
+<ul>
+<li>ghosts where we apply the projection</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t level <span class="op">=</span> min_level<span class="op">;</span> level <span class="op">&lt;</span> max_level<span class="op">;</span> <span class="op">++</span>level<span class="op">)</span></span>
+<span id="cb4-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb4-3"><a href=""></a>    <span class="kw">auto</span> subset <span class="op">=</span> intersection<span class="op">(</span>mesh<span class="op">[</span>reference<span class="op">][</span>level<span class="op">],</span> <span class="kw">union</span><span class="op">()[</span>level<span class="op">]).</span>on<span class="op">(</span>level<span class="op">+</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-4"><a href=""></a>    subset<span class="op">([&amp;](</span><span class="bu">std::</span>size_t level<span class="op">,</span> <span class="kw">auto</span><span class="op">&amp;</span> i<span class="op">)</span></span>
+<span id="cb4-5"><a href=""></a>    <span class="op">{</span></span>
+<span id="cb4-6"><a href=""></a>        mesh<span class="op">[</span>reference<span class="op">][</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">].</span>add_interval<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb4-7"><a href=""></a>        mesh<span class="op">[</span>proj<span class="op">][</span>level<span class="op">].</span>add_interval<span class="op">(</span>i <span class="op">&gt;&gt;</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-8"><a href=""></a>    <span class="op">})</span></span>
+<span id="cb4-9"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 <section id="compression-rates" class="slide level2">
 <h2>Compression rates</h2>
 
@@ -606,16 +742,16 @@
 </section>
 <section id="field-creation" class="slide level2">
 <h2>Field creation</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a href=""></a><span class="kw">auto</span> mesh <span class="op">=</span> samurai<span class="op">::</span>MRMesh<span class="op">&lt;</span>Config<span class="op">&gt;({{</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">}},</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">8</span><span class="op">);</span></span>
-<span id="cb1-2"><a href=""></a><span class="kw">auto</span> u <span class="op">=</span> samurai<span class="op">::</span>make_field<span class="op">&lt;</span><span class="dt">double</span><span class="op">,</span> <span class="dv">1</span><span class="op">&gt;(</span><span class="st">"u"</span><span class="op">,</span> mesh<span class="op">);</span></span>
-<span id="cb1-3"><a href=""></a></span>
-<span id="cb1-4"><a href=""></a>samurai<span class="op">::</span>for_each_cell<span class="op">(</span>mesh<span class="op">,</span> <span class="op">[&amp;](</span><span class="kw">auto</span> cell<span class="op">)</span></span>
-<span id="cb1-5"><a href=""></a><span class="op">{</span></span>
-<span id="cb1-6"><a href=""></a>  <span class="kw">auto</span> x <span class="op">=</span> cell<span class="op">.</span>center<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
-<span id="cb1-7"><a href=""></a>  <span class="kw">auto</span> y <span class="op">=</span> cell<span class="op">.</span>center<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb1-8"><a href=""></a></span>
-<span id="cb1-9"><a href=""></a>  u<span class="op">[</span>cell<span class="op">]</span> <span class="op">=</span> x<span class="op">*</span>x <span class="op">+</span> y<span class="op">*</span>y<span class="op">;</span></span>
-<span id="cb1-10"><a href=""></a><span class="op">});</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a href=""></a><span class="kw">auto</span> mesh <span class="op">=</span> samurai<span class="op">::</span>MRMesh<span class="op">&lt;</span>Config<span class="op">&gt;({{</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">}},</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">8</span><span class="op">);</span></span>
+<span id="cb5-2"><a href=""></a><span class="kw">auto</span> u <span class="op">=</span> samurai<span class="op">::</span>make_field<span class="op">&lt;</span><span class="dt">double</span><span class="op">,</span> <span class="dv">1</span><span class="op">&gt;(</span><span class="st">"u"</span><span class="op">,</span> mesh<span class="op">);</span></span>
+<span id="cb5-3"><a href=""></a></span>
+<span id="cb5-4"><a href=""></a>samurai<span class="op">::</span>for_each_cell<span class="op">(</span>mesh<span class="op">,</span> <span class="op">[&amp;](</span><span class="kw">auto</span> cell<span class="op">)</span></span>
+<span id="cb5-5"><a href=""></a><span class="op">{</span></span>
+<span id="cb5-6"><a href=""></a>  <span class="kw">auto</span> x <span class="op">=</span> cell<span class="op">.</span>center<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb5-7"><a href=""></a>  <span class="kw">auto</span> y <span class="op">=</span> cell<span class="op">.</span>center<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb5-8"><a href=""></a></span>
+<span id="cb5-9"><a href=""></a>  u<span class="op">[</span>cell<span class="op">]</span> <span class="op">=</span> x<span class="op">*</span>x <span class="op">+</span> y<span class="op">*</span>y<span class="op">;</span></span>
+<span id="cb5-10"><a href=""></a><span class="op">});</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section></section>
 <section>
 <section id="the-projection-operator" class="title-slide slide level1 subtitle text-center center">
@@ -628,15 +764,15 @@
 </video></section>
 <section id="the-implementation" class="slide level2">
 <h2>The implementation</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href=""></a><span class="kw">auto</span> u <span class="op">=</span> samurai<span class="op">::</span>make_field<span class="op">&lt;</span><span class="dt">double</span><span class="op">,</span> <span class="dv">1</span><span class="op">&gt;(</span><span class="st">"u"</span><span class="op">,</span> mesh<span class="op">);</span></span>
-<span id="cb2-2"><a href=""></a><span class="op">...</span></span>
-<span id="cb2-3"><a href=""></a><span class="kw">auto</span> set <span class="op">=</span> samurai<span class="op">::</span>intersection<span class="op">(</span>mesh<span class="op">[</span>level<span class="op">],</span> mesh<span class="op">[</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">])</span></span>
-<span id="cb2-4"><a href=""></a>          <span class="op">.</span>on<span class="op">(</span>level<span class="op">);</span></span>
-<span id="cb2-5"><a href=""></a></span>
-<span id="cb2-6"><a href=""></a>set<span class="op">([&amp;](</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> i<span class="op">,</span> <span class="kw">auto</span><span class="op">)</span></span>
-<span id="cb2-7"><a href=""></a><span class="op">{</span></span>
-<span id="cb2-8"><a href=""></a>    u<span class="op">(</span>level<span class="op">,</span> i<span class="op">)</span> <span class="op">=</span> <span class="fl">0.5</span><span class="op">*(</span>u<span class="op">(</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">)</span> <span class="op">+</span> u<span class="op">(</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">));</span></span>
-<span id="cb2-9"><a href=""></a><span class="op">});</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a href=""></a><span class="kw">auto</span> u <span class="op">=</span> samurai<span class="op">::</span>make_field<span class="op">&lt;</span><span class="dt">double</span><span class="op">,</span> <span class="dv">1</span><span class="op">&gt;(</span><span class="st">"u"</span><span class="op">,</span> mesh<span class="op">);</span></span>
+<span id="cb6-2"><a href=""></a><span class="op">...</span></span>
+<span id="cb6-3"><a href=""></a><span class="kw">auto</span> set <span class="op">=</span> samurai<span class="op">::</span>intersection<span class="op">(</span>mesh<span class="op">[</span>level<span class="op">],</span> mesh<span class="op">[</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">])</span></span>
+<span id="cb6-4"><a href=""></a>          <span class="op">.</span>on<span class="op">(</span>level<span class="op">);</span></span>
+<span id="cb6-5"><a href=""></a></span>
+<span id="cb6-6"><a href=""></a>set<span class="op">([&amp;](</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> i<span class="op">,</span> <span class="kw">auto</span><span class="op">)</span></span>
+<span id="cb6-7"><a href=""></a><span class="op">{</span></span>
+<span id="cb6-8"><a href=""></a>    u<span class="op">(</span>level<span class="op">,</span> i<span class="op">)</span> <span class="op">=</span> <span class="fl">0.5</span><span class="op">*(</span>u<span class="op">(</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">)</span> <span class="op">+</span> u<span class="op">(</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">));</span></span>
+<span id="cb6-9"><a href=""></a><span class="op">});</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section></section>
 <section>
 <section id="creation-of-random-meshes-and-their-graduation" class="title-slide slide level1 subtitle center">
@@ -656,86 +792,86 @@
 </section>
 <section id="create-a-mesh" class="slide level2">
 <h2>Create a mesh</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href=""></a><span class="kw">constexpr</span> <span class="bu">std::</span>size_t dim <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb3-2"><a href=""></a><span class="bu">std::</span>size_t start_level <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb3-3"><a href=""></a><span class="bu">std::</span>size_t max_refinement_level <span class="op">=</span> <span class="dv">7</span><span class="op">;</span></span>
-<span id="cb3-4"><a href=""></a></span>
-<span id="cb3-5"><a href=""></a>samurai<span class="op">::</span>Box<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> dim<span class="op">&gt;</span> box<span class="op">({</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{</span><span class="dv">1</span><span class="op">&lt;&lt;</span>start_level<span class="op">,</span> <span class="dv">1</span><span class="op">&lt;&lt;</span>start_level<span class="op">});</span></span>
-<span id="cb3-6"><a href=""></a></span>
-<span id="cb3-7"><a href=""></a>samurai<span class="op">::</span>CellArray<span class="op">&lt;</span>dim<span class="op">&gt;</span> ca<span class="op">;</span></span>
-<span id="cb3-8"><a href=""></a>ca<span class="op">[</span>start_level<span class="op">]</span> <span class="op">=</span> <span class="op">{</span>start_level<span class="op">,</span> box<span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a href=""></a><span class="kw">constexpr</span> <span class="bu">std::</span>size_t dim <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb7-2"><a href=""></a><span class="bu">std::</span>size_t start_level <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb7-3"><a href=""></a><span class="bu">std::</span>size_t max_refinement_level <span class="op">=</span> <span class="dv">7</span><span class="op">;</span></span>
+<span id="cb7-4"><a href=""></a></span>
+<span id="cb7-5"><a href=""></a>samurai<span class="op">::</span>Box<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> dim<span class="op">&gt;</span> box<span class="op">({</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{</span><span class="dv">1</span><span class="op">&lt;&lt;</span>start_level<span class="op">,</span> <span class="dv">1</span><span class="op">&lt;&lt;</span>start_level<span class="op">});</span></span>
+<span id="cb7-6"><a href=""></a></span>
+<span id="cb7-7"><a href=""></a>samurai<span class="op">::</span>CellArray<span class="op">&lt;</span>dim<span class="op">&gt;</span> ca<span class="op">;</span></span>
+<span id="cb7-8"><a href=""></a>ca<span class="op">[</span>start_level<span class="op">]</span> <span class="op">=</span> <span class="op">{</span>start_level<span class="op">,</span> box<span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="add-cells-randomly" class="slide level2">
 <h2>Add cells randomly</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a href=""></a>samurai<span class="op">::</span>CellList<span class="op">&lt;</span>dim<span class="op">&gt;</span> cl<span class="op">;</span></span>
-<span id="cb4-2"><a href=""></a></span>
-<span id="cb4-3"><a href=""></a>samurai<span class="op">::</span>for_each_interval<span class="op">(</span>ca<span class="op">,</span> <span class="op">[&amp;](</span><span class="bu">std::</span>size_t level<span class="op">,</span> <span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> interval<span class="op">,</span> <span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> index<span class="op">)</span></span>
-<span id="cb4-4"><a href=""></a><span class="op">{</span></span>
-<span id="cb4-5"><a href=""></a>    <span class="kw">auto</span> choice <span class="op">=</span> xt<span class="op">::</span>random<span class="op">::</span>choice<span class="op">(</span>xt<span class="op">::</span>xtensor_fixed<span class="op">&lt;</span><span class="dt">bool</span><span class="op">,</span></span>
-<span id="cb4-6"><a href=""></a>                                     xt<span class="op">::</span>xshape<span class="op">&lt;</span><span class="dv">2</span><span class="op">&gt;&gt;{</span><span class="kw">true</span><span class="op">,</span> <span class="kw">false</span><span class="op">},</span> interval<span class="op">.</span>size<span class="op">());</span></span>
-<span id="cb4-7"><a href=""></a></span>
-<span id="cb4-8"><a href=""></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> interval<span class="op">.</span>start<span class="op">,</span> ic <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span>interval<span class="op">.</span>end<span class="op">;</span> <span class="op">++</span>i<span class="op">,</span> <span class="op">++</span>ic<span class="op">)</span></span>
-<span id="cb4-9"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb4-10"><a href=""></a>        <span class="cf">if</span> <span class="op">(</span>choice<span class="op">[</span>ic<span class="op">])</span></span>
-<span id="cb4-11"><a href=""></a>        <span class="op">{</span></span>
-<span id="cb4-12"><a href=""></a>            cl<span class="op">[</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">][</span><span class="dv">2</span><span class="op">*</span>index<span class="op">].</span>add_interval<span class="op">({</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">2</span><span class="op">});</span></span>
-<span id="cb4-13"><a href=""></a>            cl<span class="op">[</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">][</span><span class="dv">2</span><span class="op">*</span>index <span class="op">+</span> <span class="dv">1</span><span class="op">].</span>add_interval<span class="op">({</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">2</span><span class="op">});</span></span>
-<span id="cb4-14"><a href=""></a>        <span class="op">}</span></span>
-<span id="cb4-15"><a href=""></a>        <span class="cf">else</span></span>
-<span id="cb4-16"><a href=""></a>        <span class="op">{</span></span>
-<span id="cb4-17"><a href=""></a>            cl<span class="op">[</span>level<span class="op">][</span>index<span class="op">].</span>add_point<span class="op">(</span>i<span class="op">);</span></span>
-<span id="cb4-18"><a href=""></a>        <span class="op">}</span></span>
-<span id="cb4-19"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb4-20"><a href=""></a><span class="op">});</span></span>
-<span id="cb4-21"><a href=""></a></span>
-<span id="cb4-22"><a href=""></a>ca <span class="op">=</span> <span class="op">{</span>cl<span class="op">,</span> <span class="kw">true</span><span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb8-1"><a href=""></a>samurai<span class="op">::</span>CellList<span class="op">&lt;</span>dim<span class="op">&gt;</span> cl<span class="op">;</span></span>
+<span id="cb8-2"><a href=""></a></span>
+<span id="cb8-3"><a href=""></a>samurai<span class="op">::</span>for_each_interval<span class="op">(</span>ca<span class="op">,</span> <span class="op">[&amp;](</span><span class="bu">std::</span>size_t level<span class="op">,</span> <span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> interval<span class="op">,</span> <span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> index<span class="op">)</span></span>
+<span id="cb8-4"><a href=""></a><span class="op">{</span></span>
+<span id="cb8-5"><a href=""></a>    <span class="kw">auto</span> choice <span class="op">=</span> xt<span class="op">::</span>random<span class="op">::</span>choice<span class="op">(</span>xt<span class="op">::</span>xtensor_fixed<span class="op">&lt;</span><span class="dt">bool</span><span class="op">,</span></span>
+<span id="cb8-6"><a href=""></a>                                     xt<span class="op">::</span>xshape<span class="op">&lt;</span><span class="dv">2</span><span class="op">&gt;&gt;{</span><span class="kw">true</span><span class="op">,</span> <span class="kw">false</span><span class="op">},</span> interval<span class="op">.</span>size<span class="op">());</span></span>
+<span id="cb8-7"><a href=""></a></span>
+<span id="cb8-8"><a href=""></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> interval<span class="op">.</span>start<span class="op">,</span> ic <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span>interval<span class="op">.</span>end<span class="op">;</span> <span class="op">++</span>i<span class="op">,</span> <span class="op">++</span>ic<span class="op">)</span></span>
+<span id="cb8-9"><a href=""></a>    <span class="op">{</span></span>
+<span id="cb8-10"><a href=""></a>        <span class="cf">if</span> <span class="op">(</span>choice<span class="op">[</span>ic<span class="op">])</span></span>
+<span id="cb8-11"><a href=""></a>        <span class="op">{</span></span>
+<span id="cb8-12"><a href=""></a>            cl<span class="op">[</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">][</span><span class="dv">2</span><span class="op">*</span>index<span class="op">].</span>add_interval<span class="op">({</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">2</span><span class="op">});</span></span>
+<span id="cb8-13"><a href=""></a>            cl<span class="op">[</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">][</span><span class="dv">2</span><span class="op">*</span>index <span class="op">+</span> <span class="dv">1</span><span class="op">].</span>add_interval<span class="op">({</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">2</span><span class="op">});</span></span>
+<span id="cb8-14"><a href=""></a>        <span class="op">}</span></span>
+<span id="cb8-15"><a href=""></a>        <span class="cf">else</span></span>
+<span id="cb8-16"><a href=""></a>        <span class="op">{</span></span>
+<span id="cb8-17"><a href=""></a>            cl<span class="op">[</span>level<span class="op">][</span>index<span class="op">].</span>add_point<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb8-18"><a href=""></a>        <span class="op">}</span></span>
+<span id="cb8-19"><a href=""></a>    <span class="op">}</span></span>
+<span id="cb8-20"><a href=""></a><span class="op">});</span></span>
+<span id="cb8-21"><a href=""></a></span>
+<span id="cb8-22"><a href=""></a>ca <span class="op">=</span> <span class="op">{</span>cl<span class="op">,</span> <span class="kw">true</span><span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="tag-cells-to-refine" class="slide level2">
 <h2>Tag cells to refine</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a href=""></a><span class="bu">std::</span>size_t min_level <span class="op">=</span> ca<span class="op">.</span>min_level<span class="op">(),</span> max_level <span class="op">=</span> ca<span class="op">.</span>max_level<span class="op">();</span></span>
-<span id="cb5-2"><a href=""></a>xt<span class="op">::</span>xtensor_fixed<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> xt<span class="op">::</span>xshape<span class="op">&lt;</span><span class="dv">4</span><span class="op">,</span> dim<span class="op">&gt;&gt;</span> stencil<span class="op">{{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">},</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">}};</span></span>
-<span id="cb5-3"><a href=""></a></span>
-<span id="cb5-4"><a href=""></a><span class="kw">auto</span> tag <span class="op">=</span> samurai<span class="op">::</span>make_field<span class="op">&lt;</span><span class="dt">bool</span><span class="op">,</span> <span class="dv">1</span><span class="op">&gt;(</span><span class="st">"tag"</span><span class="op">,</span> ca<span class="op">);</span></span>
-<span id="cb5-5"><a href=""></a>tag<span class="op">.</span>fill<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
-<span id="cb5-6"><a href=""></a></span>
-<span id="cb5-7"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t level <span class="op">=</span> min_level <span class="op">+</span> <span class="dv">2</span><span class="op">;</span> level <span class="op">&lt;=</span> max_level<span class="op">;</span> <span class="op">++</span>level<span class="op">)</span></span>
-<span id="cb5-8"><a href=""></a><span class="op">{</span></span>
-<span id="cb5-9"><a href=""></a>    <span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t level_below <span class="op">=</span> min_level<span class="op">;</span> level_below <span class="op">&lt;</span> level <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> <span class="op">++</span>level_below<span class="op">)</span></span>
-<span id="cb5-10"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb5-11"><a href=""></a>        <span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> stencil<span class="op">.</span>shape<span class="op">()[</span><span class="dv">0</span><span class="op">];</span> <span class="op">++</span>i<span class="op">)</span></span>
-<span id="cb5-12"><a href=""></a>        <span class="op">{</span></span>
-<span id="cb5-13"><a href=""></a>            <span class="kw">auto</span> s <span class="op">=</span> xt<span class="op">::</span>view<span class="op">(</span>stencil<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb5-14"><a href=""></a>            <span class="kw">auto</span> set <span class="op">=</span> samurai<span class="op">::</span>intersection<span class="op">(</span>samurai<span class="op">::</span>translate<span class="op">(</span>ca<span class="op">[</span>level<span class="op">],</span> s<span class="op">),</span> ca<span class="op">[</span>level_below<span class="op">])</span></span>
-<span id="cb5-15"><a href=""></a>                      <span class="op">.</span>on<span class="op">(</span>level_below<span class="op">);</span></span>
-<span id="cb5-16"><a href=""></a>            set<span class="op">([&amp;](</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> i<span class="op">,</span> <span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> index<span class="op">)</span></span>
-<span id="cb5-17"><a href=""></a>            <span class="op">{</span></span>
-<span id="cb5-18"><a href=""></a>                tag<span class="op">(</span>level_below<span class="op">,</span> i<span class="op">,</span> index<span class="op">[</span><span class="dv">0</span><span class="op">])</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb5-19"><a href=""></a>            <span class="op">});</span></span>
-<span id="cb5-20"><a href=""></a>        <span class="op">}</span></span>
-<span id="cb5-21"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb5-22"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb9-1"><a href=""></a><span class="bu">std::</span>size_t min_level <span class="op">=</span> ca<span class="op">.</span>min_level<span class="op">(),</span> max_level <span class="op">=</span> ca<span class="op">.</span>max_level<span class="op">();</span></span>
+<span id="cb9-2"><a href=""></a>xt<span class="op">::</span>xtensor_fixed<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> xt<span class="op">::</span>xshape<span class="op">&lt;</span><span class="dv">4</span><span class="op">,</span> dim<span class="op">&gt;&gt;</span> stencil<span class="op">{{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">},</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">}};</span></span>
+<span id="cb9-3"><a href=""></a></span>
+<span id="cb9-4"><a href=""></a><span class="kw">auto</span> tag <span class="op">=</span> samurai<span class="op">::</span>make_field<span class="op">&lt;</span><span class="dt">bool</span><span class="op">,</span> <span class="dv">1</span><span class="op">&gt;(</span><span class="st">"tag"</span><span class="op">,</span> ca<span class="op">);</span></span>
+<span id="cb9-5"><a href=""></a>tag<span class="op">.</span>fill<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span id="cb9-6"><a href=""></a></span>
+<span id="cb9-7"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t level <span class="op">=</span> min_level <span class="op">+</span> <span class="dv">2</span><span class="op">;</span> level <span class="op">&lt;=</span> max_level<span class="op">;</span> <span class="op">++</span>level<span class="op">)</span></span>
+<span id="cb9-8"><a href=""></a><span class="op">{</span></span>
+<span id="cb9-9"><a href=""></a>    <span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t level_below <span class="op">=</span> min_level<span class="op">;</span> level_below <span class="op">&lt;</span> level <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> <span class="op">++</span>level_below<span class="op">)</span></span>
+<span id="cb9-10"><a href=""></a>    <span class="op">{</span></span>
+<span id="cb9-11"><a href=""></a>        <span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> stencil<span class="op">.</span>shape<span class="op">()[</span><span class="dv">0</span><span class="op">];</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb9-12"><a href=""></a>        <span class="op">{</span></span>
+<span id="cb9-13"><a href=""></a>            <span class="kw">auto</span> s <span class="op">=</span> xt<span class="op">::</span>view<span class="op">(</span>stencil<span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb9-14"><a href=""></a>            <span class="kw">auto</span> set <span class="op">=</span> samurai<span class="op">::</span>intersection<span class="op">(</span>samurai<span class="op">::</span>translate<span class="op">(</span>ca<span class="op">[</span>level<span class="op">],</span> s<span class="op">),</span> ca<span class="op">[</span>level_below<span class="op">])</span></span>
+<span id="cb9-15"><a href=""></a>                      <span class="op">.</span>on<span class="op">(</span>level_below<span class="op">);</span></span>
+<span id="cb9-16"><a href=""></a>            set<span class="op">([&amp;](</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> i<span class="op">,</span> <span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> index<span class="op">)</span></span>
+<span id="cb9-17"><a href=""></a>            <span class="op">{</span></span>
+<span id="cb9-18"><a href=""></a>                tag<span class="op">(</span>level_below<span class="op">,</span> i<span class="op">,</span> index<span class="op">[</span><span class="dv">0</span><span class="op">])</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb9-19"><a href=""></a>            <span class="op">});</span></span>
+<span id="cb9-20"><a href=""></a>        <span class="op">}</span></span>
+<span id="cb9-21"><a href=""></a>    <span class="op">}</span></span>
+<span id="cb9-22"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="create-a-new-mesh-from-the-tag" class="slide level2">
 <h2>Create a new mesh from the tag</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a href=""></a>samurai<span class="op">::</span>CellList<span class="op">&lt;</span>dim<span class="op">&gt;</span> cl<span class="op">;</span></span>
-<span id="cb6-2"><a href=""></a></span>
-<span id="cb6-3"><a href=""></a>samurai<span class="op">::</span>for_each_cell<span class="op">(</span>ca<span class="op">,</span> <span class="op">[&amp;](</span><span class="kw">auto</span> cell<span class="op">)</span></span>
-<span id="cb6-4"><a href=""></a><span class="op">{</span></span>
-<span id="cb6-5"><a href=""></a>    <span class="kw">auto</span> i <span class="op">=</span> cell<span class="op">.</span>indices<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
-<span id="cb6-6"><a href=""></a>    <span class="kw">auto</span> j <span class="op">=</span> cell<span class="op">.</span>indices<span class="op">[</span><span class="dv">1</span><span class="op">];</span></span>
-<span id="cb6-7"><a href=""></a></span>
-<span id="cb6-8"><a href=""></a>    <span class="cf">if</span> <span class="op">(</span>tag<span class="op">[</span>cell<span class="op">])</span></span>
-<span id="cb6-9"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb6-10"><a href=""></a>        cl<span class="op">[</span>cell<span class="op">.</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">][{</span><span class="dv">2</span><span class="op">*</span>j<span class="op">}].</span>add_interval<span class="op">({</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">2</span><span class="op">});</span></span>
-<span id="cb6-11"><a href=""></a>        cl<span class="op">[</span>cell<span class="op">.</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">][{</span><span class="dv">2</span><span class="op">*</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">}].</span>add_interval<span class="op">({</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">2</span><span class="op">});</span></span>
-<span id="cb6-12"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb6-13"><a href=""></a>    <span class="cf">else</span></span>
-<span id="cb6-14"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb6-15"><a href=""></a>        cl<span class="op">[</span>cell<span class="op">.</span>level<span class="op">][{</span>j<span class="op">}].</span>add_point<span class="op">(</span>i<span class="op">);</span></span>
-<span id="cb6-16"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb6-17"><a href=""></a><span class="op">});</span></span>
-<span id="cb6-18"><a href=""></a></span>
-<span id="cb6-19"><a href=""></a>samurai<span class="op">::</span>CellArray<span class="op">&lt;</span>dim<span class="op">&gt;</span> new_ca <span class="op">=</span> <span class="op">{</span>cl<span class="op">,</span> <span class="kw">true</span><span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb10-1"><a href=""></a>samurai<span class="op">::</span>CellList<span class="op">&lt;</span>dim<span class="op">&gt;</span> cl<span class="op">;</span></span>
+<span id="cb10-2"><a href=""></a></span>
+<span id="cb10-3"><a href=""></a>samurai<span class="op">::</span>for_each_cell<span class="op">(</span>ca<span class="op">,</span> <span class="op">[&amp;](</span><span class="kw">auto</span> cell<span class="op">)</span></span>
+<span id="cb10-4"><a href=""></a><span class="op">{</span></span>
+<span id="cb10-5"><a href=""></a>    <span class="kw">auto</span> i <span class="op">=</span> cell<span class="op">.</span>indices<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb10-6"><a href=""></a>    <span class="kw">auto</span> j <span class="op">=</span> cell<span class="op">.</span>indices<span class="op">[</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb10-7"><a href=""></a></span>
+<span id="cb10-8"><a href=""></a>    <span class="cf">if</span> <span class="op">(</span>tag<span class="op">[</span>cell<span class="op">])</span></span>
+<span id="cb10-9"><a href=""></a>    <span class="op">{</span></span>
+<span id="cb10-10"><a href=""></a>        cl<span class="op">[</span>cell<span class="op">.</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">][{</span><span class="dv">2</span><span class="op">*</span>j<span class="op">}].</span>add_interval<span class="op">({</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">2</span><span class="op">});</span></span>
+<span id="cb10-11"><a href=""></a>        cl<span class="op">[</span>cell<span class="op">.</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">][{</span><span class="dv">2</span><span class="op">*</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">}].</span>add_interval<span class="op">({</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">2</span><span class="op">});</span></span>
+<span id="cb10-12"><a href=""></a>    <span class="op">}</span></span>
+<span id="cb10-13"><a href=""></a>    <span class="cf">else</span></span>
+<span id="cb10-14"><a href=""></a>    <span class="op">{</span></span>
+<span id="cb10-15"><a href=""></a>        cl<span class="op">[</span>cell<span class="op">.</span>level<span class="op">][{</span>j<span class="op">}].</span>add_point<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb10-16"><a href=""></a>    <span class="op">}</span></span>
+<span id="cb10-17"><a href=""></a><span class="op">});</span></span>
+<span id="cb10-18"><a href=""></a></span>
+<span id="cb10-19"><a href=""></a>samurai<span class="op">::</span>CellArray<span class="op">&lt;</span>dim<span class="op">&gt;</span> new_ca <span class="op">=</span> <span class="op">{</span>cl<span class="op">,</span> <span class="kw">true</span><span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section></section>
 <section>
 <section id="the-heat-equation" class="title-slide slide level1 center">
@@ -758,12 +894,12 @@
 <p>the flux function to implement is a discrete version of <span class="math inline">\(\nabla u\cdot \mathbf{n}\)</span>.</p>
 <p>Here, we choose the normal gradient of the first order, requiring a stencil of two cells.</p>
 <p>This is enough to write the static configuration</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a href=""></a><span class="kw">auto</span> u <span class="op">=</span> samurai<span class="op">::</span>make_field<span class="op">&lt;</span><span class="dv">1</span><span class="op">&gt;(</span><span class="st">"u"</span><span class="op">,</span> mesh<span class="op">);</span> <span class="co">// scalar field</span></span>
-<span id="cb7-2"><a href=""></a></span>
-<span id="cb7-3"><a href=""></a><span class="kw">using</span> cfg <span class="op">=</span> samurai<span class="op">::</span>FluxConfig<span class="op">&lt;</span>SchemeType<span class="op">::</span>LinearHomogeneous<span class="op">,</span></span>
-<span id="cb7-4"><a href=""></a>                                <span class="dv">1</span><span class="op">,</span>            <span class="co">// output_field_size</span></span>
-<span id="cb7-5"><a href=""></a>                                <span class="dv">2</span><span class="op">,</span>            <span class="co">// stencil_size</span></span>
-<span id="cb7-6"><a href=""></a>                                <span class="kw">decltype</span><span class="op">(</span>u<span class="op">)&gt;;</span> <span class="co">// input_field_type</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb11-1"><a href=""></a><span class="kw">auto</span> u <span class="op">=</span> samurai<span class="op">::</span>make_field<span class="op">&lt;</span><span class="dv">1</span><span class="op">&gt;(</span><span class="st">"u"</span><span class="op">,</span> mesh<span class="op">);</span> <span class="co">// scalar field</span></span>
+<span id="cb11-2"><a href=""></a></span>
+<span id="cb11-3"><a href=""></a><span class="kw">using</span> cfg <span class="op">=</span> samurai<span class="op">::</span>FluxConfig<span class="op">&lt;</span>SchemeType<span class="op">::</span>LinearHomogeneous<span class="op">,</span></span>
+<span id="cb11-4"><a href=""></a>                                <span class="dv">1</span><span class="op">,</span>            <span class="co">// output_field_size</span></span>
+<span id="cb11-5"><a href=""></a>                                <span class="dv">2</span><span class="op">,</span>            <span class="co">// stencil_size</span></span>
+<span id="cb11-6"><a href=""></a>                                <span class="kw">decltype</span><span class="op">(</span>u<span class="op">)&gt;;</span> <span class="co">// input_field_type</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="the-finite-volume-scheme-1" class="slide level2">
 <h2>The finite volume scheme</h2>
@@ -773,66 +909,66 @@
 \]</span></p>
 <p>where <span class="math inline">\(u_L\)</span> and <span class="math inline">\(u_R\)</span> are the finite volume approximations of <span class="math inline">\(u\)</span> in the respective cells, and <span class="math inline">\(h\)</span> is the cell length.</p>
 <p>The flux function then writes</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb8-1"><a href=""></a>samurai<span class="op">::</span>FluxDefinition<span class="op">&lt;</span>cfg<span class="op">&gt;</span> gradient<span class="op">([](</span><span class="dt">double</span> h<span class="op">)</span></span>
-<span id="cb8-2"><a href=""></a><span class="op">{</span></span>
-<span id="cb8-3"><a href=""></a>    samurai<span class="op">::</span>FluxStencilCoeffs<span class="op">&lt;</span>cfg<span class="op">&gt;</span> c<span class="op">;</span></span>
-<span id="cb8-4"><a href=""></a>    c<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">/</span>h<span class="op">;</span> <span class="co">// left</span></span>
-<span id="cb8-5"><a href=""></a>    c<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span>  <span class="dv">1</span><span class="op">/</span>h<span class="op">;</span> <span class="co">// right</span></span>
-<span id="cb8-6"><a href=""></a>    <span class="cf">return</span> c<span class="op">;</span></span>
-<span id="cb8-7"><a href=""></a><span class="op">});</span></span>
-<span id="cb8-8"><a href=""></a></span>
-<span id="cb8-9"><a href=""></a><span class="kw">auto</span> diff <span class="op">=</span> samurai<span class="op">::</span>make_flux_based_scheme<span class="op">(</span>gradient<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb12-1"><a href=""></a>samurai<span class="op">::</span>FluxDefinition<span class="op">&lt;</span>cfg<span class="op">&gt;</span> gradient<span class="op">([](</span><span class="dt">double</span> h<span class="op">)</span></span>
+<span id="cb12-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb12-3"><a href=""></a>    samurai<span class="op">::</span>FluxStencilCoeffs<span class="op">&lt;</span>cfg<span class="op">&gt;</span> c<span class="op">;</span></span>
+<span id="cb12-4"><a href=""></a>    c<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">/</span>h<span class="op">;</span> <span class="co">// left</span></span>
+<span id="cb12-5"><a href=""></a>    c<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span>  <span class="dv">1</span><span class="op">/</span>h<span class="op">;</span> <span class="co">// right</span></span>
+<span id="cb12-6"><a href=""></a>    <span class="cf">return</span> c<span class="op">;</span></span>
+<span id="cb12-7"><a href=""></a><span class="op">});</span></span>
+<span id="cb12-8"><a href=""></a></span>
+<span id="cb12-9"><a href=""></a><span class="kw">auto</span> diff <span class="op">=</span> samurai<span class="op">::</span>make_flux_based_scheme<span class="op">(</span>gradient<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="simulation-on-uniform-mesh" class="slide level2">
 <h2>Simulation on uniform mesh</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb9-1"><a href=""></a><span class="co">// ...</span></span>
-<span id="cb9-2"><a href=""></a><span class="kw">auto</span> diff <span class="op">=</span> samurai<span class="op">::</span>make_diffusion<span class="op">&lt;</span><span class="kw">decltype</span><span class="op">(</span>u<span class="op">)&gt;();</span></span>
-<span id="cb9-3"><a href=""></a><span class="kw">auto</span> id   <span class="op">=</span> samurai<span class="op">::</span>make_identity<span class="op">&lt;</span><span class="kw">decltype</span><span class="op">(</span>u<span class="op">)&gt;();</span></span>
-<span id="cb9-4"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t ite<span class="op">=</span><span class="dv">0</span><span class="op">;</span> ite<span class="op">&lt;</span><span class="dv">200</span><span class="op">;</span> <span class="op">++</span>ite<span class="op">)</span></span>
-<span id="cb9-5"><a href=""></a><span class="op">{</span></span>
-<span id="cb9-6"><a href=""></a>    samurai<span class="op">::</span>update_ghost_mr<span class="op">(</span>u<span class="op">);</span></span>
-<span id="cb9-7"><a href=""></a></span>
-<span id="cb9-8"><a href=""></a>    <span class="cf">if</span> <span class="op">(</span>explicit_scheme<span class="op">)</span></span>
-<span id="cb9-9"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb9-10"><a href=""></a>        unp1 <span class="op">=</span> u <span class="op">-</span> dt <span class="op">*</span> diff<span class="op">(</span>u<span class="op">);</span></span>
-<span id="cb9-11"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb9-12"><a href=""></a>    <span class="cf">else</span></span>
-<span id="cb9-13"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb9-14"><a href=""></a>        <span class="kw">auto</span> back_euler <span class="op">=</span> id <span class="op">+</span> dt <span class="op">*</span> diff<span class="op">;</span></span>
-<span id="cb9-15"><a href=""></a>        <span class="co">// solves the linear equation   [Id + dt*Diff](unp1) = u</span></span>
-<span id="cb9-16"><a href=""></a>        samurai<span class="op">::</span>petsc<span class="op">::</span>solve<span class="op">(</span>back_euler<span class="op">,</span> unp1<span class="op">,</span> u<span class="op">);</span></span>
-<span id="cb9-17"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb9-18"><a href=""></a></span>
-<span id="cb9-19"><a href=""></a>    <span class="bu">std::</span>swap<span class="op">(</span>u<span class="op">.</span>array<span class="op">(),</span> u_np1<span class="op">.</span>array<span class="op">());</span></span>
-<span id="cb9-20"><a href=""></a></span>
-<span id="cb9-21"><a href=""></a>    samurai<span class="op">::</span>save<span class="op">(</span>fmt<span class="op">::</span>format<span class="op">(</span><span class="st">"mesh_</span><span class="sc">{}</span><span class="st">"</span><span class="op">,</span> ite <span class="op">+</span> <span class="dv">1</span><span class="op">),</span> mesh<span class="op">,</span> u<span class="op">);</span></span>
-<span id="cb9-22"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb13-1"><a href=""></a><span class="co">// ...</span></span>
+<span id="cb13-2"><a href=""></a><span class="kw">auto</span> diff <span class="op">=</span> samurai<span class="op">::</span>make_diffusion<span class="op">&lt;</span><span class="kw">decltype</span><span class="op">(</span>u<span class="op">)&gt;();</span></span>
+<span id="cb13-3"><a href=""></a><span class="kw">auto</span> id   <span class="op">=</span> samurai<span class="op">::</span>make_identity<span class="op">&lt;</span><span class="kw">decltype</span><span class="op">(</span>u<span class="op">)&gt;();</span></span>
+<span id="cb13-4"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t ite<span class="op">=</span><span class="dv">0</span><span class="op">;</span> ite<span class="op">&lt;</span><span class="dv">200</span><span class="op">;</span> <span class="op">++</span>ite<span class="op">)</span></span>
+<span id="cb13-5"><a href=""></a><span class="op">{</span></span>
+<span id="cb13-6"><a href=""></a>    samurai<span class="op">::</span>update_ghost_mr<span class="op">(</span>u<span class="op">);</span></span>
+<span id="cb13-7"><a href=""></a></span>
+<span id="cb13-8"><a href=""></a>    <span class="cf">if</span> <span class="op">(</span>explicit_scheme<span class="op">)</span></span>
+<span id="cb13-9"><a href=""></a>    <span class="op">{</span></span>
+<span id="cb13-10"><a href=""></a>        unp1 <span class="op">=</span> u <span class="op">-</span> dt <span class="op">*</span> diff<span class="op">(</span>u<span class="op">);</span></span>
+<span id="cb13-11"><a href=""></a>    <span class="op">}</span></span>
+<span id="cb13-12"><a href=""></a>    <span class="cf">else</span></span>
+<span id="cb13-13"><a href=""></a>    <span class="op">{</span></span>
+<span id="cb13-14"><a href=""></a>        <span class="kw">auto</span> back_euler <span class="op">=</span> id <span class="op">+</span> dt <span class="op">*</span> diff<span class="op">;</span></span>
+<span id="cb13-15"><a href=""></a>        <span class="co">// solves the linear equation   [Id + dt*Diff](unp1) = u</span></span>
+<span id="cb13-16"><a href=""></a>        samurai<span class="op">::</span>petsc<span class="op">::</span>solve<span class="op">(</span>back_euler<span class="op">,</span> unp1<span class="op">,</span> u<span class="op">);</span></span>
+<span id="cb13-17"><a href=""></a>    <span class="op">}</span></span>
+<span id="cb13-18"><a href=""></a></span>
+<span id="cb13-19"><a href=""></a>    <span class="bu">std::</span>swap<span class="op">(</span>u<span class="op">.</span>array<span class="op">(),</span> u_np1<span class="op">.</span>array<span class="op">());</span></span>
+<span id="cb13-20"><a href=""></a></span>
+<span id="cb13-21"><a href=""></a>    samurai<span class="op">::</span>save<span class="op">(</span>fmt<span class="op">::</span>format<span class="op">(</span><span class="st">"mesh_</span><span class="sc">{}</span><span class="st">"</span><span class="op">,</span> ite <span class="op">+</span> <span class="dv">1</span><span class="op">),</span> mesh<span class="op">,</span> u<span class="op">);</span></span>
+<span id="cb13-22"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="simulation-with-adaptive-mesh-refinement" class="slide level2">
 <h2>Simulation with adaptive mesh refinement</h2>
-<div class="sourceCode" id="cb10" data-code-line-numbers="1-2,6-7"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb10-1"><a href=""></a><span class="kw">auto</span> MRadaptation <span class="op">=</span> samurai<span class="op">::</span>make_MRAdapt<span class="op">(</span>u<span class="op">);</span></span>
-<span id="cb10-2"><a href=""></a><span class="dt">double</span> eps <span class="op">=</span> <span class="fl">1e-4</span><span class="op">,</span> regularity <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb10-3"><a href=""></a></span>
-<span id="cb10-4"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t ite<span class="op">=</span><span class="dv">0</span><span class="op">;</span> ite<span class="op">&lt;</span><span class="dv">200</span><span class="op">;</span> <span class="op">++</span>ite<span class="op">)</span></span>
-<span id="cb10-5"><a href=""></a><span class="op">{</span></span>
-<span id="cb10-6"><a href=""></a>    MRadaptation<span class="op">(</span>eps<span class="op">,</span> regularity<span class="op">);</span></span>
-<span id="cb10-7"><a href=""></a>    unp1<span class="op">.</span>resize<span class="op">();</span></span>
-<span id="cb10-8"><a href=""></a>    samurai<span class="op">::</span>update_ghost_mr<span class="op">(</span>u<span class="op">);</span></span>
-<span id="cb10-9"><a href=""></a></span>
-<span id="cb10-10"><a href=""></a>    <span class="cf">if</span> <span class="op">(</span>explicit_scheme<span class="op">)</span></span>
-<span id="cb10-11"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb10-12"><a href=""></a>        unp1 <span class="op">=</span> u <span class="op">-</span> dt <span class="op">*</span> diff<span class="op">(</span>u<span class="op">);</span></span>
-<span id="cb10-13"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb10-14"><a href=""></a>    <span class="cf">else</span></span>
-<span id="cb10-15"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb10-16"><a href=""></a>      <span class="kw">auto</span> back_euler <span class="op">=</span> id <span class="op">+</span> dt <span class="op">*</span> diff<span class="op">;</span></span>
-<span id="cb10-17"><a href=""></a>      <span class="co">// solves the linear equation   [Id + dt*Diff](unp1) = u</span></span>
-<span id="cb10-18"><a href=""></a>      samurai<span class="op">::</span>petsc<span class="op">::</span>solve<span class="op">(</span>back_euler<span class="op">,</span> unp1<span class="op">,</span> u<span class="op">);</span></span>
-<span id="cb10-19"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb10-20"><a href=""></a></span>
-<span id="cb10-21"><a href=""></a>    <span class="bu">std::</span>swap<span class="op">(</span>u<span class="op">.</span>array<span class="op">(),</span> u_np1<span class="op">.</span>array<span class="op">());</span></span>
-<span id="cb10-22"><a href=""></a>    samurai<span class="op">::</span>save<span class="op">(</span>fmt<span class="op">::</span>format<span class="op">(</span><span class="st">"mesh_</span><span class="sc">{}</span><span class="st">"</span><span class="op">,</span> ite <span class="op">+</span> <span class="dv">1</span><span class="op">),</span> mesh<span class="op">,</span> u<span class="op">);</span></span>
-<span id="cb10-23"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14" data-code-line-numbers="1-2,6-7"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb14-1"><a href=""></a><span class="kw">auto</span> MRadaptation <span class="op">=</span> samurai<span class="op">::</span>make_MRAdapt<span class="op">(</span>u<span class="op">);</span></span>
+<span id="cb14-2"><a href=""></a><span class="dt">double</span> eps <span class="op">=</span> <span class="fl">1e-4</span><span class="op">,</span> regularity <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb14-3"><a href=""></a></span>
+<span id="cb14-4"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t ite<span class="op">=</span><span class="dv">0</span><span class="op">;</span> ite<span class="op">&lt;</span><span class="dv">200</span><span class="op">;</span> <span class="op">++</span>ite<span class="op">)</span></span>
+<span id="cb14-5"><a href=""></a><span class="op">{</span></span>
+<span id="cb14-6"><a href=""></a>    MRadaptation<span class="op">(</span>eps<span class="op">,</span> regularity<span class="op">);</span></span>
+<span id="cb14-7"><a href=""></a>    unp1<span class="op">.</span>resize<span class="op">();</span></span>
+<span id="cb14-8"><a href=""></a>    samurai<span class="op">::</span>update_ghost_mr<span class="op">(</span>u<span class="op">);</span></span>
+<span id="cb14-9"><a href=""></a></span>
+<span id="cb14-10"><a href=""></a>    <span class="cf">if</span> <span class="op">(</span>explicit_scheme<span class="op">)</span></span>
+<span id="cb14-11"><a href=""></a>    <span class="op">{</span></span>
+<span id="cb14-12"><a href=""></a>        unp1 <span class="op">=</span> u <span class="op">-</span> dt <span class="op">*</span> diff<span class="op">(</span>u<span class="op">);</span></span>
+<span id="cb14-13"><a href=""></a>    <span class="op">}</span></span>
+<span id="cb14-14"><a href=""></a>    <span class="cf">else</span></span>
+<span id="cb14-15"><a href=""></a>    <span class="op">{</span></span>
+<span id="cb14-16"><a href=""></a>      <span class="kw">auto</span> back_euler <span class="op">=</span> id <span class="op">+</span> dt <span class="op">*</span> diff<span class="op">;</span></span>
+<span id="cb14-17"><a href=""></a>      <span class="co">// solves the linear equation   [Id + dt*Diff](unp1) = u</span></span>
+<span id="cb14-18"><a href=""></a>      samurai<span class="op">::</span>petsc<span class="op">::</span>solve<span class="op">(</span>back_euler<span class="op">,</span> unp1<span class="op">,</span> u<span class="op">);</span></span>
+<span id="cb14-19"><a href=""></a>    <span class="op">}</span></span>
+<span id="cb14-20"><a href=""></a></span>
+<span id="cb14-21"><a href=""></a>    <span class="bu">std::</span>swap<span class="op">(</span>u<span class="op">.</span>array<span class="op">(),</span> u_np1<span class="op">.</span>array<span class="op">());</span></span>
+<span id="cb14-22"><a href=""></a>    samurai<span class="op">::</span>save<span class="op">(</span>fmt<span class="op">::</span>format<span class="op">(</span><span class="st">"mesh_</span><span class="sc">{}</span><span class="st">"</span><span class="op">,</span> ite <span class="op">+</span> <span class="dv">1</span><span class="op">),</span> mesh<span class="op">,</span> u<span class="op">);</span></span>
+<span id="cb14-23"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section></section>
 <section>
 <section id="a-dual-splittingimex-strategy-for-stiff-pdes" class="title-slide slide level1 center">
