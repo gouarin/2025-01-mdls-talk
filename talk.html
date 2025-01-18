@@ -317,21 +317,32 @@ Marc Massot
 <p><em>samurai: create a unified framework for testing a whole range<br class="m-0">of mesh adaptation methods with the latest generation of numerical schemes.</em></p>
 </div>
 </div>
-</section></section>
-<section>
-<section id="samurai" class="title-slide slide level1 center">
-<h1>Samurai</h1>
+</section>
+<section class="slide level2">
 
+<div style="position: absolute; top: 50%; transform: translate(0, -50%); text-align: center;">
+<div class="row">
+<div class="col-6 align-self-center">
+<p><img data-src="figures/logo.png"></p>
+</div>
+<div class="col align-self-center">
+<h4>
+samurai
+</h4>
+</div>
+</div>
+</div>
 </section>
 <section id="design-principles" class="slide level2">
 <h2>Design principles</h2>
+<div style="position: absolute; top: 50%; transform: translate(0%, -50%); text-align: center;">
 <ul>
-<li>Mesh compression according to the level</li>
-<li>Achieve fast look-up for a cell into the structure</li>
-<li>Maximize the memory contiguity of the stored data</li>
-<li>Facilitate inter-level operations</li>
-<li>Give the possibility of writing numerical schemes easily</li>
+<li>Compress the mesh according to the level-wise spatial connectivity along each Cartesian axis.</li>
+<li>Achieve fast look-up for a cell into the structure, especially for parents and neighbors.</li>
+<li>Maximize the memory contiguity of the stored data to allow for caching and vectorization.</li>
+<li>Facilitate inter-level operations which are common in many numerical techniques.</li>
 </ul>
+</div>
 </section>
 <section id="an-overview-of-the-data-structure" class="slide level2">
 <h2>An overview of the data structure</h2>
@@ -517,7 +528,7 @@ Marc Massot
 <div>
 <video src="videos/mra_construction/mesh_0000_unnamed.mp4">
 </video></div>
-<div class="text-center">
+<div class="text-center mt-0">
 <p>initial mesh</p>
 </div>
 </section>
@@ -526,7 +537,7 @@ Marc Massot
 <div>
 <video data-autoplay="" src="videos/mra_construction/mesh_0000_unnamed.mp4">
 </video></div>
-<div class="text-center">
+<div class="text-center mt-0">
 <p>initial mesh</p>
 </div>
 </section>
@@ -535,7 +546,7 @@ Marc Massot
 <div>
 <video data-autoplay="" src="videos/mra_construction/mesh_0001_unnamed.mp4">
 </video></div>
-<div class="text-center">
+<div class="text-center mt-0">
 <p>ghost cells used by the numerical scheme</p>
 </div>
 </section>
@@ -544,7 +555,7 @@ Marc Massot
 <div>
 <video data-autoplay="" src="videos/mra_construction/mesh_0002_unnamed.mp4">
 </video></div>
-<div class="text-center">
+<div class="text-center mt-0">
 <p>cells needed to compute the details (all tree)</p>
 </div>
 </section>
@@ -553,7 +564,7 @@ Marc Massot
 <div>
 <video data-autoplay="" src="videos/mra_construction/mesh_0003_unnamed.mp4">
 </video></div>
-<div class="text-center">
+<div class="text-center mt-0">
 <p>cells needed to compute the details (iterative way)</p>
 </div>
 </section>
@@ -562,7 +573,7 @@ Marc Massot
 <div>
 <video data-autoplay="" src="videos/mra_construction/mesh_0004_unnamed.mp4">
 </video></div>
-<div class="text-center">
+<div class="text-center mt-0">
 <p>cells needed to compute the details (iterative way)</p>
 </div>
 </section>
@@ -571,7 +582,7 @@ Marc Massot
 <div>
 <video data-autoplay="" src="videos/mra_construction/mesh_0005_unnamed.mp4">
 </video></div>
-<div class="text-center">
+<div class="text-center mt-0">
 <p>cells needed to compute the details (iterative way)</p>
 </div>
 </section>
@@ -580,7 +591,7 @@ Marc Massot
 <div>
 <video data-autoplay="" src="videos/mra_construction/mesh_0006_unnamed.mp4">
 </video></div>
-<div class="text-center">
+<div class="text-center mt-0">
 <p>cells needed to compute the details (iterative way)</p>
 </div>
 </section>
@@ -589,7 +600,7 @@ Marc Massot
 <div>
 <video data-autoplay="" src="videos/mra_construction/mesh_0007_unnamed.mp4">
 </video></div>
-<div class="text-center">
+<div class="text-center mt-0">
 <p>cells needed to compute the details (iterative way)</p>
 </div>
 </section>
@@ -737,575 +748,8 @@ $$ -->
 <li>Helper classes to construct N-D operators and expressions using xtensor</li>
 <li>HDF5 support</li>
 </ul>
-</section></section>
-<section>
-<section id="examples" class="title-slide slide level1 center">
-<h1>Examples</h1>
-
-</section>
-<section id="field-creation" class="slide level2">
-<h2>Field creation</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a href=""></a><span class="kw">auto</span> mesh <span class="op">=</span> samurai<span class="op">::</span>MRMesh<span class="op">&lt;</span>Config<span class="op">&gt;({{</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">}},</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">8</span><span class="op">);</span></span>
-<span id="cb5-2"><a href=""></a><span class="kw">auto</span> u <span class="op">=</span> samurai<span class="op">::</span>make_field<span class="op">&lt;</span><span class="dt">double</span><span class="op">,</span> <span class="dv">1</span><span class="op">&gt;(</span><span class="st">"u"</span><span class="op">,</span> mesh<span class="op">);</span></span>
-<span id="cb5-3"><a href=""></a></span>
-<span id="cb5-4"><a href=""></a>samurai<span class="op">::</span>for_each_cell<span class="op">(</span>mesh<span class="op">,</span> <span class="op">[&amp;](</span><span class="kw">auto</span> cell<span class="op">)</span></span>
-<span id="cb5-5"><a href=""></a><span class="op">{</span></span>
-<span id="cb5-6"><a href=""></a>  <span class="kw">auto</span> x <span class="op">=</span> cell<span class="op">.</span>center<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
-<span id="cb5-7"><a href=""></a>  <span class="kw">auto</span> y <span class="op">=</span> cell<span class="op">.</span>center<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb5-8"><a href=""></a></span>
-<span id="cb5-9"><a href=""></a>  u<span class="op">[</span>cell<span class="op">]</span> <span class="op">=</span> x<span class="op">*</span>x <span class="op">+</span> y<span class="op">*</span>y<span class="op">;</span></span>
-<span id="cb5-10"><a href=""></a><span class="op">});</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section></section>
-<section>
-<section id="the-projection-operator" class="title-slide slide level1 subtitle text-center center">
-<h1>The projection operator</h1>
-
-</section>
-<section id="an-example" class="slide level2">
-<h2>An example</h2>
-<video data-autoplay="" src="videos/projection.mp4">
-</video></section>
-<section id="the-implementation" class="slide level2">
-<h2>The implementation</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a href=""></a><span class="kw">auto</span> u <span class="op">=</span> samurai<span class="op">::</span>make_field<span class="op">&lt;</span><span class="dt">double</span><span class="op">,</span> <span class="dv">1</span><span class="op">&gt;(</span><span class="st">"u"</span><span class="op">,</span> mesh<span class="op">);</span></span>
-<span id="cb6-2"><a href=""></a><span class="op">...</span></span>
-<span id="cb6-3"><a href=""></a><span class="kw">auto</span> set <span class="op">=</span> samurai<span class="op">::</span>intersection<span class="op">(</span>mesh<span class="op">[</span>level<span class="op">],</span> mesh<span class="op">[</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">])</span></span>
-<span id="cb6-4"><a href=""></a>          <span class="op">.</span>on<span class="op">(</span>level<span class="op">);</span></span>
-<span id="cb6-5"><a href=""></a></span>
-<span id="cb6-6"><a href=""></a>set<span class="op">([&amp;](</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> i<span class="op">,</span> <span class="kw">auto</span><span class="op">)</span></span>
-<span id="cb6-7"><a href=""></a><span class="op">{</span></span>
-<span id="cb6-8"><a href=""></a>    u<span class="op">(</span>level<span class="op">,</span> i<span class="op">)</span> <span class="op">=</span> <span class="fl">0.5</span><span class="op">*(</span>u<span class="op">(</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">)</span> <span class="op">+</span> u<span class="op">(</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">));</span></span>
-<span id="cb6-9"><a href=""></a><span class="op">});</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section></section>
-<section>
-<section id="creation-of-random-meshes-and-their-graduation" class="title-slide slide level1 subtitle center">
-<h1>Creation of random meshes and their graduation</h1>
-
-</section>
-<section class="slide level2">
-
-<div class="row">
-<div class="col text-center">
-<p><img data-src="figures/graduation_before.png"> before</p>
-</div>
-<div class="col text-center">
-<p><img data-src="figures/graduation_after.png"> after</p>
-</div>
-</div>
-</section>
-<section id="create-a-mesh" class="slide level2">
-<h2>Create a mesh</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a href=""></a><span class="kw">constexpr</span> <span class="bu">std::</span>size_t dim <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb7-2"><a href=""></a><span class="bu">std::</span>size_t start_level <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb7-3"><a href=""></a><span class="bu">std::</span>size_t max_refinement_level <span class="op">=</span> <span class="dv">7</span><span class="op">;</span></span>
-<span id="cb7-4"><a href=""></a></span>
-<span id="cb7-5"><a href=""></a>samurai<span class="op">::</span>Box<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> dim<span class="op">&gt;</span> box<span class="op">({</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{</span><span class="dv">1</span><span class="op">&lt;&lt;</span>start_level<span class="op">,</span> <span class="dv">1</span><span class="op">&lt;&lt;</span>start_level<span class="op">});</span></span>
-<span id="cb7-6"><a href=""></a></span>
-<span id="cb7-7"><a href=""></a>samurai<span class="op">::</span>CellArray<span class="op">&lt;</span>dim<span class="op">&gt;</span> ca<span class="op">;</span></span>
-<span id="cb7-8"><a href=""></a>ca<span class="op">[</span>start_level<span class="op">]</span> <span class="op">=</span> <span class="op">{</span>start_level<span class="op">,</span> box<span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="add-cells-randomly" class="slide level2">
-<h2>Add cells randomly</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb8-1"><a href=""></a>samurai<span class="op">::</span>CellList<span class="op">&lt;</span>dim<span class="op">&gt;</span> cl<span class="op">;</span></span>
-<span id="cb8-2"><a href=""></a></span>
-<span id="cb8-3"><a href=""></a>samurai<span class="op">::</span>for_each_interval<span class="op">(</span>ca<span class="op">,</span> <span class="op">[&amp;](</span><span class="bu">std::</span>size_t level<span class="op">,</span> <span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> interval<span class="op">,</span> <span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> index<span class="op">)</span></span>
-<span id="cb8-4"><a href=""></a><span class="op">{</span></span>
-<span id="cb8-5"><a href=""></a>    <span class="kw">auto</span> choice <span class="op">=</span> xt<span class="op">::</span>random<span class="op">::</span>choice<span class="op">(</span>xt<span class="op">::</span>xtensor_fixed<span class="op">&lt;</span><span class="dt">bool</span><span class="op">,</span></span>
-<span id="cb8-6"><a href=""></a>                                     xt<span class="op">::</span>xshape<span class="op">&lt;</span><span class="dv">2</span><span class="op">&gt;&gt;{</span><span class="kw">true</span><span class="op">,</span> <span class="kw">false</span><span class="op">},</span> interval<span class="op">.</span>size<span class="op">());</span></span>
-<span id="cb8-7"><a href=""></a></span>
-<span id="cb8-8"><a href=""></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> interval<span class="op">.</span>start<span class="op">,</span> ic <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span>interval<span class="op">.</span>end<span class="op">;</span> <span class="op">++</span>i<span class="op">,</span> <span class="op">++</span>ic<span class="op">)</span></span>
-<span id="cb8-9"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb8-10"><a href=""></a>        <span class="cf">if</span> <span class="op">(</span>choice<span class="op">[</span>ic<span class="op">])</span></span>
-<span id="cb8-11"><a href=""></a>        <span class="op">{</span></span>
-<span id="cb8-12"><a href=""></a>            cl<span class="op">[</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">][</span><span class="dv">2</span><span class="op">*</span>index<span class="op">].</span>add_interval<span class="op">({</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">2</span><span class="op">});</span></span>
-<span id="cb8-13"><a href=""></a>            cl<span class="op">[</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">][</span><span class="dv">2</span><span class="op">*</span>index <span class="op">+</span> <span class="dv">1</span><span class="op">].</span>add_interval<span class="op">({</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">2</span><span class="op">});</span></span>
-<span id="cb8-14"><a href=""></a>        <span class="op">}</span></span>
-<span id="cb8-15"><a href=""></a>        <span class="cf">else</span></span>
-<span id="cb8-16"><a href=""></a>        <span class="op">{</span></span>
-<span id="cb8-17"><a href=""></a>            cl<span class="op">[</span>level<span class="op">][</span>index<span class="op">].</span>add_point<span class="op">(</span>i<span class="op">);</span></span>
-<span id="cb8-18"><a href=""></a>        <span class="op">}</span></span>
-<span id="cb8-19"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb8-20"><a href=""></a><span class="op">});</span></span>
-<span id="cb8-21"><a href=""></a></span>
-<span id="cb8-22"><a href=""></a>ca <span class="op">=</span> <span class="op">{</span>cl<span class="op">,</span> <span class="kw">true</span><span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="tag-cells-to-refine" class="slide level2">
-<h2>Tag cells to refine</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb9-1"><a href=""></a><span class="bu">std::</span>size_t min_level <span class="op">=</span> ca<span class="op">.</span>min_level<span class="op">(),</span> max_level <span class="op">=</span> ca<span class="op">.</span>max_level<span class="op">();</span></span>
-<span id="cb9-2"><a href=""></a>xt<span class="op">::</span>xtensor_fixed<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> xt<span class="op">::</span>xshape<span class="op">&lt;</span><span class="dv">4</span><span class="op">,</span> dim<span class="op">&gt;&gt;</span> stencil<span class="op">{{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">},</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">},</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">}};</span></span>
-<span id="cb9-3"><a href=""></a></span>
-<span id="cb9-4"><a href=""></a><span class="kw">auto</span> tag <span class="op">=</span> samurai<span class="op">::</span>make_field<span class="op">&lt;</span><span class="dt">bool</span><span class="op">,</span> <span class="dv">1</span><span class="op">&gt;(</span><span class="st">"tag"</span><span class="op">,</span> ca<span class="op">);</span></span>
-<span id="cb9-5"><a href=""></a>tag<span class="op">.</span>fill<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
-<span id="cb9-6"><a href=""></a></span>
-<span id="cb9-7"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t level <span class="op">=</span> min_level <span class="op">+</span> <span class="dv">2</span><span class="op">;</span> level <span class="op">&lt;=</span> max_level<span class="op">;</span> <span class="op">++</span>level<span class="op">)</span></span>
-<span id="cb9-8"><a href=""></a><span class="op">{</span></span>
-<span id="cb9-9"><a href=""></a>    <span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t level_below <span class="op">=</span> min_level<span class="op">;</span> level_below <span class="op">&lt;</span> level <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> <span class="op">++</span>level_below<span class="op">)</span></span>
-<span id="cb9-10"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb9-11"><a href=""></a>        <span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> stencil<span class="op">.</span>shape<span class="op">()[</span><span class="dv">0</span><span class="op">];</span> <span class="op">++</span>i<span class="op">)</span></span>
-<span id="cb9-12"><a href=""></a>        <span class="op">{</span></span>
-<span id="cb9-13"><a href=""></a>            <span class="kw">auto</span> s <span class="op">=</span> xt<span class="op">::</span>view<span class="op">(</span>stencil<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb9-14"><a href=""></a>            <span class="kw">auto</span> set <span class="op">=</span> samurai<span class="op">::</span>intersection<span class="op">(</span>samurai<span class="op">::</span>translate<span class="op">(</span>ca<span class="op">[</span>level<span class="op">],</span> s<span class="op">),</span> ca<span class="op">[</span>level_below<span class="op">])</span></span>
-<span id="cb9-15"><a href=""></a>                      <span class="op">.</span>on<span class="op">(</span>level_below<span class="op">);</span></span>
-<span id="cb9-16"><a href=""></a>            set<span class="op">([&amp;](</span><span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> i<span class="op">,</span> <span class="at">const</span> <span class="kw">auto</span><span class="op">&amp;</span> index<span class="op">)</span></span>
-<span id="cb9-17"><a href=""></a>            <span class="op">{</span></span>
-<span id="cb9-18"><a href=""></a>                tag<span class="op">(</span>level_below<span class="op">,</span> i<span class="op">,</span> index<span class="op">[</span><span class="dv">0</span><span class="op">])</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb9-19"><a href=""></a>            <span class="op">});</span></span>
-<span id="cb9-20"><a href=""></a>        <span class="op">}</span></span>
-<span id="cb9-21"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb9-22"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="create-a-new-mesh-from-the-tag" class="slide level2">
-<h2>Create a new mesh from the tag</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb10-1"><a href=""></a>samurai<span class="op">::</span>CellList<span class="op">&lt;</span>dim<span class="op">&gt;</span> cl<span class="op">;</span></span>
-<span id="cb10-2"><a href=""></a></span>
-<span id="cb10-3"><a href=""></a>samurai<span class="op">::</span>for_each_cell<span class="op">(</span>ca<span class="op">,</span> <span class="op">[&amp;](</span><span class="kw">auto</span> cell<span class="op">)</span></span>
-<span id="cb10-4"><a href=""></a><span class="op">{</span></span>
-<span id="cb10-5"><a href=""></a>    <span class="kw">auto</span> i <span class="op">=</span> cell<span class="op">.</span>indices<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
-<span id="cb10-6"><a href=""></a>    <span class="kw">auto</span> j <span class="op">=</span> cell<span class="op">.</span>indices<span class="op">[</span><span class="dv">1</span><span class="op">];</span></span>
-<span id="cb10-7"><a href=""></a></span>
-<span id="cb10-8"><a href=""></a>    <span class="cf">if</span> <span class="op">(</span>tag<span class="op">[</span>cell<span class="op">])</span></span>
-<span id="cb10-9"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb10-10"><a href=""></a>        cl<span class="op">[</span>cell<span class="op">.</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">][{</span><span class="dv">2</span><span class="op">*</span>j<span class="op">}].</span>add_interval<span class="op">({</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">2</span><span class="op">});</span></span>
-<span id="cb10-11"><a href=""></a>        cl<span class="op">[</span>cell<span class="op">.</span>level <span class="op">+</span> <span class="dv">1</span><span class="op">][{</span><span class="dv">2</span><span class="op">*</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">}].</span>add_interval<span class="op">({</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span> <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">2</span><span class="op">});</span></span>
-<span id="cb10-12"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb10-13"><a href=""></a>    <span class="cf">else</span></span>
-<span id="cb10-14"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb10-15"><a href=""></a>        cl<span class="op">[</span>cell<span class="op">.</span>level<span class="op">][{</span>j<span class="op">}].</span>add_point<span class="op">(</span>i<span class="op">);</span></span>
-<span id="cb10-16"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb10-17"><a href=""></a><span class="op">});</span></span>
-<span id="cb10-18"><a href=""></a></span>
-<span id="cb10-19"><a href=""></a>samurai<span class="op">::</span>CellArray<span class="op">&lt;</span>dim<span class="op">&gt;</span> new_ca <span class="op">=</span> <span class="op">{</span>cl<span class="op">,</span> <span class="kw">true</span><span class="op">};</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section></section>
-<section>
-<section id="the-heat-equation" class="title-slide slide level1 center">
-<h1>The heat equation</h1>
-
-</section>
-<section id="the-problem" class="slide level2">
-<h2>The problem</h2>
-<p>We consider the well known heat equation</p>
-<p><span class="math display">\[
-\frac{\partial u}{\partial t} - \Delta u = 0
-\]</span></p>
-</section>
-<section id="the-finite-volume-scheme" class="slide level2">
-<h2>The finite volume scheme</h2>
-<p>Since we have</p>
-<p><span class="math display">\[
-\int_V \Delta u = \int_{\partial V} \nabla u\cdot \mathbf{n},
-\]</span></p>
-<p>the flux function to implement is a discrete version of <span class="math inline">\(\nabla u\cdot \mathbf{n}\)</span>.</p>
-<p>Here, we choose the normal gradient of the first order, requiring a stencil of two cells.</p>
-<p>This is enough to write the static configuration</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb11-1"><a href=""></a><span class="kw">auto</span> u <span class="op">=</span> samurai<span class="op">::</span>make_field<span class="op">&lt;</span><span class="dv">1</span><span class="op">&gt;(</span><span class="st">"u"</span><span class="op">,</span> mesh<span class="op">);</span> <span class="co">// scalar field</span></span>
-<span id="cb11-2"><a href=""></a></span>
-<span id="cb11-3"><a href=""></a><span class="kw">using</span> cfg <span class="op">=</span> samurai<span class="op">::</span>FluxConfig<span class="op">&lt;</span>SchemeType<span class="op">::</span>LinearHomogeneous<span class="op">,</span></span>
-<span id="cb11-4"><a href=""></a>                                <span class="dv">1</span><span class="op">,</span>            <span class="co">// output_field_size</span></span>
-<span id="cb11-5"><a href=""></a>                                <span class="dv">2</span><span class="op">,</span>            <span class="co">// stencil_size</span></span>
-<span id="cb11-6"><a href=""></a>                                <span class="kw">decltype</span><span class="op">(</span>u<span class="op">)&gt;;</span> <span class="co">// input_field_type</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="the-finite-volume-scheme-1" class="slide level2">
-<h2>The finite volume scheme</h2>
-<p>Now, denoting by <span class="math inline">\(V_L\)</span> (left) and <span class="math inline">\(V_R\)</span> (right) the stencil cells and <span class="math inline">\(F\)</span> their interface, the discrete flux from <span class="math inline">\(V_L\)</span> to <span class="math inline">\(V_R\)</span> writes</p>
-<p><span class="math display">\[
-\mathcal{F}_h(u_h)_{|F} := \frac{u_R-u_L}{h},
-\]</span></p>
-<p>where <span class="math inline">\(u_L\)</span> and <span class="math inline">\(u_R\)</span> are the finite volume approximations of <span class="math inline">\(u\)</span> in the respective cells, and <span class="math inline">\(h\)</span> is the cell length.</p>
-<p>The flux function then writes</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb12-1"><a href=""></a>samurai<span class="op">::</span>FluxDefinition<span class="op">&lt;</span>cfg<span class="op">&gt;</span> gradient<span class="op">([](</span><span class="dt">double</span> h<span class="op">)</span></span>
-<span id="cb12-2"><a href=""></a><span class="op">{</span></span>
-<span id="cb12-3"><a href=""></a>    samurai<span class="op">::</span>FluxStencilCoeffs<span class="op">&lt;</span>cfg<span class="op">&gt;</span> c<span class="op">;</span></span>
-<span id="cb12-4"><a href=""></a>    c<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">/</span>h<span class="op">;</span> <span class="co">// left</span></span>
-<span id="cb12-5"><a href=""></a>    c<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span>  <span class="dv">1</span><span class="op">/</span>h<span class="op">;</span> <span class="co">// right</span></span>
-<span id="cb12-6"><a href=""></a>    <span class="cf">return</span> c<span class="op">;</span></span>
-<span id="cb12-7"><a href=""></a><span class="op">});</span></span>
-<span id="cb12-8"><a href=""></a></span>
-<span id="cb12-9"><a href=""></a><span class="kw">auto</span> diff <span class="op">=</span> samurai<span class="op">::</span>make_flux_based_scheme<span class="op">(</span>gradient<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="simulation-on-uniform-mesh" class="slide level2">
-<h2>Simulation on uniform mesh</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb13-1"><a href=""></a><span class="co">// ...</span></span>
-<span id="cb13-2"><a href=""></a><span class="kw">auto</span> diff <span class="op">=</span> samurai<span class="op">::</span>make_diffusion<span class="op">&lt;</span><span class="kw">decltype</span><span class="op">(</span>u<span class="op">)&gt;();</span></span>
-<span id="cb13-3"><a href=""></a><span class="kw">auto</span> id   <span class="op">=</span> samurai<span class="op">::</span>make_identity<span class="op">&lt;</span><span class="kw">decltype</span><span class="op">(</span>u<span class="op">)&gt;();</span></span>
-<span id="cb13-4"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t ite<span class="op">=</span><span class="dv">0</span><span class="op">;</span> ite<span class="op">&lt;</span><span class="dv">200</span><span class="op">;</span> <span class="op">++</span>ite<span class="op">)</span></span>
-<span id="cb13-5"><a href=""></a><span class="op">{</span></span>
-<span id="cb13-6"><a href=""></a>    samurai<span class="op">::</span>update_ghost_mr<span class="op">(</span>u<span class="op">);</span></span>
-<span id="cb13-7"><a href=""></a></span>
-<span id="cb13-8"><a href=""></a>    <span class="cf">if</span> <span class="op">(</span>explicit_scheme<span class="op">)</span></span>
-<span id="cb13-9"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb13-10"><a href=""></a>        unp1 <span class="op">=</span> u <span class="op">-</span> dt <span class="op">*</span> diff<span class="op">(</span>u<span class="op">);</span></span>
-<span id="cb13-11"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb13-12"><a href=""></a>    <span class="cf">else</span></span>
-<span id="cb13-13"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb13-14"><a href=""></a>        <span class="kw">auto</span> back_euler <span class="op">=</span> id <span class="op">+</span> dt <span class="op">*</span> diff<span class="op">;</span></span>
-<span id="cb13-15"><a href=""></a>        <span class="co">// solves the linear equation   [Id + dt*Diff](unp1) = u</span></span>
-<span id="cb13-16"><a href=""></a>        samurai<span class="op">::</span>petsc<span class="op">::</span>solve<span class="op">(</span>back_euler<span class="op">,</span> unp1<span class="op">,</span> u<span class="op">);</span></span>
-<span id="cb13-17"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb13-18"><a href=""></a></span>
-<span id="cb13-19"><a href=""></a>    <span class="bu">std::</span>swap<span class="op">(</span>u<span class="op">.</span>array<span class="op">(),</span> u_np1<span class="op">.</span>array<span class="op">());</span></span>
-<span id="cb13-20"><a href=""></a></span>
-<span id="cb13-21"><a href=""></a>    samurai<span class="op">::</span>save<span class="op">(</span>fmt<span class="op">::</span>format<span class="op">(</span><span class="st">"mesh_</span><span class="sc">{}</span><span class="st">"</span><span class="op">,</span> ite <span class="op">+</span> <span class="dv">1</span><span class="op">),</span> mesh<span class="op">,</span> u<span class="op">);</span></span>
-<span id="cb13-22"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="simulation-with-adaptive-mesh-refinement" class="slide level2">
-<h2>Simulation with adaptive mesh refinement</h2>
-<div class="sourceCode" id="cb14" data-code-line-numbers="1-2,6-7"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb14-1"><a href=""></a><span class="kw">auto</span> MRadaptation <span class="op">=</span> samurai<span class="op">::</span>make_MRAdapt<span class="op">(</span>u<span class="op">);</span></span>
-<span id="cb14-2"><a href=""></a><span class="dt">double</span> eps <span class="op">=</span> <span class="fl">1e-4</span><span class="op">,</span> regularity <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb14-3"><a href=""></a></span>
-<span id="cb14-4"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t ite<span class="op">=</span><span class="dv">0</span><span class="op">;</span> ite<span class="op">&lt;</span><span class="dv">200</span><span class="op">;</span> <span class="op">++</span>ite<span class="op">)</span></span>
-<span id="cb14-5"><a href=""></a><span class="op">{</span></span>
-<span id="cb14-6"><a href=""></a>    MRadaptation<span class="op">(</span>eps<span class="op">,</span> regularity<span class="op">);</span></span>
-<span id="cb14-7"><a href=""></a>    unp1<span class="op">.</span>resize<span class="op">();</span></span>
-<span id="cb14-8"><a href=""></a>    samurai<span class="op">::</span>update_ghost_mr<span class="op">(</span>u<span class="op">);</span></span>
-<span id="cb14-9"><a href=""></a></span>
-<span id="cb14-10"><a href=""></a>    <span class="cf">if</span> <span class="op">(</span>explicit_scheme<span class="op">)</span></span>
-<span id="cb14-11"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb14-12"><a href=""></a>        unp1 <span class="op">=</span> u <span class="op">-</span> dt <span class="op">*</span> diff<span class="op">(</span>u<span class="op">);</span></span>
-<span id="cb14-13"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb14-14"><a href=""></a>    <span class="cf">else</span></span>
-<span id="cb14-15"><a href=""></a>    <span class="op">{</span></span>
-<span id="cb14-16"><a href=""></a>      <span class="kw">auto</span> back_euler <span class="op">=</span> id <span class="op">+</span> dt <span class="op">*</span> diff<span class="op">;</span></span>
-<span id="cb14-17"><a href=""></a>      <span class="co">// solves the linear equation   [Id + dt*Diff](unp1) = u</span></span>
-<span id="cb14-18"><a href=""></a>      samurai<span class="op">::</span>petsc<span class="op">::</span>solve<span class="op">(</span>back_euler<span class="op">,</span> unp1<span class="op">,</span> u<span class="op">);</span></span>
-<span id="cb14-19"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb14-20"><a href=""></a></span>
-<span id="cb14-21"><a href=""></a>    <span class="bu">std::</span>swap<span class="op">(</span>u<span class="op">.</span>array<span class="op">(),</span> u_np1<span class="op">.</span>array<span class="op">());</span></span>
-<span id="cb14-22"><a href=""></a>    samurai<span class="op">::</span>save<span class="op">(</span>fmt<span class="op">::</span>format<span class="op">(</span><span class="st">"mesh_</span><span class="sc">{}</span><span class="st">"</span><span class="op">,</span> ite <span class="op">+</span> <span class="dv">1</span><span class="op">),</span> mesh<span class="op">,</span> u<span class="op">);</span></span>
-<span id="cb14-23"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section></section>
-<section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes" class="title-slide slide level1 center">
-<h1>A dual Splitting/IMEX strategy for stiff PDEs</h1>
-
-</section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes-1" class="slide level2 fs-4">
-<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
-<div class="row fs-6">
-<div class="col-7 align-self-center">
-<ul>
-<li>A strategy has been designed (PhD M. Duarte) relying on time-adaptive operator splitting with dynamically adapted mesh (multiresolution) with error control:
-<ul>
-<li>optimal computational cost and parallelization properties when large splitting time steps compared to the smallest time scale can be taken without impairing precision</li>
-</ul></li>
-<li>We aim at resolving stiff PDEs with samurai and ponio (time integrators) libraries with the same computation favorable properties:
-<ul>
-<li>the same computational properties (local implicitation of the source term - allowing for very stiff source with local time integration in space)</li>
-<li>explicit diffusion integration without von Neumann stability limit (ROCK)</li>
-<li>high-order in space and time integration of convection, including shocks</li>
-<li>strong acceleration through adaptation in space and time</li>
-</ul></li>
-<li>Stumbling block: what to do when reaction and diffusion coupled to the smallest time scale (complex chemistry)</li>
-</ul>
-</div>
-<div class="col align-self-center">
-<div>
-<video data-autoplay="" loop="true" src="videos/ignition_Re1000.mov">
-</video></div>
-<p><img data-src="figures/splitting_time_steps.jpg"></p>
-</div>
-</div>
-</section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes-2" class="slide level2 fs-4">
-<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
-<div class="row">
-<div class="col-8 align-self-center">
-<ul>
-<li>Keep reaction and diffusion coupled (IMEX)!</li>
-<li>No splitting time step limitation due to the coupling at small scale (complex chemistry and detailed transport in flames for example)</li>
-<li>Relying on the PIROCK strategy of G. Vilmart and A. Abdulle.</li>
-<li>Adaptation in space and time with error control</li>
-<li>Project with CEA on hydrogen risk - DNS combustion with detailed transport and CChem</li>
-</ul>
-</div>
-<div class="col text-center">
-<p><img data-src="figures/hpc@maths.png" style="width:50.0%"> <img data-src="figures/logo.png" style="width:50.0%"> <img data-src="figures/logo-cea.webp" style="width:50.0%"></p>
-</div>
-</div>
-</section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes-3" class="slide level2 fs-4">
-<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
-<div class="row fs-5">
-<div class="col-6 align-self-center">
-<p>Ignition and Combustion (Verwer &amp; Hundsdorfer)</p>
-<p>Specific for RKC methods and ROCK</p>
-<p><span class="math display">\[
-u_t = d \Delta u + \frac{R}{\alpha \delta} (1 + \alpha - u) e^{\delta( 1 - 1/u )} \quad \text{in } [0,1]\times[0,1]
-\]</span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figures/combustion2d.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
-</figure>
-</div>
-</div>
-<div class="col text-center">
-<p><img data-src="figures/combustion.svg" style="width:80.0%"></p>
-</div>
-</div>
-</section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes-4" class="slide level2 fs-4">
-<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
-<div class="row fs-5">
-<div class="col-6 align-self-center">
-<p>Ignition and Combustion (Verwer &amp; Hundsdorfer)</p>
-<p>Specific for RKC methods and ROCK</p>
-<p><span class="math display">\[
-u_t = d \Delta u + \frac{R}{\alpha \delta} (1 + \alpha - u) e^{\delta( 1 - 1/u )} \quad \text{in } [0,1]\times[0,1]
-\]</span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figures/combustion2d.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
-</figure>
-</div>
-</div>
-<div class="col text-center">
-<div class="fs-6 fragment">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th></th>
-<th>PIROCK</th>
-<th>ROCK2</th>
-<th>ROCK4</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Tolerance used</td>
-<td>1e-5</td>
-<td>1e-6</td>
-<td>1e-5</td>
-</tr>
-<tr class="even">
-<td>L2 norm of error</td>
-<td>1.84e-4</td>
-<td>2.27e-4</td>
-<td>2.69e-4</td>
-</tr>
-<tr class="odd">
-<td>Elapsed time (s)</td>
-<td>7.97</td>
-<td>1.90</td>
-<td>0.42</td>
-</tr>
-<tr class="even">
-<td>Nb. time steps</td>
-<td>889</td>
-<td>157</td>
-<td>57</td>
-</tr>
-<tr class="odd">
-<td>Nb. time steps rejected</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td>Nb. function evaluation</td>
-<td>-</td>
-<td>6367</td>
-<td>1734</td>
-</tr>
-<tr class="odd">
-<td>Nb. function evaluation (diffusion)</td>
-<td>8304</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr class="even">
-<td>Nb. function evaluation (reaction)</td>
-<td>360067655</td>
-<td>-</td>
-<td>-</td>
-</tr>
-</tbody>
-</table>
-<p>between <span class="math inline">\(t=0.29\)</span> and <span class="math inline">\(t=0.32\)</span>.</p>
-</div>
-<div class="fs-6 fragment">
-<p>IMEX reasonable overhead compared to fully explicit methods (ROCK2 - ROCK4) even in this very difficult configuration</p>
-<ul class="list-unstyled text-center">
-<li class="my-1">
-Error control
-</li>
-<li class="my-1">
-Good BC treatment
-</li>
-<li class="my-1">
-No splitting errors
-</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes-5" class="slide level2 fs-4">
-<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
-<div class="row fs-6">
-<div class="col-6 align-self-center">
-<p>Belousov-Zhabotinsky (very stiff source - 3 eq) <span class="math display">\[
-\left\{
-\begin{aligned}
-\partial_t a - D_a \, \Delta a &amp;= \frac{1}{\mu} ( -qa - ab
-+
-fc) \\
-\partial_t b - D_b \, \Delta b &amp;= \frac{1}{\varepsilon} (
-qa
-- ab + b\,(1-b)) \\
-\partial_t c - D_c \, \Delta c &amp;= b - c
-\end{aligned}
-\right.
-\]</span></p>
-<ul>
-<li>Error to the reference quasi-exact solution is second order in time but not of the same origin (splitting error vs.&nbsp;IMEX error) - but still error control</li>
-<li>Larger time step can be taken with IMEX while keeping a proper solution (no disastrous splitting errors - wrong wave speed)</li>
-<li>When optimal large splitting time step is taken, IMEX as efficient as splitting, whereas it is advantageous for smaller time steps as well as larger time steps</li>
-<li>No boundary condition problems</li>
-<li>Same computational good properties</li>
-</ul>
-</div>
-<div class="col-6 text-center">
-<p><img data-src="figures/bz_b_t=0.png" style="width:48.0%"> <img data-src="figures/bz_b_t=1.png" style="width:48.0%"> <br> <img data-src="figures/bz_b_t=2.png" style="width:48.0%"></p>
-</div>
-</div>
-</section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes-6" class="slide level2 fs-4">
-<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
-<div class="row fs-6">
-<div class="col-6 align-self-center">
-<p>Belousov-Zhabotinsky (very stiff source - 3 eq) <span class="math display">\[
-\left\{
-\begin{aligned}
-\partial_t a - D_a \, \Delta a &amp;= \frac{1}{\mu} ( -qa - ab
-+
-fc) \\
-\partial_t b - D_b \, \Delta b &amp;= \frac{1}{\varepsilon} (
-qa
-- ab + b\,(1-b)) \\
-\partial_t c - D_c \, \Delta c &amp;= b - c
-\end{aligned}
-\right.
-\]</span></p>
-<ul>
-<li>Error to the reference quasi-exact solution is second order in time but not of the same origin (splitting error vs.&nbsp;IMEX error) - but still error control</li>
-<li>Larger time step can be taken with IMEX while keeping a proper solution (no disastrous splitting errors - wrong wave speed)</li>
-<li>When optimal large splitting time step is taken, IMEX as efficient as splitting, whereas it is advantageous for smaller time steps as well as larger time steps</li>
-<li>No boundary condition problems</li>
-<li>Same computational good properties</li>
-</ul>
-</div>
-<div class="col-6 text-center">
-<table class="caption-top">
-<colgroup>
-<col style="width: 41%">
-<col style="width: 27%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th style="text-align: center;">PIROCK (tol=5e-3)</th>
-<th style="text-align: center;">STRANG (dt=2/128)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>L2 norm of error (variable b)</td>
-<td style="text-align: center;">3.31e-2</td>
-<td style="text-align: center;">1.14e-1</td>
-</tr>
-<tr class="even">
-<td>L2 norm of error (variable c)</td>
-<td style="text-align: center;">2.92e-3</td>
-<td style="text-align: center;">1.37e-2</td>
-</tr>
-<tr class="odd">
-<td>Elapsed time (s)</td>
-<td style="text-align: center;">6.91</td>
-<td style="text-align: center;">6.70</td>
-</tr>
-<tr class="even">
-<td>Nb. time steps.</td>
-<td style="text-align: center;">624</td>
-<td style="text-align: center;">128</td>
-</tr>
-</tbody>
-</table>
-<p>&nbsp;</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 41%">
-<col style="width: 27%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th style="text-align: center;">PIROCK (tol=1e-3)</th>
-<th style="text-align: center;">STRANG (dt=2/512)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>L2 norm of error (variable b)</td>
-<td style="text-align: center;">4.94e-3</td>
-<td style="text-align: center;">1.55e-3</td>
-</tr>
-<tr class="even">
-<td>L2 norm of error (variable c)</td>
-<td style="text-align: center;">4.31e-4</td>
-<td style="text-align: center;">1.41e-4</td>
-</tr>
-<tr class="odd">
-<td>Elapsed time (s)</td>
-<td style="text-align: center;">13.33</td>
-<td style="text-align: center;">17.20</td>
-</tr>
-<tr class="even">
-<td>Nb. time steps.</td>
-<td style="text-align: center;">1528</td>
-<td style="text-align: center;">512</td>
-</tr>
-</tbody>
-</table>
-<p>&nbsp;</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 41%">
-<col style="width: 27%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th style="text-align: center;">PIROCK (tol=1e-4)</th>
-<th style="text-align: center;">STRANG (dt=2/16384)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>L2 norm of error (variable b)</td>
-<td style="text-align: center;">7.72e-6</td>
-<td style="text-align: center;">1.81e-5</td>
-</tr>
-<tr class="even">
-<td>L2 norm of error (variable c)</td>
-<td style="text-align: center;">6.97e-7</td>
-<td style="text-align: center;">1.57e-6</td>
-</tr>
-<tr class="odd">
-<td>Elapsed time (s)</td>
-<td style="text-align: center;">165.12</td>
-<td style="text-align: center;">427.81</td>
-</tr>
-<tr class="even">
-<td>Nb. time steps.</td>
-<td style="text-align: center;">31728</td>
-<td style="text-align: center;">16384</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<!-- {{< include examples.qmd >}} -->
+<!-- {{< include splitting_imex.qmd >}} -->
 </section>
 <section id="key-point" class="slide level2">
 <h2>Key point</h2>
