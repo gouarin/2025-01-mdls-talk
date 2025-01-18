@@ -2,5 +2,5 @@
 .DS_Store
 talk_files
 talk.html
-
+__pycache__
 /.quarto/

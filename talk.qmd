@@ -210,6 +210,165 @@ The available operators in samurai are for now
 - the <span>translation</span> of a set,
 - the <span>extension</span> of a set.
 
+## Algebra of sets: Usage to MRA
+
+<div>
+<video src="videos/mra_construction/mesh_0000_unnamed.mp4" />
+</div>
+
+:::{.text-center}
+initial mesh
+:::
+
+## Algebra of sets: Usage to MRA
+
+<div>
+<video data-autoplay src="videos/mra_construction/mesh_0000_unnamed.mp4" />
+</div>
+
+:::{.text-center}
+initial mesh
+:::
+
+## Algebra of sets: Usage to MRA
+
+<div>
+<video data-autoplay src="videos/mra_construction/mesh_0001_unnamed.mp4" />
+</div>
+
+:::{.text-center}
+ghost cells used by the numerical scheme
+:::
+
+## Algebra of sets: Usage to MRA
+
+<div>
+<video data-autoplay src="videos/mra_construction/mesh_0002_unnamed.mp4" />
+</div>
+
+:::{.text-center}
+cells needed to compute the details (all tree)
+:::
+
+
+## Algebra of sets: Usage to MRA
+
+<div>
+<video data-autoplay src="videos/mra_construction/mesh_0003_unnamed.mp4" />
+</div>
+
+:::{.text-center}
+cells needed to compute the details (iterative way)
+:::
+
+## Algebra of sets: Usage to MRA
+
+<div>
+<video data-autoplay src="videos/mra_construction/mesh_0004_unnamed.mp4" />
+</div>
+
+:::{.text-center}
+cells needed to compute the details (iterative way)
+:::
+
+## Algebra of sets: Usage to MRA
+
+<div>
+<video data-autoplay src="videos/mra_construction/mesh_0005_unnamed.mp4" />
+</div>
+
+:::{.text-center}
+cells needed to compute the details (iterative way)
+:::
+
+## Algebra of sets: Usage to MRA
+
+<div>
+<video data-autoplay src="videos/mra_construction/mesh_0006_unnamed.mp4" />
+</div>
+
+:::{.text-center}
+cells needed to compute the details (iterative way)
+:::
+
+## Algebra of sets: Usage to MRA
+
+<div>
+<video data-autoplay src="videos/mra_construction/mesh_0007_unnamed.mp4" />
+</div>
+
+:::{.text-center}
+cells needed to compute the details (iterative way)
+:::
+
+## Meshes description with samurai
+
+Given a mesh with all the leaves called `cells`
+
+- ghosts for the numerical scheme
+
+<!-- $$
+ghosts^l = \text{extend} \; cells^l \; \text{about the stencil size in each direction}
+$$ -->
+
+```{.cpp}
+samurai::for_each_interval(mesh[cells], [&](std::size_t level, auto& i)
+{
+    mesh[cells_and_ghosts][level].add_interval({i.start - stencil_size, i.end + stencil_size});
+})
+```
+
+## Meshes description with samurai
+
+Given a mesh with all the leaves called `cells`
+
+- ghosts for the detail computation
+
+```{.cpp}
+for(std::size_t level = min_level + 1; level <= max_level; ++level)
+{
+    auto subset = difference(mesh[cells_and_ghosts][level], union()[level]);
+
+    subset([&](std::size_t level, auto& i)
+    {
+        auto i_above = i >> 1;
+        mesh[pred][level - 1].add_interval({i_above.start - prediction_size, i_above.end + prediction_size});
+    })
+}
+```
+
+
+```{.cpp}
+for(std::size_t level = min_level + 2; level <= max_level; ++level)
+{
+    samurai::for_each_interval(mesh[cells][level], [&](std::size_t level, auto& i)
+    {
+        auto i_above = i >> 2;
+        mesh[pred][level - 2].add_interval({i_above.start - prediction_size, i_above.end + prediction_size});
+    })
+}
+```
+
+## Meshes description with samurai
+
+Given a mesh with all the leaves called `cells`
+
+- ghosts where we apply the projection
+
+```{.cpp}
+for(std::size_t level = min_level; level < max_level; ++level)
+{
+    auto subset = intersection(mesh[reference][level], union()[level]).on(level+1);
+    subset([&](std::size_t level, auto& i)
+    {
+        mesh[reference][level + 1].add_interval(i);
+        mesh[proj][level].add_interval(i >> 1);
+    })
+}
+```
+
+
+
 ## Compression rates
 
 ![](figures/p4est_3.png)
