@@ -70,16 +70,29 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 *samurai: create a unified framework for testing a whole range<br class='m-0'>of mesh adaptation methods with the latest generation of numerical schemes.*
 :::
 
-# Samurai
+---
+
+<div style="position: absolute; top: 50%; transform: translate(0, -50%); text-align: center;">
+
+:::{.row}
+::::{.col-6 .align-self-center}
+![](figures/logo.png)
+::::
+::::{.col .align-self-center}
+<h4>samurai</h4>
+::::
+:::
+</div>
 
 ## Design principles
 
-- Mesh compression according to the level
-- Achieve fast look-up for a cell into the structure
-- Maximize the memory contiguity of the stored data
-- Facilitate inter-level operations
-- Give the possibility of writing numerical schemes easily
+<div style="position: absolute; top: 50%; transform: translate(0%, -50%); text-align: center;">
 
+- Compress the mesh according to the level-wise spatial connectivity along each Cartesian axis.
+- Achieve fast look-up for a cell into the structure, especially for parents and neighbors.
+- Maximize the memory contiguity of the stored data to allow for caching and vectorization.
+- Facilitate inter-level operations which are common in many numerical techniques.
+</div>
 ## An overview of the data structure
 
 ::: {.row}
@@ -199,7 +212,7 @@ The available operators in samurai are for now
 <video src="videos/mra_construction/mesh_0000_unnamed.mp4" />
 </div>
 
-:::{.text-center}
+:::{.text-center .mt-0}
 initial mesh
 :::
 
@@ -209,7 +222,7 @@ initial mesh
 <video data-autoplay src="videos/mra_construction/mesh_0000_unnamed.mp4" />
 </div>
 
-:::{.text-center}
+:::{.text-center .mt-0}
 initial mesh
 :::
 
@@ -219,7 +232,7 @@ initial mesh
 <video data-autoplay src="videos/mra_construction/mesh_0001_unnamed.mp4" />
 </div>
 
-:::{.text-center}
+:::{.text-center .mt-0}
 ghost cells used by the numerical scheme
 :::
 
@@ -229,7 +242,7 @@ ghost cells used by the numerical scheme
 <video data-autoplay src="videos/mra_construction/mesh_0002_unnamed.mp4" />
 </div>
 
-:::{.text-center}
+:::{.text-center .mt-0}
 cells needed to compute the details (all tree)
 :::
 
@@ -240,7 +253,7 @@ cells needed to compute the details (all tree)
 <video data-autoplay src="videos/mra_construction/mesh_0003_unnamed.mp4" />
 </div>
 
-:::{.text-center}
+:::{.text-center .mt-0}
 cells needed to compute the details (iterative way)
 :::
 
@@ -250,7 +263,7 @@ cells needed to compute the details (iterative way)
 <video data-autoplay src="videos/mra_construction/mesh_0004_unnamed.mp4" />
 </div>
 
-:::{.text-center}
+:::{.text-center .mt-0}
 cells needed to compute the details (iterative way)
 :::
 
@@ -260,7 +273,7 @@ cells needed to compute the details (iterative way)
 <video data-autoplay src="videos/mra_construction/mesh_0005_unnamed.mp4" />
 </div>
 
-:::{.text-center}
+:::{.text-center .mt-0}
 cells needed to compute the details (iterative way)
 :::
 
@@ -270,7 +283,7 @@ cells needed to compute the details (iterative way)
 <video data-autoplay src="videos/mra_construction/mesh_0006_unnamed.mp4" />
 </div>
 
-:::{.text-center}
+:::{.text-center .mt-0}
 cells needed to compute the details (iterative way)
 :::
 
@@ -280,7 +293,7 @@ cells needed to compute the details (iterative way)
 <video data-autoplay src="videos/mra_construction/mesh_0007_unnamed.mp4" />
 </div>
 
-:::{.text-center}
+:::{.text-center .mt-0}
 cells needed to compute the details (iterative way)
 :::
 
@@ -378,460 +391,8 @@ for(std::size_t level = min_level; level < max_level; ++level)
 - Helper classes to construct N-D operators and expressions using xtensor
 - HDF5 support
 
-# Examples
-
-## Field creation
-
-```{.cpp}
-auto mesh = samurai::MRMesh<Config>({{0, 0}, {1, 1}}, 2, 8);
-auto u = samurai::make_field<double, 1>("u", mesh);
-
-samurai::for_each_cell(mesh, [&](auto cell)
-{
-  auto x = cell.center(0);
-  auto y = cell.center(1);
-
-  u[cell] = x*x + y*y;
-});
-```
-
-# The projection operator {.subtitle .text-center}
-
-## An example
-
-<video data-autoplay src="videos/projection.mp4" />
-
-## The implementation
-
-```{.cpp}
-auto u = samurai::make_field<double, 1>("u", mesh);
-...
-auto set = samurai::intersection(mesh[level], mesh[level + 1])
-          .on(level);
-
-set([&](const auto& i, auto)
-{
-    u(level, i) = 0.5*(u(level + 1, 2*i) + u(level + 1, 2*i + 1));
-});
-```
-
-# Creation of random meshes and their graduation {.subtitle}
-
----
-
-:::{.row}
-
-::::{.col .text-center}
-![](figures/graduation_before.png)
-before
-::::
-
-::::{.col .text-center}
-![](figures/graduation_after.png)
-after
-::::
-
-:::
-
-## Create a mesh
-
-```{.cpp}
-constexpr std::size_t dim = 2;
-std::size_t start_level = 1;
-std::size_t max_refinement_level = 7;
-
-samurai::Box<int, dim> box({0, 0}, {1<<start_level, 1<<start_level});
-
-samurai::CellArray<dim> ca;
-ca[start_level] = {start_level, box};
-```
-
-## Add cells randomly
-
-```{.cpp}
-samurai::CellList<dim> cl;
-
-samurai::for_each_interval(ca, [&](std::size_t level, const auto& interval, const auto& index)
-{
-    auto choice = xt::random::choice(xt::xtensor_fixed<bool,
-                                     xt::xshape<2>>{true, false}, interval.size());
-
-    for(int i = interval.start, ic = 0; i<interval.end; ++i, ++ic)
-    {
-        if (choice[ic])
-        {
-            cl[level + 1][2*index].add_interval({2*i, 2*i+2});
-            cl[level + 1][2*index + 1].add_interval({2*i, 2*i+2});
-        }
-        else
-        {
-            cl[level][index].add_point(i);
-        }
-    }
-});
-
-ca = {cl, true};
-```
-
-## Tag cells to refine
-
-```{.cpp}
-std::size_t min_level = ca.min_level(), max_level = ca.max_level();
-xt::xtensor_fixed<int, xt::xshape<4, dim>> stencil{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-
-auto tag = samurai::make_field<bool, 1>("tag", ca);
-tag.fill(false);
-
-for(std::size_t level = min_level + 2; level <= max_level; ++level)
-{
-    for(std::size_t level_below = min_level; level_below < level - 1; ++level_below)
-    {
-        for(std::size_t i = 0; i < stencil.shape()[0]; ++i)
-        {
-            auto s = xt::view(stencil, i);
-            auto set = samurai::intersection(samurai::translate(ca[level], s), ca[level_below])
-                      .on(level_below);
-            set([&](const auto& i, const auto& index)
-            {
-                tag(level_below, i, index[0]) = true;
-            });
-        }
-    }
-}
-```
-
-## Create a new mesh from the tag
-
-```{.cpp}
-samurai::CellList<dim> cl;
-
-samurai::for_each_cell(ca, [&](auto cell)
-{
-    auto i = cell.indices[0];
-    auto j = cell.indices[1];
-
-    if (tag[cell])
-    {
-        cl[cell.level + 1][{2*j}].add_interval({2*i, 2*i+2});
-        cl[cell.level + 1][{2*j + 1}].add_interval({2*i, 2*i+2});
-    }
-    else
-    {
-        cl[cell.level][{j}].add_point(i);
-    }
-});
-
-samurai::CellArray<dim> new_ca = {cl, true};
-```
-
-# The heat equation
-
-## The problem
-
-We consider the well known heat equation
-
-$$
-\frac{\partial u}{\partial t} - \Delta u = 0
-$$
-
-## The finite volume scheme
-
-Since we have
-
-$$
-\int_V \Delta u = \int_{\partial V} \nabla u\cdot \mathbf{n},
-$$
-
-the flux function to implement is a discrete version of $\nabla u\cdot \mathbf{n}$.
-
-Here, we choose the normal gradient of the first order, requiring a stencil of two cells.
-
-This is enough to write the static configuration
-
-```{.cpp}
-auto u = samurai::make_field<1>("u", mesh); // scalar field
-
-using cfg = samurai::FluxConfig<SchemeType::LinearHomogeneous,
-                                1,            // output_field_size
-                                2,            // stencil_size
-                                decltype(u)>; // input_field_type
-```
-
-## The finite volume scheme
-
-Now, denoting by $V_L$ (left) and $V_R$ (right) the stencil cells and $F$ their interface, the discrete flux from $V_L$ to $V_R$ writes
-
-$$
-\mathcal{F}_h(u_h)_{|F} := \frac{u_R-u_L}{h},
-$$
-
-where $u_L$ and $u_R$ are the finite volume approximations of $u$ in the respective cells, and $h$ is the cell length.
-
-The flux function then writes
-
-```{.cpp}
-samurai::FluxDefinition<cfg> gradient([](double h)
-{
-    samurai::FluxStencilCoeffs<cfg> c;
-    c[0] = -1/h; // left
-    c[1] =  1/h; // right
-    return c;
-});
-
-auto diff = samurai::make_flux_based_scheme(gradient);
-```
-
-## Simulation on uniform mesh
-
-```{.cpp}
-// ...
-auto diff = samurai::make_diffusion<decltype(u)>();
-auto id   = samurai::make_identity<decltype(u)>();
-for(std::size_t ite=0; ite<200; ++ite)
-{
-    samurai::update_ghost_mr(u);
-
-    if (explicit_scheme)
-    {
-        unp1 = u - dt * diff(u);
-    }
-    else
-    {
-        auto back_euler = id + dt * diff;
-        // solves the linear equation   [Id + dt*Diff](unp1) = u
-        samurai::petsc::solve(back_euler, unp1, u);
-    }
-
-    std::swap(u.array(), u_np1.array());
-
-    samurai::save(fmt::format("mesh_{}", ite + 1), mesh, u);
-}
-```
-
-## Simulation with adaptive mesh refinement
-
-```{.cpp code-line-numbers="1-2,6-7"}
-auto MRadaptation = samurai::make_MRAdapt(u);
-double eps = 1e-4, regularity = 2;
-
-for(std::size_t ite=0; ite<200; ++ite)
-{
-    MRadaptation(eps, regularity);
-    unp1.resize();
-    samurai::update_ghost_mr(u);
-
-    if (explicit_scheme)
-    {
-        unp1 = u - dt * diff(u);
-    }
-    else
-    {
-      auto back_euler = id + dt * diff;
-      // solves the linear equation   [Id + dt*Diff](unp1) = u
-      samurai::petsc::solve(back_euler, unp1, u);
-    }
-
-    std::swap(u.array(), u_np1.array());
-    samurai::save(fmt::format("mesh_{}", ite + 1), mesh, u);
-}
-```
-
-# A dual Splitting/IMEX strategy for stiff PDEs
-
-## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
-
-:::{.row .fs-6}
-::::{.col-7 .align-self-center}
-- A strategy has been designed (PhD M. Duarte) relying on time-adaptive operator splitting with dynamically adapted mesh (multiresolution) with error control:
-  - optimal computational cost and parallelization properties when large splitting time steps compared to the smallest time scale can be taken without impairing precision
-- We aim at resolving stiff PDEs with samurai and ponio (time integrators) libraries with the same computation favorable properties:
-  - the same computational properties (local implicitation of the source term - allowing for very stiff source with local time integration in space)
-  - explicit diffusion integration without von Neumann stability limit (ROCK)
-  - high-order in space and time integration of convection, including shocks
-  - strong acceleration through adaptation in space and time
-- Stumbling block: what to do when reaction and diffusion coupled to the smallest time scale (complex chemistry)
-::::
-
-::::{.col .align-self-center}
-<div>
-<video data-autoplay loop="true" src="videos/ignition_Re1000.mov" />
-</div>
-![](figures/splitting_time_steps.jpg)
-::::
-:::
-
-## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
-
-:::{.row }
-::::{.col-8 .align-self-center}
-- Keep reaction and diffusion coupled (IMEX)!
-- No splitting time step limitation due to the coupling at small scale (complex chemistry and detailed transport in flames for example)
-- Relying on the PIROCK strategy of G. Vilmart and A. Abdulle.
-- Adaptation in space and time with error control
-- Project with CEA on hydrogen risk - DNS combustion with detailed transport and CChem
-::::
-
-::::{.col .text-center}
-![](figures/hpc@maths.png){width=50%}
-![](figures/logo.png){width=50%}
-![](figures/logo-cea.webp){width=50%}
-::::
-:::
-
-## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
-
-:::{.row .fs-5 }
-::::{.col-6 .align-self-center}
-Ignition and Combustion (Verwer & Hundsdorfer)
-
-Specific for RKC methods and ROCK
-
-$$
-u_t = d \Delta u + \frac{R}{\alpha \delta} (1 + \alpha - u) e^{\delta( 1 - 1/u )} \quad \text{in } [0,1]\times[0,1]
-$$
-
-![](figures/combustion2d.png){width=60% fig-align="center"}
-::::
-
-::::{.col .text-center}
-![](figures/combustion.svg){width=80%}
-::::
-:::
-
-## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
-
-:::{.row .fs-5 }
-::::{.col-6 .align-self-center}
-Ignition and Combustion (Verwer & Hundsdorfer)
-
-Specific for RKC methods and ROCK
-
-$$
-u_t = d \Delta u + \frac{R}{\alpha \delta} (1 + \alpha - u) e^{\delta( 1 - 1/u )} \quad \text{in } [0,1]\times[0,1]
-$$
-
-![](figures/combustion2d.png){width=60% fig-align="center"}
-::::
-
-::::{.col .text-center}
-:::::{.fs-6 .fragment}
-|                                     | PIROCK    | ROCK2  | ROCK4  |
-|-------------------------------------|-----------|--------|--------|
-| Tolerance used                      | 1e-5      | 1e-6   | 1e-5   |
-| L2 norm of error                    | 1.84e-4   | 2.27e-4| 2.69e-4|
-| Elapsed time (s)                    | 7.97      | 1.90   | 0.42   |
-| Nb. time steps                      | 889       | 157    | 57     |
-| Nb. time steps rejected             | 0         | 0      | 0      |
-| Nb. function evaluation             | -         | 6367   | 1734   |
-| Nb. function evaluation (diffusion) | 8304      | -      | -      |
-| Nb. function evaluation (reaction)  | 360067655 | -      | -      |
-
-between $t=0.29$ and $t=0.32$.
-:::::
-:::::{.fs-6 .fragment}
-IMEX reasonable overhead compared to fully explicit methods (ROCK2 - ROCK4) even in this very difficult configuration
-
-<ul class="list-unstyled text-center">
-  <li class="my-1">Error control</li>
-  <li class="my-1">Good BC treatment</li>
-  <li class="my-1">No splitting errors</li>
-</ul>
-
-:::::
-::::
-:::
-
-## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
-
-:::{.row .fs-6 }
-
-::::{.col-6 .align-self-center }
-Belousov-Zhabotinsky (very stiff source - 3 eq)
-$$
-\left\{
-\begin{aligned}
-\partial_t a - D_a \, \Delta a &= \frac{1}{\mu} ( -qa - ab
-+
-fc) \\
-\partial_t b - D_b \, \Delta b &= \frac{1}{\varepsilon} (
-qa
-- ab + b\,(1-b)) \\
-\partial_t c - D_c \, \Delta c &= b - c
-\end{aligned}
-\right.
-$$
-
-- Error to the reference quasi-exact solution is second order in time but not of the same origin (splitting error vs. IMEX error) - but still error control
-- Larger time step can be taken with IMEX while keeping a proper solution (no disastrous splitting errors - wrong wave speed)
-- When optimal large splitting time step is taken, IMEX as efficient as splitting, whereas it is advantageous for smaller time steps as well as larger time steps
-- No boundary condition problems
-- Same computational good properties
-::::
-
-::::{.col-6 .text-center}
-![](figures/bz_b_t=0.png){width="48%"}
-![](figures/bz_b_t=1.png){width="48%"}
-<br>
-![](figures/bz_b_t=2.png){width="48%"}
-::::
-:::
-
-## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
-
-:::{.row .fs-6 }
-
-::::{.col-6 .align-self-center }
-Belousov-Zhabotinsky (very stiff source - 3 eq)
-$$
-\left\{
-\begin{aligned}
-\partial_t a - D_a \, \Delta a &= \frac{1}{\mu} ( -qa - ab
-+
-fc) \\
-\partial_t b - D_b \, \Delta b &= \frac{1}{\varepsilon} (
-qa
-- ab + b\,(1-b)) \\
-\partial_t c - D_c \, \Delta c &= b - c
-\end{aligned}
-\right.
-$$
-
-- Error to the reference quasi-exact solution is second order in time but not of the same origin (splitting error vs. IMEX error) - but still error control
-- Larger time step can be taken with IMEX while keeping a proper solution (no disastrous splitting errors - wrong wave speed)
-- When optimal large splitting time step is taken, IMEX as efficient as splitting, whereas it is advantageous for smaller time steps as well as larger time steps
-- No boundary condition problems
-- Same computational good properties
-::::
-
-::::{.col-6 .text-center}
-
-| | PIROCK (tol=5e-3) | STRANG (dt=2/128) |
-|------------------------------|:------------------:|:--------------------:|
-|L2 norm of error (variable b) | 3.31e-2 | 1.14e-1 |
-|L2 norm of error (variable c) | 2.92e-3 | 1.37e-2 |
-|Elapsed time (s) | 6.91 | 6.70 |
-|Nb. time steps. | 624 | 128 |
-
-&nbsp;
-
-| | PIROCK (tol=1e-3) | STRANG (dt=2/512) |
-|------------------------------|:------------------:|:--------------------:|
-|L2 norm of error (variable b) | 4.94e-3 | 1.55e-3 |
-|L2 norm of error (variable c) | 4.31e-4 | 1.41e-4 |
-|Elapsed time (s) | 13.33 | 17.20 |
-|Nb. time steps. | 1528 | 512 |
-
-&nbsp;
-
-| | PIROCK (tol=1e-4) | STRANG (dt=2/16384) |
-|------------------------------|:------------------:|:--------------------:|
-|L2 norm of error (variable b) | 7.72e-6 | 1.81e-5 |
-|L2 norm of error (variable c) | 6.97e-7 | 1.57e-6 |
-|Elapsed time (s) | 165.12 | 427.81 |
-|Nb. time steps. | 31728 | 16384 |
-
-::::
-:::
+<!-- {{< include examples.qmd >}} -->
+<!-- {{< include splitting_imex.qmd >}} -->
 
 ## Key point
 

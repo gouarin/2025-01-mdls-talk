@@ -20,12 +20,12 @@ section.has-dark-background h6 {
  * GLOBAL STYLES
  *********************************************/
 :root {
-    --r-background-color: rgb(255, 255, 255);
+    --r-background-color: #FAFAFA;
     --r-main-font: "Lato", sans-serif;
     --r-line-color: #9b001a;
     --r-main-font-size: 26px;
     --r-main-color: #222;
-    --r-block-margin: 20px;
+    --r-block-margin: 2px;
     --r-heading-margin: 0 0 20px 0;
     --r-heading-font: DroidSerif;
     --r-heading-color: #222;
@@ -38,7 +38,7 @@ section.has-dark-background h6 {
     --r-heading1-size: 1.8em;
     --r-heading2-size: 1.6em;
     --r-heading3-size: 1.3em;
-    --r-heading4-size: 1em;
+    --r-heading4-size: 1.8em;
     --r-code-font: monospace;
     --r-link-color: #9b001a;
     --r-link-color-dark: #9b001a;
