@@ -22,9 +22,6 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 
 ---
 
-
----
-
 ##  Burgers equation - small hat problem
 
 $$
