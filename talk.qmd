@@ -529,53 +529,53 @@ for(std::size_t level = min_level; level < max_level; ++level)
 
 # Burgers results for upwind scheme
 
-## MRA $\epsilon = 1e-3$ without portion
+## MRA $\epsilon = 1e-3$ without portion {.fs-6}
 
-<div>
-<video data-autoplay src="videos/burgers/MRA_upwind_without_portion.mp4" />
-</div>
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_without_portion.mp4" />
+:::
 
-## MRA $\epsilon = 1e-3$ with portion
+## MRA $\epsilon = 1e-3$ with portion {.fs-6}
 
-<div>
-<video data-autoplay src="videos/burgers/MRA_upwind_with_portion.mp4" />
-</div>
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_with_portion.mp4" />
+:::
 
-## AMR with the modulus of the gradient $<1e-2$ as refinement criteria without portion
+## AMR with the modulus of the gradient $<1e-2$ as refinement criteria without portion {.fs-6}
 
-<div>
-<video data-autoplay src="videos/burgers/AMR_derivative_eps_1e-2_upwind_without_portion.mp4" />
-</div>
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/AMR_derivative_eps_1e-2_upwind_without_portion.mp4" />
+:::
 
-## AMR with the modulus of the gradient $<1e-2$ as refinement criteria with portion
+## AMR with the modulus of the gradient $<1e-2$ as refinement criteria with portion {.fs-6}
 
-<div>
-<video data-autoplay src="videos/burgers/AMR_derivative_eps_1e-2_upwind_with_portion.mp4" />
-</div>
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/AMR_derivative_eps_1e-2_upwind_with_portion.mp4" />
+:::
 
-## AMR with the modulus of the second derivative $<10$ as refinement criteria without portion
+## AMR with the modulus of the second derivative $<10$ as refinement criteria without portion {.fs-6}
 
-<div>
-<video data-autoplay src="videos/burgers/AMR_second_derivative_eps_10_upwind_without_portion.mp4" />
-</div>
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/AMR_second_derivative_eps_10_upwind_without_portion.mp4" />
+:::
 
-## AMR with the modulus of the second derivative $<10$ as refinement criteria with portion
+## AMR with the modulus of the second derivative $<10$ as refinement criteria with portion {.fs-6}
 
-<div>
-<video data-autoplay src="videos/burgers/AMR_second_derivative_eps_10_upwind_with_portion.mp4" />
-</div>
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/AMR_second_derivative_eps_10_upwind_with_portion.mp4" />
+:::
 
-## AMR with the modulus of the second derivative $<100$ as refinement criteria without portion
+## AMR with the modulus of the second derivative $<100$ as refinement criteria without portion {.fs-6}
 
-<div>
-<video data-autoplay src="videos/burgers/AMR_second_derivative_eps_100_upwind_without_portion.mp4" />
-</div>
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/AMR_second_derivative_eps_100_upwind_without_portion.mp4" />
+:::
 
-## AMR with the modulus of the second derivative $<100$ as refinement criteria with portion
+## AMR with the modulus of the second derivative $<100$ as refinement criteria with portion {.fs-6}
 
-<div>
-<video data-autoplay src="videos/burgers/AMR_second_derivative_eps_100_upwind_with_portion.mp4" />
-</div>
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/AMR_second_derivative_eps_100_upwind_with_portion.mp4" />
+:::
 
 ## BZ
 
@@ -583,7 +583,7 @@ for(std::size_t level = min_level; level < max_level; ++level)
 
 <div class="text-center">
 <video data-autoplay loop="true" src="videos/bz_pirock_animation.mp4" width="45%" />
-</div>
+:::
 
 :::
 
