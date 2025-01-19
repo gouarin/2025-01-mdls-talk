@@ -218,6 +218,220 @@ Marc Massot
 </section>
 <section class="slide level2">
 
+</section>
+<section id="burgers-equation---small-hat-problem" class="slide level2">
+<h2>Burgers equation - small hat problem</h2>
+<p><span class="math display">\[
+\partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
+\]</span></p>
+<div class="row">
+<div class="col-7">
+<p>Consider the Cauchy problem with initial cond.</p>
+<p><span class="math display">\[
+u^0(x)=\left\{%
+             \begin{array}{cc}
+             \hfill 0,    &amp; x \in ]- \infty,-1]\cup [1, + \infty[,\\
+                    x+1,  &amp; x \in ]-1,0],        \hfill           \\
+                    1-x,  &amp; x \in[0,1[.          \hfill           \\
+             \end{array}
+       \right.
+\]</span></p>
+<div>
+<ul>
+<li class="fragment">Shock formation at time <span class="math inline">\(T^* = 1\)</span></li>
+<li class="fragment">Leading to irreversible solution</li>
+<li class="fragment">RH condition governs shock dynamics</li>
+</ul>
+</div>
+</div>
+<div class="col">
+<p><img data-src="figures/chapeau.jpg"></p>
+</div>
+</div>
+</section>
+<section id="burgers-equation---small-hat-problem-1" class="slide level2">
+<h2>Burgers equation - small hat problem</h2>
+<p><span class="math display">\[
+\partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
+\]</span></p>
+<div class="row">
+<div class="col-7">
+<p>Consider the Cauchy problem with initial cond.</p>
+<p><span class="math display">\[
+u^0(x)=\left\{%
+             \begin{array}{cc}
+             \hfill 0,    &amp; x \in ]- \infty,-1]\cup [1, + \infty[,\\
+                    x+1,  &amp; x \in ]-1,0],        \hfill           \\
+                    1-x,  &amp; x \in[0,1[.          \hfill           \\
+             \end{array}
+       \right.
+\]</span></p>
+<ul>
+<li>Shock formation at time <span class="math inline">\(T^* = 1\)</span></li>
+<li>Leading to irreversible solution</li>
+<li>RH condition governs shock dynamics</li>
+</ul>
+</div>
+<div class="col">
+<p><img data-src="figures/chapeau_bis.jpg"></p>
+</div>
+</div>
+</section>
+<section id="burgers-equation---small-hat-problem-2" class="slide level2">
+<h2>Burgers equation - small hat problem</h2>
+<p><span class="math display">\[
+\partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
+\]</span></p>
+<div class="row">
+<div class="col-7">
+<p>Consider the Cauchy problem with initial cond.</p>
+<p><span class="math display">\[
+u^0(x)=\left\{%
+             \begin{array}{cc}
+             \hfill 0,    &amp; x \in ]- \infty,-1]\cup [1, + \infty[,\\
+                    x+1,  &amp; x \in ]-1,0],        \hfill           \\
+                    1-x,  &amp; x \in[0,1[.          \hfill           \\
+             \end{array}
+       \right.
+\]</span></p>
+<div>
+<ul>
+<li class="fragment">Shock location <span class="math inline">\(\varphi(t)=\sqrt{2(1+t)}-1\)</span></li>
+<li class="fragment">Propagation speed shock <span class="math inline">\(\sigma(t)={1}/{\sqrt{2(1+t)}}\)</span></li>
+<li class="fragment">Shock amplitude <span class="math inline">\([u]=\sqrt{{2}/{(1+t)}}\)</span></li>
+</ul>
+</div>
+</div>
+<div class="col">
+<p><img data-src="figures/chapeau_bis.jpg"></p>
+</div>
+</div>
+</section>
+<section id="adaptive-multiresolution" class="slide level2">
+<h2>Adaptive Multiresolution</h2>
+<div class="row">
+<div class="col-7">
+<ul>
+<li>Minimum level <span class="math inline">\(\underline{\ell}\)</span> and maximum level <span class="math inline">\(\bar{\ell}\)</span>.</li>
+<li>Cells: <span class="math display">\[
+C_{\ell, k}:=\prod_{\alpha=1}^d\left[2^{-\ell} k_\alpha, 2^{-\ell}\left(k_\alpha+1\right)\right]
+\]</span></li>
+<li>Finest step: <span class="math inline">\(\Delta x=2^{-\bar{\ell}}\)</span>.</li>
+<li>Level-wise step: <span class="math inline">\(\Delta x_{\ell}:=2^{-\ell}=2^{\Delta \ell} \Delta x\)</span>.</li>
+</ul>
+</div>
+<div class="col">
+<p><img data-src="figures/levels_mod.png"></p>
+</div>
+</div>
+</section>
+<section id="wavelets" class="slide level2">
+<h2>Wavelets</h2>
+<p>Decomposition of the solution on a wavelet basis [Daubechies, ’88], [Mallat, ’89] to measure its local regularity. “Practical” approach by [Harten, ’95], [Cohen et al., ’03].</p>
+<div class="row">
+<div class="col-7">
+<p><strong>Projection operator</strong></p>
+<p><strong>Prediction operator</strong> at order <span class="math inline">\(2 \gamma+1\)</span></p>
+<p><span class="math display">\[
+{\hat f}_{\ell+1,2 k}={f}_{\ell, k}+\sum_{\sigma=1}^\gamma \psi_\sigma\left({f}_{\ell, k+\sigma}-{f}_{\ell, k-\sigma}\right)
+\]</span></p>
+<div style="text-align: left">
+<p><img data-src="figures/prediction.jpg"></p>
+<div class="fragment">
+<p>Details are <strong>regularity indicator</strong> <span class="math display">\[
+{\mathrm{d}}_{\ell, {k}}:={f}_{\ell, {k}}-{\hat{f}}_{\ell, {k}}
+\]</span></p>
+<p>Let <span class="math inline">\(f \in W^{\nu, \infty}\)</span> (neigh. of <span class="math inline">\(C_{\ell, k}\)</span> ), then <span class="math display">\[
+\left|{\mathrm{d}}_{\ell, k}\right| \lesssim 2^{-\ell \min (\nu, 2 \gamma+1)}|f|_{W^{\min (\nu, 2 \gamma+1), \infty}}
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="col">
+
+</div>
+</div>
+</section>
+<section id="wavelets-1" class="slide level2">
+<h2>Wavelets</h2>
+<p>Decomposition of the solution on a wavelet basis [Daubechies, ’88], [Mallat, ’89] to measure its local regularity. “Practical” approach by [Harten, ’95], [Cohen et al., ’03].</p>
+<div class="row">
+<div class="col-7">
+<p><strong>Projection operator</strong></p>
+<p><strong>Prediction operator</strong> at order <span class="math inline">\(2 \gamma+1\)</span></p>
+<p><span class="math display">\[
+{\hat f}_{\ell+1,2 k}={f}_{\ell, k}+\sum_{\sigma=1}^\gamma \psi_\sigma\left({f}_{\ell, k+\sigma}-{f}_{\ell, k-\sigma}\right)
+\]</span></p>
+<div style="text-align: left">
+<p><img data-src="figures/prediction.jpg"></p>
+<p>Details are <strong>regularity indicator</strong> <span class="math display">\[
+{\mathrm{d}}_{\ell, {k}}:={f}_{\ell, {k}}-{\hat{f}}_{\ell, {k}}
+\]</span></p>
+<p>Let <span class="math inline">\(f \in W^{\nu, \infty}\)</span> (neigh. of <span class="math inline">\(C_{\ell, k}\)</span> ), then <span class="math display">\[
+\left|{\mathrm{d}}_{\ell, k}\right| \lesssim 2^{-\ell \min (\nu, 2 \gamma+1)}|f|_{W^{\min (\nu, 2 \gamma+1), \infty}}
+\]</span></p>
+</div>
+</div>
+<div class="col">
+<p><strong>Fast wavelet transform:</strong></p>
+<p>means at the finest level can be recast as means at the coarsest level + details <span class="math display">\[
+\begin{array}{rlr}
+{f}_{\overline{\ell}}
+&amp; \Longleftrightarrow &amp; \left({f}_{\underline{\ell}}, {{d}}_{\underline{\ell} +1}, \ldots, {d}_{\bar{\ell}}\right)\\
+\end{array}
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="mesh-coarsening-static" class="slide level2">
+<h2>Mesh coarsening (static)</h2>
+<p>Local regularity of the solution allows to select areas to coarsen</p>
+<p><span class="math display">\[
+{{f}}_{\bar{\ell}} \rightarrow \left({f}_{\underline{\ell}}, {\mathbf{d}}_{\underline{\ell}+1}, \ldots, {\mathbf{d}}_{\bar{\ell}}\right)  \rightarrow \left({f}_{\underline{\ell}}, {\tilde{\mathbf{d}}}_{\underline{\ell}+1}, \ldots, \tilde{{\mathbf{d}}}_{\bar{\ell}}\right) \rightarrow  {\tilde{{f}}}_{\bar{\ell}}
+\]</span> <span class="math display">\[
+\tilde{{\mathrm{d}}}_{\ell, k}=
+\begin{cases}0, &amp; \text { if } \left|{\mathbf{d}}_{\ell, k}\right| \leq \epsilon_{\ell}=2^{-d \Delta \ell} \epsilon, \quad \rightarrow \quad\left\|{\mathbf{f}}_{\bar{\ell}}-\tilde{{\mathbf{f}}}_{\bar{\ell}}\right\|_{\ell^p} \lesssim \epsilon \\
+{\mathrm{d}}_{\ell, k}, &amp; \text { otherwise}
+\end{cases}
+\]</span></p>
+<p>Set a small (below <span class="math inline">\(\epsilon_{\ell}\)</span>) detail to zero <span class="math inline">\(\equiv\)</span> erase the cell <span class="math inline">\(C_{\ell, k}\)</span> from the structure</p>
+</section>
+<section id="examples" class="slide level2">
+<h2>Examples</h2>
+<p>Donner ici les caracteristiques du cas : espilon / maillage le plus fin / norme - regularité</p>
+
+<img data-src="figures/compression.png" class="quarto-figure quarto-figure-center r-stretch"><p>et les taux de compression</p>
+</section>
+<section id="time-evolution-of-pdes" class="slide level2">
+<h2>Time evolution of PDEs</h2>
+<ul>
+<li>Finite volumes with global time step <span class="math inline">\(\Delta t = \Lambda(\Delta x)\)</span></li>
+<li>Use dynamic mesh refinement</li>
+</ul>
+<p>Mesh updated using “old” information at time <span class="math inline">\(t\)</span> to accommodate the one at time <span class="math inline">\(t + \Delta t\)</span></p>
+<div class="row">
+<div class="col-6">
+<ul>
+<li>Propagation of information : add security cells</li>
+<li>Formation of singularities : (regularity index: <span class="math inline">\(\nu =0\)</span>, <span class="math inline">\(\mu = \min(\nu,2\gamma +1)\)</span>) refine if <span class="math display">\[
+\left|{\mathbf{d}}_{\ell, k}\right| \geq \epsilon_{\ell}\,2^{d+\mu}
+\]</span></li>
+</ul>
+</div>
+<div class="col">
+<p><img data-src="figures/viscous_burgers.jpg"></p>
+</div>
+</div>
+</section>
+<section id="finite-volumes-conservation-order" class="slide level2">
+<h2>Finite volumes / conservation / order</h2>
+<p>Flux evaluation at interfaces between levels</p>
+<p><img data-src="figures/reconstruction_only_leaves.jpg"></p>
+<p>Using the prediction operator allows to evaluate fluxes at the same level</p>
+<p><img data-src="figures/reconstruction.jpg"></p>
+</section>
+<section class="slide level2">
+
 <div class="text-center">
 <video data-autoplay="" src="videos/upwind_without_portion.mp4">
 </video></div>
