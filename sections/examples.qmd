@@ -1,0 +1,257 @@
+# Examples
+
+## Field creation
+
+```{.cpp}
+auto mesh = samurai::MRMesh<Config>({{0, 0}, {1, 1}}, 2, 8);
+auto u = samurai::make_field<double, 1>("u", mesh);
+
+samurai::for_each_cell(mesh, [&](auto cell)
+{
+  auto x = cell.center(0);
+  auto y = cell.center(1);
+
+  u[cell] = x*x + y*y;
+});
+```
+
+# The projection operator {.subtitle .text-center}
+
+## An example
+
+<video data-autoplay src="videos/projection.mp4" />
+
+## The implementation
+
+```{.cpp}
+auto u = samurai::make_field<double, 1>("u", mesh);
+...
+auto set = samurai::intersection(mesh[level], mesh[level + 1])
+          .on(level);
+
+set([&](const auto& i, auto)
+{
+    u(level, i) = 0.5*(u(level + 1, 2*i) + u(level + 1, 2*i + 1));
+});
+```
+
+# Creation of random meshes and their graduation {.subtitle}
+
+---
+
+:::{.row}
+
+::::{.col .text-center}
+![](figures/graduation_before.png)
+before
+::::
+
+::::{.col .text-center}
+![](figures/graduation_after.png)
+after
+::::
+
+:::
+
+## Create a mesh
+
+```{.cpp}
+constexpr std::size_t dim = 2;
+std::size_t start_level = 1;
+std::size_t max_refinement_level = 7;
+
+samurai::Box<int, dim> box({0, 0}, {1<<start_level, 1<<start_level});
+
+samurai::CellArray<dim> ca;
+ca[start_level] = {start_level, box};
+```
+
+## Add cells randomly
+
+```{.cpp}
+samurai::CellList<dim> cl;
+
+samurai::for_each_interval(ca, [&](std::size_t level, const auto& interval, const auto& index)
+{
+    auto choice = xt::random::choice(xt::xtensor_fixed<bool,
+                                     xt::xshape<2>>{true, false}, interval.size());
+
+    for(int i = interval.start, ic = 0; i<interval.end; ++i, ++ic)
+    {
+        if (choice[ic])
+        {
+            cl[level + 1][2*index].add_interval({2*i, 2*i+2});
+            cl[level + 1][2*index + 1].add_interval({2*i, 2*i+2});
+        }
+        else
+        {
+            cl[level][index].add_point(i);
+        }
+    }
+});
+
+ca = {cl, true};
+```
+
+## Tag cells to refine
+
+```{.cpp}
+std::size_t min_level = ca.min_level(), max_level = ca.max_level();
+xt::xtensor_fixed<int, xt::xshape<4, dim>> stencil{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+auto tag = samurai::make_field<bool, 1>("tag", ca);
+tag.fill(false);
+
+for(std::size_t level = min_level + 2; level <= max_level; ++level)
+{
+    for(std::size_t level_below = min_level; level_below < level - 1; ++level_below)
+    {
+        for(std::size_t i = 0; i < stencil.shape()[0]; ++i)
+        {
+            auto s = xt::view(stencil, i);
+            auto set = samurai::intersection(samurai::translate(ca[level], s), ca[level_below])
+                      .on(level_below);
+            set([&](const auto& i, const auto& index)
+            {
+                tag(level_below, i, index[0]) = true;
+            });
+        }
+    }
+}
+```
+
+## Create a new mesh from the tag
+
+```{.cpp}
+samurai::CellList<dim> cl;
+
+samurai::for_each_cell(ca, [&](auto cell)
+{
+    auto i = cell.indices[0];
+    auto j = cell.indices[1];
+
+    if (tag[cell])
+    {
+        cl[cell.level + 1][{2*j}].add_interval({2*i, 2*i+2});
+        cl[cell.level + 1][{2*j + 1}].add_interval({2*i, 2*i+2});
+    }
+    else
+    {
+        cl[cell.level][{j}].add_point(i);
+    }
+});
+
+samurai::CellArray<dim> new_ca = {cl, true};
+```
+
+# The heat equation
+
+## The problem
+
+We consider the well known heat equation
+
+$$
+\frac{\partial u}{\partial t} - \Delta u = 0
+$$
+
+## The finite volume scheme
+
+Since we have
+
+$$
+\int_V \Delta u = \int_{\partial V} \nabla u\cdot \mathbf{n},
+$$
+
+the flux function to implement is a discrete version of $\nabla u\cdot \mathbf{n}$.
+
+Here, we choose the normal gradient of the first order, requiring a stencil of two cells.
+
+This is enough to write the static configuration
+
+```{.cpp}
+auto u = samurai::make_field<1>("u", mesh); // scalar field
+
+using cfg = samurai::FluxConfig<SchemeType::LinearHomogeneous,
+                                1,            // output_field_size
+                                2,            // stencil_size
+                                decltype(u)>; // input_field_type
+```
+
+## The finite volume scheme
+
+Now, denoting by $V_L$ (left) and $V_R$ (right) the stencil cells and $F$ their interface, the discrete flux from $V_L$ to $V_R$ writes
+
+$$
+\mathcal{F}_h(u_h)_{|F} := \frac{u_R-u_L}{h},
+$$
+
+where $u_L$ and $u_R$ are the finite volume approximations of $u$ in the respective cells, and $h$ is the cell length.
+
+The flux function then writes
+
+```{.cpp}
+samurai::FluxDefinition<cfg> gradient([](double h)
+{
+    samurai::FluxStencilCoeffs<cfg> c;
+    c[0] = -1/h; // left
+    c[1] =  1/h; // right
+    return c;
+});
+
+auto diff = samurai::make_flux_based_scheme(gradient);
+```
+
+## Simulation on uniform mesh
+
+```{.cpp}
+// ...
+auto diff = samurai::make_diffusion<decltype(u)>();
+auto id   = samurai::make_identity<decltype(u)>();
+for(std::size_t ite=0; ite<200; ++ite)
+{
+    samurai::update_ghost_mr(u);
+
+    if (explicit_scheme)
+    {
+        unp1 = u - dt * diff(u);
+    }
+    else
+    {
+        auto back_euler = id + dt * diff;
+        // solves the linear equation   [Id + dt*Diff](unp1) = u
+        samurai::petsc::solve(back_euler, unp1, u);
+    }
+
+    std::swap(u.array(), u_np1.array());
+
+    samurai::save(fmt::format("mesh_{}", ite + 1), mesh, u);
+}
+```
+
+## Simulation with adaptive mesh refinement
+
+```{.cpp code-line-numbers="1-2,6-7"}
+auto MRadaptation = samurai::make_MRAdapt(u);
+double eps = 1e-4, regularity = 2;
+
+for(std::size_t ite=0; ite<200; ++ite)
+{
+    MRadaptation(eps, regularity);
+    unp1.resize();
+    samurai::update_ghost_mr(u);
+
+    if (explicit_scheme)
+    {
+        unp1 = u - dt * diff(u);
+    }
+    else
+    {
+      auto back_euler = id + dt * diff;
+      // solves the linear equation   [Id + dt*Diff](unp1) = u
+      samurai::petsc::solve(back_euler, unp1, u);
+    }
+
+    std::swap(u.array(), u_np1.array());
+    samurai::save(fmt::format("mesh_{}", ite + 1), mesh, u);
+}
+```

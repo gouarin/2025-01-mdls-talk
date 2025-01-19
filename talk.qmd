@@ -524,8 +524,8 @@ for(std::size_t level = min_level; level < max_level; ++level)
 - HDF5 support
 :::
 
-<!-- {{< include examples.qmd >}} -->
-<!-- {{< include splitting_imex.qmd >}} -->
+<!-- {{< include sections/examples.qmd >}} -->
+<!-- {{< include sections/splitting_imex.qmd >}} -->
 
 # Burgers results for upwind scheme
 
