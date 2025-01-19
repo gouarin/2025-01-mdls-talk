@@ -22,7 +22,7 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 
 ---
 
-##  Burgers equation - small hat problem
+##  Burgers equation (1948) - small hat problem
 
 $$
 \partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2}, 
@@ -93,6 +93,7 @@ $$
 ::::
 :::
 
+
 ---
 
 ##  Burgers equation - small hat problem
@@ -132,6 +133,11 @@ $$
 ::::
 :::
 
+
+:::{.notes}
+The key issue is to get a analytical solution of the problem involving both reversible and irreversible dynamics. Notebook MAP412 pour intégration Godunov et convergence https://jupyter_map412.gitlab.labos.polytechnique.fr/jb_2024_2025/content/chapter/11_edp_03/burgers.html
+:::
+
 ---
 
 ##  Adaptive Multiresolution
@@ -152,6 +158,11 @@ $$
 :::: {.col}
 ![](figures/levels_mod.png)
 ::::
+:::
+
+
+:::{.notes}
+Just introducing the notations and the notion of level difference with Delta l 
 :::
 
 ---
@@ -345,9 +356,7 @@ Using the prediction operator allows to evaluate fluxes at the same level
 ```
 :::
 
----
 
-![](figures/compression.png){fig-align=center}
 
 # Adaptive mesh refinement software
 
