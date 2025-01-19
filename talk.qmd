@@ -47,11 +47,35 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 ::::
 :::
 
+:::{.notes}
+If we look at all the open source software specializing in dynamic mesh adaptation, there are two main families:
+- patch-based, which is a hierarchical representation of the mesh: layers are placed on top of layers
+- cell-based, which is a flat representation of the mesh
+
+Each has its advantages and disadvantages:
+- patch-based has rectangular zones for tiling and optimizing caches. But it generally requires more cells than necessary.
+- cell-based requires far fewer cells but requires a tree-like structure, which means that you lose the good memory locality you had with patch-based. We use space filling curves such as Morton or Hilbert to find an acceptable locality.
+:::
+
 ---
 
 ![](figures/amr-charac.png)
 
+:::{.notes}
+If we look in a little more detail at the functions offered by these software packages, we can group them into 4 main families.
+
+There are two types of data structure, as described above: a list of blocks or a tree.
+
+There are two main adaptation criteria: one is based on a heuristic criterion and depends on the physical problem you are looking at. This could be a gradient, for example. The other is based on a wavelet decomposition that allows you to adapt the mesh without knowing anything about the physical problem, as we have just shown with Haar wavelets and multiresolution.
+
+As you advance in time, you can choose different time steps depending on the resolution of the grid: this is called subcycling. Otherwise, you take the same time step everywhere and, in general, it is the finest grid that guides its value to satisfy a CFL.
+
+Finally, given that the mesh is dynamic, the load balancing must be reviewed regularly during the calculation so that, in a parallel context, all the processes have more or less the same workload. There are two types of method: one based on the space filling curve, where you cut out chunks of the same size following this curve; the other is based on solving a diffusion equation on the workload of the processes.
+:::
+
 ## Open source software
+
+:::::{.center-page-vertically}
 
 ::: {.fs-6}
 | Name    | Data structure | Adaptation criteria | Time scheme                     | Load balancing               |
@@ -64,12 +88,16 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 | samurai | interval       | heuristic/wavelet   | RK/splitting/IMEX<br>time-space/code coupling               | SFC/diffusion algorithm      |
 :::
 
-. . .
-
-::: {.text-center .color_0 }
+::: {.text-center .color_0 .mt-5}
 *samurai: create a unified framework for testing a whole range<br class='m-0'>of mesh adaptation methods with the latest generation of numerical schemes.*
 :::
+:::::
 
+:::{.notes}
+Here's an overview of the software we think is interesting to look at today.
+
+Peano and p4est don't have any adaptation or time-scheme criteria, as they are software programs specializing solely in mesh management.
+:::
 ---
 
 <div style="position: absolute; top: 50%; transform: translate(0, -50%); text-align: center;">
@@ -86,13 +114,13 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 
 ## Design principles
 
-<div style="position: absolute; top: 50%; transform: translate(0%, -50%); text-align: center;">
-
+:::{.center-page-vertically}
 - Compress the mesh according to the level-wise spatial connectivity along each Cartesian axis.
 - Achieve fast look-up for a cell into the structure, especially for parents and neighbors.
 - Maximize the memory contiguity of the stored data to allow for caching and vectorization.
 - Facilitate inter-level operations which are common in many numerical techniques.
-</div>
+:::
+
 ## An overview of the data structure
 
 ::: {.row}
@@ -112,6 +140,12 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 
 :::
 
+:::{.notes}
+We illustrate the samurai data structure, starting with a 2D problem to see all the components. The data structure is fully recursive and can therefore handle Nd Cartesian meshes.
+
+The main element of samurai is an interval modeled by its beginning and non-included end. There's also an offset parameter that will serve us in two different ways. We'll come back to this later.
+:::
+
 ## An overview of the data structure
 
 ::: {.row}
@@ -123,7 +157,10 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 ```{=html}
 {{< include codes/celllist.html >}}
 ```
+:::
 
+:::{.notes}
+The first thing we're going to do is go through each level and each y-component, and look at the set of contiguous cells along the x-axis to construct intervals.
 :::
 
 ## An overview of the data structure
@@ -137,12 +174,20 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 ```
 :::
 
+:::{.notes}
+Now that we have this representation, we'll also try compressing along the y-axis.
+
+The y-offset table lets us know how many x-intervals each y has. This is equivalent to the CSR format, where you have the same thing for rows, where you have to count the number of non-zero elements and accumulate them.
+
+The offset is used here to find the right range of x-intervals in the 1d array of x-intervals.
+:::
+
 ## Mesh constraints
 
 - A refined cell is split into 2 in 1d, 4 in 2d and 8 in 3d equal parts.
 - At a given resolution level, the size of the cells is equal.
 - The size of the cells is defined by the resolution level.
-$$\Delta x = 2^{-level}$$
+$$\Delta x = s2^{-level}$$
 - A cell is represented by integer coordinates given its location.
 $$center = \Delta x (indices + 0.5)$$
 - The adapted mesh is generally graded.
@@ -154,11 +199,21 @@ $$center = \Delta x (indices + 0.5)$$
 <video data-autoplay src="videos/identify_0000.mp4" />
 ```
 
+:::{.notes}
+During the calculation, we'll adapt the mesh to give us this type of configuration. We'll need several additional cells to advance our equations in time, but also to adapt the mesh over time.
+
+Here we only have the mesh cells called leaves when you're in a tree configuration.
+:::
+
 ## Identify the different types of cells
 
 ```{=html}
 <video data-autoplay src="videos/identify_0001.mp4" />
 ```
+
+:::{.notes}
+Generally, you have a spatial scheme with a stencil, so we need to add cells called ghosts on either side of our intervals.
+:::
 
 ## Identify the different types of cells
 
@@ -166,11 +221,23 @@ $$center = \Delta x (indices + 0.5)$$
 <video data-autoplay src="videos/identify_0002.mp4" />
 ```
 
+:::{.notes}
+There are two ways of looking at it: you can try to store only the ghost cell intervals. As you can see, the list can be quite large, especially if our mesh is quite fragmented. So we've lost some data compression, even though that's what we were selling.
+Can we do better?
+:::
+
+
 ## Identify the different types of cells
 
 ```{=html}
 <video data-autoplay src="videos/identify_0003.mp4" />
 ```
+
+:::{.notes}
+If we group together cells called leaves and ghosts, we have a much more compact version. We can even say that it's more compact than the version with leaves, because it allows interval merging.
+
+But this leads to another problem: if we use this set, how do we find our ghosts?
+:::
 
 ## Algebra of sets
 
@@ -181,6 +248,10 @@ $$center = \Delta x (indices + 0.5)$$
 <span>=</span>
 
 <img class="border border-2" src="figures/mesh_all.png" width="400px"/>
+:::
+
+:::{.notes}
+We need to add a set algebra that allows us to switch from one to the other easily.
 :::
 
 ## Algebra of sets
@@ -216,6 +287,12 @@ The available operators in samurai are for now
 initial mesh
 :::
 
+:::{.notes}
+Let's take a closer look at how we use intervals and set algebra in mutliresolution. You could do the same with AMR. The final sets just won't be exactly the same.
+
+We start with this mesh.
+:::
+
 ## Algebra of sets: Usage to MRA
 
 <div>
@@ -224,6 +301,10 @@ initial mesh
 
 :::{.text-center .mt-0}
 initial mesh
+:::
+
+:::{.notes}
+we can classify cells by levels.
 :::
 
 ## Algebra of sets: Usage to MRA
@@ -236,6 +317,10 @@ initial mesh
 ghost cells used by the numerical scheme
 :::
 
+:::{.notes}
+As we said earlier, we'll probably need ghosts to integrate our numerical scheme in space. We'll therefore need to add cells on either side of the leaves, depending on the maximum size of the stencil.
+:::
+
 ## Algebra of sets: Usage to MRA
 
 <div>
@@ -246,6 +331,12 @@ ghost cells used by the numerical scheme
 cells needed to compute the details (all tree)
 :::
 
+:::{.notes}
+We have shown that for multiresolution, we need to calculate details. In the original version, you have the whole tree and are able to calculate details on all levels.  It's a completely recursive algorithm.
+
+However, if we do this, we once again lose a compressed view of the mesh, adapted with more cells than necessary.
+We therefore propose to make this algorithm iterative and modify the mesh until it stops moving.
+:::
 
 ## Algebra of sets: Usage to MRA
 
@@ -255,6 +346,12 @@ cells needed to compute the details (all tree)
 
 :::{.text-center .mt-0}
 cells needed to compute the details (iterative way)
+:::
+
+:::{.notes}
+So we start with each leaf and add the cells needed to make the prediction for that leaf at the bottom level. This obviously depends on the order of the prediction, but we'll assume here that we have a stencil of 1.
+
+The idea is then to calculate the details, adapt the mesh accordingly and iterate by calculating the details again on the new mesh until it stops moving.
 :::
 
 ## Algebra of sets: Usage to MRA
@@ -267,6 +364,10 @@ cells needed to compute the details (iterative way)
 cells needed to compute the details (iterative way)
 :::
 
+:::{.notes}
+But we've got a problem: let's imagine that these two cells are to be coarsened.
+:::
+
 ## Algebra of sets: Usage to MRA
 
 <div>
@@ -275,6 +376,14 @@ cells needed to compute the details (iterative way)
 
 :::{.text-center .mt-0}
 cells needed to compute the details (iterative way)
+:::
+
+:::{.notes}
+You'll have this new mesh. You calculate the details and realize that you'll have to refine this new cell after all. This happens because we're in an iterative process, so we don't have a global view of the details, but rather a local one.
+
+We could say  that it's no big deal, but in the end we've put the cells back the way we started, except that we've added them by making a prediction. So we've degraded the initial values. We really don't want to do that.
+
+How can we correct this problem?
 :::
 
 ## Algebra of sets: Usage to MRA
@@ -287,6 +396,10 @@ cells needed to compute the details (iterative way)
 cells needed to compute the details (iterative way)
 :::
 
+:::{.notes}
+All we need to do is calculate the details on two successive levels to avoid this problem, so we add these cells.
+:::
+
 ## Algebra of sets: Usage to MRA
 
 <div>
@@ -295,6 +408,24 @@ cells needed to compute the details (iterative way)
 
 :::{.text-center .mt-0}
 cells needed to compute the details (iterative way)
+:::
+
+:::{.notes}
+In this example, a problem persists. The cell at the very bottom needs to be calculated, and since it has fine cells above it, it needs to be computed using the projection operator. However, a cell above is missing. So we need to add it.
+:::
+
+## Algebra of sets: Usage to MRA
+
+<div>
+<video data-autoplay src="videos/mra_construction/mesh_0008_unnamed.mp4" />
+</div>
+
+:::{.text-center .mt-0}
+cells needed to compute the details (iterative way)
+:::
+
+:::{.notes}
+You may be thinking that in the end we've added as many cells as the whole tree, and you'd be right. But these different mesh layers are rather complicated to illustrate in 1d because the mesh is quite small. This is no longer for N-D case, and what we've shown you in this simplistic example makes perfect sense.
 :::
 
 ## Meshes description with samurai
@@ -384,19 +515,22 @@ for(std::size_t level = min_level; level < max_level; ++level)
 
 ## Other features
 
+:::{.center-page-vertically}
 - Loop algorithms over the levels and the cells
 - Simplified access operator
 - Helper classes to construct complex meshes
 - Helper classes to construct schemes for explicit and implicit usage
 - Helper classes to construct N-D operators and expressions using xtensor
 - HDF5 support
+:::
 
 <!-- {{< include examples.qmd >}} -->
 <!-- {{< include splitting_imex.qmd >}} -->
 
 ## Key point
 
-:::{.text-center}
+:::{.center-page}
+::::{.text-center}
 Implement your finite volume scheme on a uniform Cartesian grid
 
 and
@@ -408,7 +542,7 @@ and
 <span>you have the adaptation (MRA / AMR) without further effort</span>
 
 <span>you have parallelism</span>
-
+::::
 :::
 
 ## Roadmap
@@ -417,6 +551,7 @@ and
 
 ---
 
+:::::{.center-page}
 :::{.row .align-items-center}
 ::::{.col-4}
 <video data-autoplay loop="true" src="videos/ink.mp4" />
@@ -436,3 +571,4 @@ and
 ![](figures/plasma.png)
 ::::
 :::
+:::::
