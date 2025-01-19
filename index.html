@@ -216,8 +216,8 @@ Marc Massot
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </section>
-<section id="burgers-equation---small-hat-problem" class="slide level2">
-<h2>Burgers equation - small hat problem</h2>
+<section id="burgers-equation-1948---small-hat-problem" class="slide level2">
+<h2>Burgers equation (1948) - small hat problem</h2>
 <p><span class="math display">\[
 \partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
 \]</span></p>
@@ -246,7 +246,7 @@ u^0(x)=\left\{%
 </div>
 </div>
 </section>
-<section id="burgers-equation---small-hat-problem-1" class="slide level2">
+<section id="burgers-equation---small-hat-problem" class="slide level2">
 <h2>Burgers equation - small hat problem</h2>
 <p><span class="math display">\[
 \partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
@@ -274,7 +274,7 @@ u^0(x)=\left\{%
 </div>
 </div>
 </section>
-<section id="burgers-equation---small-hat-problem-2" class="slide level2">
+<section id="burgers-equation---small-hat-problem-1" class="slide level2">
 <h2>Burgers equation - small hat problem</h2>
 <p><span class="math display">\[
 \partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
@@ -303,6 +303,19 @@ u^0(x)=\left\{%
 <p><img data-src="figures/chapeau_bis.jpg"></p>
 </div>
 </div>
+<aside class="notes">
+<p>The key issue is to get a analytical solution of the problem involving both reversible and irreversible dynamics. Notebook MAP412 pour intégration Godunov et convergence https://jupyter_map412.gitlab.labos.polytechnique.fr/jb_2024_2025/content/chapter/11_edp_03/burgers.html</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="adaptive-multiresolution" class="slide level2">
 <h2>Adaptive Multiresolution</h2>
@@ -321,6 +334,19 @@ C_{\ell, k}:=\prod_{\alpha=1}^d\left[2^{-\ell} k_\alpha, 2^{-\ell}\left(k_\alpha
 <p><img data-src="figures/levels_mod.png"></p>
 </div>
 </div>
+<aside class="notes">
+<p>Just introducing the notations and the notion of level difference with Delta l</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="wavelets" class="slide level2">
 <h2>Wavelets</h2>
@@ -432,11 +458,7 @@ C_{\ell, k}:=\prod_{\alpha=1}^d\left[2^{-\ell} k_\alpha, 2^{-\ell}\left(k_\alpha
 <div class="text-center">
 <video data-autoplay="" src="videos/upwind_without_portion.mp4">
 </video></div>
-</section>
-<section class="slide level2">
-
-
-<img data-src="figures/compression.png" class="quarto-figure quarto-figure-center r-stretch"></section></section>
+</section></section>
 <section>
 <section id="adaptive-mesh-refinement-software" class="title-slide slide level1 center">
 <h1>Adaptive mesh refinement software</h1>
