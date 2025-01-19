@@ -241,13 +241,45 @@ Marc Massot
 <p><img data-src="figures/cell_based.png"></p>
 </div>
 </div>
+<aside class="notes">
+<p>If we look at all the open source software specializing in dynamic mesh adaptation, there are two main families: - patch-based, which is a hierarchical representation of the mesh: layers are placed on top of layers - cell-based, which is a flat representation of the mesh</p>
+<p>Each has its advantages and disadvantages: - patch-based has rectangular zones for tiling and optimizing caches. But it generally requires more cells than necessary. - cell-based requires far fewer cells but requires a tree-like structure, which means that you lose the good memory locality you had with patch-based. We use space filling curves such as Morton or Hilbert to find an acceptable locality.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
 
-<img data-src="figures/amr-charac.png" class="r-stretch"></section>
+<img data-src="figures/amr-charac.png" class="r-stretch"><aside class="notes">
+<p>If we look in a little more detail at the functions offered by these software packages, we can group them into 4 main families.</p>
+<p>There are two types of data structure, as described above: a list of blocks or a tree.</p>
+<p>There are two main adaptation criteria: one is based on a heuristic criterion and depends on the physical problem you are looking at. This could be a gradient, for example. The other is based on a wavelet decomposition that allows you to adapt the mesh without knowing anything about the physical problem, as we have just shown with Haar wavelets and multiresolution.</p>
+<p>As you advance in time, you can choose different time steps depending on the resolution of the grid: this is called subcycling. Otherwise, you take the same time step everywhere and, in general, it is the finest grid that guides its value to satisfy a CFL.</p>
+<p>Finally, given that the mesh is dynamic, the load balancing must be reviewed regularly during the calculation so that, in a parallel context, all the processes have more or less the same workload. There are two types of method: one based on the space filling curve, where you cut out chunks of the same size following this curve; the other is based on solving a diffusion equation on the workload of the processes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="open-source-software" class="slide level2">
 <h2>Open source software</h2>
+<div class="center-page-vertically">
 <div class="fs-6">
 <table class="caption-top">
 <colgroup>
@@ -312,11 +344,24 @@ Marc Massot
 </tbody>
 </table>
 </div>
-<div class="fragment">
-<div class="text-center color_0">
+<div class="text-center color_0 mt-5">
 <p><em>samurai: create a unified framework for testing a whole range<br class="m-0">of mesh adaptation methods with the latest generation of numerical schemes.</em></p>
 </div>
 </div>
+<aside class="notes">
+<p>Here’s an overview of the software we think is interesting to look at today.</p>
+<p>Peano and p4est don’t have any adaptation or time-scheme criteria, as they are software programs specializing solely in mesh management.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -335,7 +380,7 @@ samurai
 </section>
 <section id="design-principles" class="slide level2">
 <h2>Design principles</h2>
-<div style="position: absolute; top: 50%; transform: translate(0%, -50%); text-align: center;">
+<div class="center-page-vertically">
 <ul>
 <li>Compress the mesh according to the level-wise spatial connectivity along each Cartesian axis.</li>
 <li>Achieve fast look-up for a cell into the structure, especially for parents and neighbors.</li>
@@ -354,6 +399,20 @@ samurai
 <p><span class="interval_symb">[</span> <span class="interval_bound">start</span> <span class="interval_symb">,</span> <span class="interval_bound">end</span> <span class="interval_symb">[ @ </span> <span class="interval_offset">offset</span></p>
 </div>
 </div>
+<aside class="notes">
+<p>We illustrate the samurai data structure, starting with a 2D problem to see all the components. The data structure is fully recursive and can therefore handle Nd Cartesian meshes.</p>
+<p>The main element of samurai is an interval modeled by its beginning and non-included end. There’s also an offset parameter that will serve us in two different ways. We’ll come back to this later.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="an-overview-of-the-data-structure-1" class="slide level2">
 <h2>An overview of the data structure</h2>
@@ -424,6 +483,19 @@ samurai
 </div>
 
 </div>
+<aside class="notes">
+<p>The first thing we’re going to do is go through each level and each y-component, and look at the set of contiguous cells along the x-axis to construct intervals.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="an-overview-of-the-data-structure-2" class="slide level2">
 <h2>An overview of the data structure</h2>
@@ -468,13 +540,28 @@ samurai
 </div>
 
 </div>
+<aside class="notes">
+<p>Now that we have this representation, we’ll also try compressing along the y-axis.</p>
+<p>The y-offset table lets us know how many x-intervals each y has. This is equivalent to the CSR format, where you have the same thing for rows, where you have to count the number of non-zero elements and accumulate them.</p>
+<p>The offset is used here to find the right range of x-intervals in the 1d array of x-intervals.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="mesh-constraints" class="slide level2">
 <h2>Mesh constraints</h2>
 <ul>
 <li>A refined cell is split into 2 in 1d, 4 in 2d and 8 in 3d equal parts.</li>
 <li>At a given resolution level, the size of the cells is equal.</li>
-<li>The size of the cells is defined by the resolution level. <span class="math display">\[\Delta x = 2^{-level}\]</span></li>
+<li>The size of the cells is defined by the resolution level. <span class="math display">\[\Delta x = s2^{-level}\]</span></li>
 <li>A cell is represented by integer coordinates given its location. <span class="math display">\[center = \Delta x (indices + 0.5)\]</span></li>
 <li>The adapted mesh is generally graded.</li>
 </ul>
@@ -482,18 +569,72 @@ samurai
 <section id="identify-the-different-types-of-cells" class="slide level2">
 <h2>Identify the different types of cells</h2>
 <video data-autoplay="" src="videos/identify_0000.mp4">
+<aside class="notes">
+<p>During the calculation, we’ll adapt the mesh to give us this type of configuration. We’ll need several additional cells to advance our equations in time, but also to adapt the mesh over time.</p>
+<p>Here we only have the mesh cells called leaves when you’re in a tree configuration.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </video></section>
 <section id="identify-the-different-types-of-cells-1" class="slide level2">
 <h2>Identify the different types of cells</h2>
 <video data-autoplay="" src="videos/identify_0001.mp4">
+<aside class="notes">
+<p>Generally, you have a spatial scheme with a stencil, so we need to add cells called ghosts on either side of our intervals.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </video></section>
 <section id="identify-the-different-types-of-cells-2" class="slide level2">
 <h2>Identify the different types of cells</h2>
 <video data-autoplay="" src="videos/identify_0002.mp4">
+<aside class="notes">
+<p>There are two ways of looking at it: you can try to store only the ghost cell intervals. As you can see, the list can be quite large, especially if our mesh is quite fragmented. So we’ve lost some data compression, even though that’s what we were selling. Can we do better?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </video></section>
 <section id="identify-the-different-types-of-cells-3" class="slide level2">
 <h2>Identify the different types of cells</h2>
 <video data-autoplay="" src="videos/identify_0003.mp4">
+<aside class="notes">
+<p>If we group together cells called leaves and ghosts, we have a much more compact version. We can even say that it’s more compact than the version with leaves, because it allows interval merging.</p>
+<p>But this leads to another problem: if we use this set, how do we find our ghosts?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </video></section>
 <section id="algebra-of-sets" class="slide level2">
 <h2>Algebra of sets</h2>
@@ -502,6 +643,19 @@ samurai
 <p><span>=</span></p>
 <p><img class="border border-2" src="figures/mesh_all.png" width="400px"></p>
 </div>
+<aside class="notes">
+<p>We need to add a set algebra that allows us to switch from one to the other easily.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="algebra-of-sets-1" class="slide level2">
 <h2>Algebra of sets</h2>
@@ -531,6 +685,20 @@ samurai
 <div class="text-center mt-0">
 <p>initial mesh</p>
 </div>
+<aside class="notes">
+<p>Let’s take a closer look at how we use intervals and set algebra in mutliresolution. You could do the same with AMR. The final sets just won’t be exactly the same.</p>
+<p>We start with this mesh.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="algebra-of-sets-usage-to-mra-1" class="slide level2">
 <h2>Algebra of sets: Usage to MRA</h2>
@@ -540,6 +708,19 @@ samurai
 <div class="text-center mt-0">
 <p>initial mesh</p>
 </div>
+<aside class="notes">
+<p>we can classify cells by levels.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="algebra-of-sets-usage-to-mra-2" class="slide level2">
 <h2>Algebra of sets: Usage to MRA</h2>
@@ -549,6 +730,19 @@ samurai
 <div class="text-center mt-0">
 <p>ghost cells used by the numerical scheme</p>
 </div>
+<aside class="notes">
+<p>As we said earlier, we’ll probably need ghosts to integrate our numerical scheme in space. We’ll therefore need to add cells on either side of the leaves, depending on the maximum size of the stencil.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="algebra-of-sets-usage-to-mra-3" class="slide level2">
 <h2>Algebra of sets: Usage to MRA</h2>
@@ -558,6 +752,20 @@ samurai
 <div class="text-center mt-0">
 <p>cells needed to compute the details (all tree)</p>
 </div>
+<aside class="notes">
+<p>We have shown that for multiresolution, we need to calculate details. In the original version, you have the whole tree and are able to calculate details on all levels. It’s a completely recursive algorithm.</p>
+<p>However, if we do this, we once again lose a compressed view of the mesh, adapted with more cells than necessary. We therefore propose to make this algorithm iterative and modify the mesh until it stops moving.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="algebra-of-sets-usage-to-mra-4" class="slide level2">
 <h2>Algebra of sets: Usage to MRA</h2>
@@ -567,6 +775,20 @@ samurai
 <div class="text-center mt-0">
 <p>cells needed to compute the details (iterative way)</p>
 </div>
+<aside class="notes">
+<p>So we start with each leaf and add the cells needed to make the prediction for that leaf at the bottom level. This obviously depends on the order of the prediction, but we’ll assume here that we have a stencil of 1.</p>
+<p>The idea is then to calculate the details, adapt the mesh accordingly and iterate by calculating the details again on the new mesh until it stops moving.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="algebra-of-sets-usage-to-mra-5" class="slide level2">
 <h2>Algebra of sets: Usage to MRA</h2>
@@ -576,6 +798,19 @@ samurai
 <div class="text-center mt-0">
 <p>cells needed to compute the details (iterative way)</p>
 </div>
+<aside class="notes">
+<p>But we’ve got a problem: let’s imagine that these two cells are to be coarsened.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="algebra-of-sets-usage-to-mra-6" class="slide level2">
 <h2>Algebra of sets: Usage to MRA</h2>
@@ -585,6 +820,21 @@ samurai
 <div class="text-center mt-0">
 <p>cells needed to compute the details (iterative way)</p>
 </div>
+<aside class="notes">
+<p>You’ll have this new mesh. You calculate the details and realize that you’ll have to refine this new cell after all. This happens because we’re in an iterative process, so we don’t have a global view of the details, but rather a local one.</p>
+<p>We could say that it’s no big deal, but in the end we’ve put the cells back the way we started, except that we’ve added them by making a prediction. So we’ve degraded the initial values. We really don’t want to do that.</p>
+<p>How can we correct this problem?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="algebra-of-sets-usage-to-mra-7" class="slide level2">
 <h2>Algebra of sets: Usage to MRA</h2>
@@ -594,6 +844,19 @@ samurai
 <div class="text-center mt-0">
 <p>cells needed to compute the details (iterative way)</p>
 </div>
+<aside class="notes">
+<p>All we need to do is calculate the details on two successive levels to avoid this problem, so we add these cells.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="algebra-of-sets-usage-to-mra-8" class="slide level2">
 <h2>Algebra of sets: Usage to MRA</h2>
@@ -603,6 +866,41 @@ samurai
 <div class="text-center mt-0">
 <p>cells needed to compute the details (iterative way)</p>
 </div>
+<aside class="notes">
+<p>In this example, a problem persists. The cell at the very bottom needs to be calculated, and since it has fine cells above it, it needs to be computed using the projection operator. However, a cell above is missing. So we need to add it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="algebra-of-sets-usage-to-mra-9" class="slide level2">
+<h2>Algebra of sets: Usage to MRA</h2>
+<div>
+<video data-autoplay="" src="videos/mra_construction/mesh_0008_unnamed.mp4">
+</video></div>
+<div class="text-center mt-0">
+<p>cells needed to compute the details (iterative way)</p>
+</div>
+<aside class="notes">
+<p>You may be thinking that in the end we’ve added as many cells as the whole tree, and you’d be right. But these different mesh layers are rather complicated to illustrate in 1d because the mesh is quite small. This is no longer for N-D case, and what we’ve shown you in this simplistic example makes perfect sense.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="meshes-description-with-samurai" class="slide level2">
 <h2>Meshes description with samurai</h2>
@@ -740,6 +1038,7 @@ $$ -->
 </section>
 <section id="other-features" class="slide level2">
 <h2>Other features</h2>
+<div class="center-page-vertically">
 <ul>
 <li>Loop algorithms over the levels and the cells</li>
 <li>Simplified access operator</li>
@@ -748,11 +1047,74 @@ $$ -->
 <li>Helper classes to construct N-D operators and expressions using xtensor</li>
 <li>HDF5 support</li>
 </ul>
-<!-- {{< include examples.qmd >}} -->
-<!-- {{< include splitting_imex.qmd >}} -->
+</div>
+<!-- {{< include sections/examples.qmd >}} -->
+<!-- {{< include sections/splitting_imex.qmd >}} -->
+</section></section>
+<section>
+<section id="burgers-results-for-upwind-scheme" class="title-slide slide level1 center">
+<h1>Burgers results for upwind scheme</h1>
+
+</section>
+<section id="mra-epsilon-1e-3-without-portion" class="slide level2">
+<h2>MRA <span class="math inline">\(\epsilon = 1e-3\)</span> without portion</h2>
+<div>
+<video data-autoplay="" src="videos/burgers/MRA_upwind_without_portion.mp4">
+</video></div>
+</section>
+<section id="mra-epsilon-1e-3-with-portion" class="slide level2">
+<h2>MRA <span class="math inline">\(\epsilon = 1e-3\)</span> with portion</h2>
+<div>
+<video data-autoplay="" src="videos/burgers/MRA_upwind_with_portion.mp4">
+</video></div>
+</section>
+<section id="amr-with-the-modulus-of-the-gradient-1e-2-as-refinement-criteria-without-portion" class="slide level2">
+<h2>AMR with the modulus of the gradient <span class="math inline">\(&lt;1e-2\)</span> as refinement criteria without portion</h2>
+<div>
+<video data-autoplay="" src="videos/burgers/AMR_derivative_eps_1e-2_upwind_without_portion.mp4">
+</video></div>
+</section>
+<section id="amr-with-the-modulus-of-the-gradient-1e-2-as-refinement-criteria-with-portion" class="slide level2">
+<h2>AMR with the modulus of the gradient <span class="math inline">\(&lt;1e-2\)</span> as refinement criteria with portion</h2>
+<div>
+<video data-autoplay="" src="videos/burgers/AMR_derivative_eps_1e-2_upwind_with_portion.mp4">
+</video></div>
+</section>
+<section id="amr-with-the-modulus-of-the-second-derivative-10-as-refinement-criteria-without-portion" class="slide level2">
+<h2>AMR with the modulus of the second derivative <span class="math inline">\(&lt;10\)</span> as refinement criteria without portion</h2>
+<div>
+<video data-autoplay="" src="videos/burgers/AMR_second_derivative_eps_10_upwind_without_portion.mp4">
+</video></div>
+</section>
+<section id="amr-with-the-modulus-of-the-second-derivative-10-as-refinement-criteria-with-portion" class="slide level2">
+<h2>AMR with the modulus of the second derivative <span class="math inline">\(&lt;10\)</span> as refinement criteria with portion</h2>
+<div>
+<video data-autoplay="" src="videos/burgers/AMR_second_derivative_eps_10_upwind_with_portion.mp4">
+</video></div>
+</section>
+<section id="amr-with-the-modulus-of-the-second-derivative-100-as-refinement-criteria-without-portion" class="slide level2">
+<h2>AMR with the modulus of the second derivative <span class="math inline">\(&lt;100\)</span> as refinement criteria without portion</h2>
+<div>
+<video data-autoplay="" src="videos/burgers/AMR_second_derivative_eps_100_upwind_without_portion.mp4">
+</video></div>
+</section>
+<section id="amr-with-the-modulus-of-the-second-derivative-100-as-refinement-criteria-with-portion" class="slide level2">
+<h2>AMR with the modulus of the second derivative <span class="math inline">\(&lt;100\)</span> as refinement criteria with portion</h2>
+<div>
+<video data-autoplay="" src="videos/burgers/AMR_second_derivative_eps_100_upwind_with_portion.mp4">
+</video></div>
+</section>
+<section id="bz" class="slide level2">
+<h2>BZ</h2>
+<div class="center-page-vertically">
+<div class="text-center">
+<video data-autoplay="" loop="true" src="videos/bz_pirock_animation.mp4" width="45%">
+</video></div>
+</div>
 </section>
 <section id="key-point" class="slide level2">
 <h2>Key point</h2>
+<div class="center-page">
 <div class="text-center">
 <p>Implement your finite volume scheme on a uniform Cartesian grid</p>
 <p>and</p>
@@ -762,6 +1124,7 @@ $$ -->
 <p><span>you have the adaptation (MRA / AMR) without further effort</span></p>
 <p><span>you have parallelism</span></p>
 </div>
+</div>
 </section>
 <section id="roadmap" class="slide level2">
 <h2>Roadmap</h2>
@@ -769,6 +1132,7 @@ $$ -->
 <img data-src="figures/roadmap.png" class="r-stretch"></section>
 <section class="slide level2">
 
+<div class="center-page">
 <div class="row align-items-center">
 <div class="col-4">
 <video data-autoplay="" loop="true" src="videos/ink.mp4">
@@ -786,6 +1150,7 @@ $$ -->
 </video></div>
 <div class="col">
 <p><img data-src="figures/plasma.png"></p>
+</div>
 </div>
 </div>
 
