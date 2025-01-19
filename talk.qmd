@@ -527,6 +527,16 @@ for(std::size_t level = min_level; level < max_level; ++level)
 <!-- {{< include examples.qmd >}} -->
 <!-- {{< include splitting_imex.qmd >}} -->
 
+## BZ
+
+:::{.center-page-vertically}
+
+<div class="text-center">
+<video data-autoplay loop="true" src="videos/bz_pirock_animation.mp4" width="45%" />
+</div>
+
+:::
+
 ## Key point
 
 :::{.center-page}
