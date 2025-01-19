@@ -527,6 +527,56 @@ for(std::size_t level = min_level; level < max_level; ++level)
 <!-- {{< include examples.qmd >}} -->
 <!-- {{< include splitting_imex.qmd >}} -->
 
+# Burgers results for upwind scheme
+
+## MRA $\epsilon = 1e-3$ without portion
+
+<div>
+<video data-autoplay src="videos/burgers/MRA_upwind_without_portion.mp4" />
+</div>
+
+## MRA $\epsilon = 1e-3$ with portion
+
+<div>
+<video data-autoplay src="videos/burgers/MRA_upwind_with_portion.mp4" />
+</div>
+
+## AMR with the modulus of the gradient $<1e-2$ as refinement criteria without portion
+
+<div>
+<video data-autoplay src="videos/burgers/AMR_derivative_eps_1e-2_upwind_without_portion.mp4" />
+</div>
+
+## AMR with the modulus of the gradient $<1e-2$ as refinement criteria with portion
+
+<div>
+<video data-autoplay src="videos/burgers/AMR_derivative_eps_1e-2_upwind_with_portion.mp4" />
+</div>
+
+## AMR with the modulus of the second derivative $<10$ as refinement criteria without portion
+
+<div>
+<video data-autoplay src="videos/burgers/AMR_second_derivative_eps_10_upwind_without_portion.mp4" />
+</div>
+
+## AMR with the modulus of the second derivative $<10$ as refinement criteria with portion
+
+<div>
+<video data-autoplay src="videos/burgers/AMR_second_derivative_eps_10_upwind_with_portion.mp4" />
+</div>
+
+## AMR with the modulus of the second derivative $<100$ as refinement criteria without portion
+
+<div>
+<video data-autoplay src="videos/burgers/AMR_second_derivative_eps_100_upwind_without_portion.mp4" />
+</div>
+
+## AMR with the modulus of the second derivative $<100$ as refinement criteria with portion
+
+<div>
+<video data-autoplay src="videos/burgers/AMR_second_derivative_eps_100_upwind_with_portion.mp4" />
+</div>
+
 ## BZ
 
 :::{.center-page-vertically}
