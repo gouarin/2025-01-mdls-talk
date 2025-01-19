@@ -22,6 +22,326 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 
 ---
 
+
+---
+
+##  Burgers equation - small hat problem
+
+$$
+\partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2}, 
+$$
+
+
+::: {.row}
+
+:::: {.col-7}
+Consider the Cauchy problem with initial cond.
+
+$$
+u^0(x)=\left\{%
+             \begin{array}{cc}
+             \hfill 0,    & x \in ]- \infty,-1]\cup [1, + \infty[,\\
+                    x+1,  & x \in ]-1,0],        \hfill           \\
+                    1-x,  & x \in[0,1[.          \hfill           \\
+             \end{array}
+       \right.
+$$
+
+
+::: {.incremental}  
+- Shock formation at time $T^* = 1$ 
+- Leading to irreversible solution
+- RH condition governs shock dynamics
+:::
+
+::::
+
+:::: {.col}
+![](figures/chapeau.jpg)
+::::
+:::
+
+---
+
+##  Burgers equation - small hat problem
+
+$$
+\partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2}, 
+$$
+
+
+::: {.row}
+
+:::: {.col-7}
+Consider the Cauchy problem with initial cond.
+
+$$
+u^0(x)=\left\{%
+             \begin{array}{cc}
+             \hfill 0,    & x \in ]- \infty,-1]\cup [1, + \infty[,\\
+                    x+1,  & x \in ]-1,0],        \hfill           \\
+                    1-x,  & x \in[0,1[.          \hfill           \\
+             \end{array}
+       \right.
+$$
+
+- Shock formation at time $T^* = 1$ 
+- Leading to irreversible solution
+- RH condition governs shock dynamics
+
+::::
+
+:::: {.col}
+![](figures/chapeau_bis.jpg)
+::::
+:::
+
+---
+
+##  Burgers equation - small hat problem
+
+$$
+\partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2}, 
+$$
+
+
+::: {.row}
+
+:::: {.col-7}
+Consider the Cauchy problem with initial cond.
+
+$$
+u^0(x)=\left\{%
+             \begin{array}{cc}
+             \hfill 0,    & x \in ]- \infty,-1]\cup [1, + \infty[,\\
+                    x+1,  & x \in ]-1,0],        \hfill           \\
+                    1-x,  & x \in[0,1[.          \hfill           \\
+             \end{array}
+       \right.
+$$
+
+::: {.incremental}  
+
+- Shock location $\varphi(t)=\sqrt{2(1+t)}-1$ 
+- Propagation speed shock $\sigma(t)={1}/{\sqrt{2(1+t)}}$ 
+- Shock amplitude $[u]=\sqrt{{2}/{(1+t)}}$
+
+:::
+
+::::
+
+:::: {.col}
+![](figures/chapeau_bis.jpg)
+::::
+:::
+
+---
+
+##  Adaptive Multiresolution
+
+::: {.row}
+
+:::: {.col-7}
+
+- Minimum level $\underline{\ell}$ and maximum level $\bar{\ell}$.
+- Cells:
+$$
+C_{\ell, k}:=\prod_{\alpha=1}^d\left[2^{-\ell} k_\alpha, 2^{-\ell}\left(k_\alpha+1\right)\right]
+$$
+- Finest step: $\Delta x=2^{-\bar{\ell}}$.
+- Level-wise step: $\Delta x_{\ell}:=2^{-\ell}=2^{\Delta \ell} \Delta x$.
+::::
+
+:::: {.col}
+![](figures/levels_mod.png)
+::::
+:::
+
+---
+
+## Wavelets 
+
+Decomposition of the solution on a wavelet basis [Daubechies, '88], [Mallat, '89] to measure its local regularity. 
+"Practical" approach by [Harten, '95], [Cohen et al., '03].
+
+::: {.row}
+
+:::: {.col-7}
+
+**Projection operator**
+
+**Prediction operator** at order $2 \gamma+1$
+
+$$
+{\hat f}_{\ell+1,2 k}={f}_{\ell, k}+\sum_{\sigma=1}^\gamma \psi_\sigma\left({f}_{\ell, k+\sigma}-{f}_{\ell, k-\sigma}\right) 
+$$
+
+:::: {style="text-align: left"}
+![](figures/prediction.jpg)
+
+:::: {.fragment}
+
+Details are **regularity indicator**
+$$
+{\mathrm{d}}_{\ell, {k}}:={f}_{\ell, {k}}-{\hat{f}}_{\ell, {k}}
+$$
+
+
+Let $f \in W^{\nu, \infty}$ (neigh. of $C_{\ell, k}$ ), then
+$$
+\left|{\mathrm{d}}_{\ell, k}\right| \lesssim 2^{-\ell \min (\nu, 2 \gamma+1)}|f|_{W^{\min (\nu, 2 \gamma+1), \infty}}
+$$
+
+
+
+::::
+::::
+::::
+
+:::: {.col}
+
+::::
+
+
+
+:::
+
+----
+
+## Wavelets 
+
+Decomposition of the solution on a wavelet basis [Daubechies, '88], [Mallat, '89] to measure its local regularity. 
+"Practical" approach by [Harten, '95], [Cohen et al., '03].
+
+::: {.row}
+
+:::: {.col-7}
+
+**Projection operator**
+
+**Prediction operator** at order $2 \gamma+1$
+
+$$
+{\hat f}_{\ell+1,2 k}={f}_{\ell, k}+\sum_{\sigma=1}^\gamma \psi_\sigma\left({f}_{\ell, k+\sigma}-{f}_{\ell, k-\sigma}\right) 
+$$
+
+:::: {style="text-align: left"}
+![](figures/prediction.jpg)
+
+
+Details are **regularity indicator**
+$$
+{\mathrm{d}}_{\ell, {k}}:={f}_{\ell, {k}}-{\hat{f}}_{\ell, {k}}
+$$
+
+
+Let $f \in W^{\nu, \infty}$ (neigh. of $C_{\ell, k}$ ), then
+$$
+\left|{\mathrm{d}}_{\ell, k}\right| \lesssim 2^{-\ell \min (\nu, 2 \gamma+1)}|f|_{W^{\min (\nu, 2 \gamma+1), \infty}}
+$$
+
+
+::::
+::::
+
+:::: {.col}
+
+**Fast wavelet transform:**
+
+means at the finest level can be recast as means at the coarsest level + details 
+$$
+\begin{array}{rlr}
+{f}_{\overline{\ell}}
+& \Longleftrightarrow & \left({f}_{\underline{\ell}}, {{d}}_{\underline{\ell} +1}, \ldots, {d}_{\bar{\ell}}\right)\\
+\end{array}
+$$
+
+::::
+
+
+
+:::
+
+----
+
+## Mesh coarsening (static) 
+
+Local regularity of the solution allows to select areas to coarsen
+
+$$
+{{f}}_{\bar{\ell}} \rightarrow \left({f}_{\underline{\ell}}, {\mathbf{d}}_{\underline{\ell}+1}, \ldots, {\mathbf{d}}_{\bar{\ell}}\right)  \rightarrow \left({f}_{\underline{\ell}}, {\tilde{\mathbf{d}}}_{\underline{\ell}+1}, \ldots, \tilde{{\mathbf{d}}}_{\bar{\ell}}\right) \rightarrow  {\tilde{{f}}}_{\bar{\ell}}
+$$
+$$
+ \tilde{{\mathrm{d}}}_{\ell, k}= 
+ \begin{cases}0, & \text { if } \left|{\mathbf{d}}_{\ell, k}\right| \leq \epsilon_{\ell}=2^{-d \Delta \ell} \epsilon, \quad \rightarrow \quad\left\|{\mathbf{f}}_{\bar{\ell}}-\tilde{{\mathbf{f}}}_{\bar{\ell}}\right\|_{\ell^p} \lesssim \epsilon \\
+{\mathrm{d}}_{\ell, k}, & \text { otherwise}
+\end{cases}
+$$
+
+Set a small (below $\epsilon_{\ell}$) detail to zero $\equiv$  erase the cell $C_{\ell, k}$ from the structure
+
+---
+
+## Examples 
+
+Donner ici les caracteristiques du cas : espilon / maillage le plus fin / norme - regularité
+
+![](figures/compression.png){fig-align=center}
+
+
+et les taux de compression
+
+
+---
+
+## Time evolution of PDEs
+
+- Finite volumes with global time step $\Delta t = \Lambda(\Delta x)$ 
+- Use dynamic mesh refinement
+
+
+Mesh updated using “old” information at time $t$ to accommodate the one at time 
+$t + \Delta t$
+
+
+::: {.row}
+
+:::: {.col-6}
+
+- Propagation of information :  add security cells
+- Formation of singularities : (regularity index: $\nu =0$, $\mu = \min(\nu,2\gamma +1)$) refine if
+$$
+\left|{\mathbf{d}}_{\ell, k}\right| \geq \epsilon_{\ell}\,2^{d+\mu}
+$$
+
+:::: 
+
+
+:::: {.col}
+![](figures/viscous_burgers.jpg)
+::::
+:::
+
+---
+
+## Finite volumes / conservation / order
+
+
+
+
+Flux evaluation at interfaces between levels 
+
+![](figures/reconstruction_only_leaves.jpg)
+
+Using the prediction operator allows to evaluate fluxes at the same level
+
+![](figures/reconstruction.jpg)
+
+
+
+
+---
+
 :::{.text-center}
 ```{=html}
 <video data-autoplay src="videos/upwind_without_portion.mp4" />
