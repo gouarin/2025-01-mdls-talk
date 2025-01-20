@@ -899,7 +899,7 @@ samurai
 </section>
 <section id="design-principles" class="slide level2">
 <h2>Design principles</h2>
-<div class="center-page-vertically">
+<div class="center-page-vertically lh-lg">
 <ul>
 <li>Compress the mesh according to the level-wise spatial connectivity along each Cartesian axis.</li>
 <li>Achieve fast look-up for a cell into the structure, especially for parents and neighbors.</li>
@@ -1077,6 +1077,7 @@ samurai
 </section>
 <section id="mesh-constraints" class="slide level2">
 <h2>Mesh constraints</h2>
+<div class="lh-lg">
 <ul>
 <li>A refined cell is split into 2 in 1d, 4 in 2d and 8 in 3d equal parts.</li>
 <li>At a given resolution level, the size of the cells is equal.</li>
@@ -1084,6 +1085,7 @@ samurai
 <li>A cell is represented by integer coordinates given its location. <span class="math display">\[center = \Delta x (indices + 0.5)\]</span></li>
 <li>The adapted mesh is generally graded.</li>
 </ul>
+</div>
 </section>
 <section id="identify-the-different-types-of-cells" class="slide level2">
 <h2>Identify the different types of cells</h2>
