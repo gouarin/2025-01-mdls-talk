@@ -11,7 +11,7 @@
   - explicit diffusion integration without von Neumann stability limit (ROCK)
   - high-order in space and time integration of convection, including shocks
   - strong acceleration through adaptation in space and time
-- Stumbling block: what to do when reaction and diffusion coupled to the smallest time scale (complex chemistry)
+- Stumbling block: what to do when reaction and diffusion coupled to the smallest time scale (complex chemistry - ignition)
 ::::
 
 ::::{.col .align-self-center}
@@ -28,14 +28,19 @@
 ::::{.col-8 .align-self-center}
 - Keep reaction and diffusion coupled (IMEX)!
 - No splitting time step limitation due to the coupling at small scale (complex chemistry and detailed transport in flames for example)
-- Relying on the PIROCK strategy of G. Vilmart and A. Abdulle.
+- Inspired from strategy of G. Vilmart and A. Abdulle (ponio library : J. Massot)
 - Adaptation in space and time with error control
-- Project with CEA on hydrogen risk - DNS combustion with detailed transport and CChem
+- Project with CEA on hydrogen risk - DNS of hydrogen combustion with detailed transport and complex chemistry - Collaboration P.A. Masset and L. Lecointre
 ::::
 
 ::::{.col .text-center}
+
 ![](figures/hpc@maths.png){width=50%}
+
+:::{.my-3}
 ![](figures/logo.png){width=50%}
+:::
+
 ![](figures/logo-cea.webp){width=50%}
 ::::
 :::
@@ -194,3 +199,80 @@ $$
 
 ::::
 :::
+
+
+## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
+
+:::{.row .fs-6 }
+
+::::{.col-6 .align-self-center }
+Belousov-Zhabotinsky (very stiff source - 3 eq)
+$$
+\left\{
+\begin{aligned}
+\partial_t a - D_a \, \Delta a &= \frac{1}{\mu} ( -qa - ab
++
+fc) \\
+\partial_t b - D_b \, \Delta b &= \frac{1}{\varepsilon} (
+qa
+- ab + b\,(1-b)) \\
+\partial_t c - D_c \, \Delta c &= b - c
+\end{aligned}
+\right.
+$$
+
+- Error to the reference quasi-exact solution is second order in time but not of the same origin (splitting error vs. IMEX error) - but still error control
+- Larger time step can be taken with IMEX while keeping a proper solution (no disastrous splitting errors - wrong wave speed)
+- When optimal large splitting time step is taken, IMEX as efficient as splitting, whereas it is advantageous for smaller time steps as well as larger time steps
+- No boundary condition problems
+- Same computational good properties
+
+
+
+:::{.callout-important icon=false title="Simulation with ponio / samurai"}
+:::
+
+
+::::
+
+::::{.col-6 .text-center}
+
+:::{.center-page-vertically}
+
+<video data-autoplay loop="true" src="videos/bz_pirock_animation.mp4" width="90%" />
+
+:::
+
+:::{.text-center .mt-0}
+$\epsilon = 1e-3$, $\underline{\ell} = 2$, $\bar{\ell} = 10$
+:::
+
+::::
+:::
+
+
+
+## References
+
+
+
+**Theses**
+
+- M. Duarte, **Adaptive numerical methods in time and space for the simulation of multi-scale reaction fronts**, PhD Thesis, *École Centrale Paris*, (2011) https://theses.hal.science/tel-00667857
+- L. Lecointre, **Hydrogen flame acceleration in non-uniform mixtures**, PhD Thesis, *Université Paris Saclay*, (2022) - https://theses.hal.science/tel-03879925
+
+
+**Publications**
+
+
+- M. Duarte , M. M., S. Descombes, C. Tenaud, T. Dumont, **New resolution strategy for multi-scale reaction waves using time operator splitting, space adaptive multiresolution and dedicated high order implicit/explicit time integrators**, *SIAM SISC*, vol. 34, No. 1 (2012) pp.76-104
+- M. Duarte, S. Descombes, C. Tenaud, S. Candel, M. M., **Time-space adaptive numerical methods for the simulation of combustion fronts**, *Combustion and Flame*, vol. 160, No. 6 (2013) pp.1083-1101
+- J. Massot, L. Séries, L. G., P. Matalon, C. Tenaud,  M. M., **A splitting/ImEx strategy for stiff PDEs with time adaptation and error control**, invited contribution to Comptes Rendus Mécanique (2025)
+
+
+
+**Software**
+
+-  J. Massot, M. M., L. Series, **ponio** (2024) https://hal.science/hal-04710549v1
+-  T. Bellotti, L. G.,  M. M., P. Matalon, **samurai** (2023) https://hal.science/hal-04545389v1
+
