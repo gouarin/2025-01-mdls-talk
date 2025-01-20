@@ -22,7 +22,7 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 
 ---
 
-##  Burgers equation (1948) - small hat problem
+##  Burgers equation (1948) - small hat 
 
 $$
 \partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2}, 
@@ -336,15 +336,26 @@ $$
 
 
 
-
-Flux evaluation at interfaces between levels 
-
+:::{.mb-3}
+Flux evaluation at interfaces between levels
+:::
 ![](figures/reconstruction_only_leaves.jpg)
 
+
+
+:::: {.fragment}
+
+:::{.my-3}
 Using the prediction operator allows to evaluate fluxes at the same level
+:::
 
 ![](figures/reconstruction.jpg)
 
+::::
+
+:::{.callout-note .mt-3}
+We use a Godunov flux for the small hat problem
+:::
 
 
 
@@ -850,8 +861,155 @@ for(std::size_t level = min_level; level < max_level; ++level)
 - HDF5 support
 :::
 
-<!-- {{< include sections/examples.qmd >}} -->
-<!-- {{< include sections/splitting_imex.qmd >}} -->
+
+
+# Numerical Analysis and Modified Equations
+
+## Linear scalar transport equation
+
+In this work, we are concerned with the numerical solution of the Cauchy problem associated with the linear scalar conservation law
+
+$$
+\partial_t u(t, x)+V \partial_x u(t, x)=0, \quad(t, x) \in \mathbb{R}^{+} \times \mathbb{R}
+$$
+
+where $V$ is the transport velocity, taken $V>0$ without loss of generality.
+we consider 1 d problems. The extension to $2 \mathrm{~d} / 3 \mathrm{~d}$ problems is straightforward and usually done by tensorization [Bellotti2022] and yields analogous conclusions.
+
+The discrete volumes are
+$$
+C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}-1 \},
+$$
+for any $\ell \in \{ \underline{\ell}, \bar{\ell} \}$. The measure of each cell at level $\ell$ is $\Delta x_{\ell}:=2^{-\ell}$ and we shall indicate $\Delta x:=\Delta x_{\bar{\ell}}$. The cell centers are $x_{\ell, k}:=$ $2^{-\ell}(k+1 / 2)$. Finally, we shall indicate $\Delta \ell:=\bar{\ell}-\ell$, hence $\Delta x_{\ell}=2^{\Delta \ell} \Delta x$.
+
+
+## Finite Volume scheme
+
+Finite Volume scheme at the finest level of resolution $\bar{\ell}$ for any cell of indices $\bar{k} \in \{ 0,2^{\bar{\ell}}-1 \}$. Explicit schemes read:
+
+$$
+\mathrm{v}_{\bar{\ell}, \bar{k}}^{n+1}=\mathrm{v}_{\bar{\ell}, \bar{k}}^n-\frac{\Delta t}{\Delta x}\left(\Phi\left(\mathrm{v}_{\bar{\ell}, \bar{k}+1 / 2}^n\right)-\Phi\left(\mathrm{v}_{\bar{\ell}, \bar{k}-1 / 2}^n\right)\right)
+$$
+
+where we utilize the same linear numerical flux for the left and the right flux (conservativity)
+$$
+\Phi\left(\mathbf{v}_{\bar{\ell}, \bar{k}-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \mathbf{v}_{\bar{\ell}, \bar{k}+\alpha}, \quad \Phi\left(\mathbf{v}_{\bar{\ell}, \bar{k}+1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha v_{\bar{\ell}, \bar{k}+1+\alpha}
+$$
+
+## Modified equations
+
+[Carpentier et al 97] or Cauchy-Kowalewski procedure [Harten et al 87] 
+
+$$
+\partial_t u\left(t^n, x_{\bar{\ell}, \bar{k}}\right)+V \partial_x u\left(t^n, x_{\bar{\ell}, \bar{k}}\right)=\sum_{h=2}^{+\infty} \Delta x^{h-1} \sigma_h \partial_x^h u\left(t^n, x_{\bar{\ell}, \bar{k}}\right)
+$$
+
+::: {.incremental}  
+- Upwind scheme
+$$
+\partial_t u+V \partial_x u=\frac{\Delta x V}{2}(1-\lambda V) \partial_{x x} u+O\left(\Delta x^2\right)
+$$
+- Lax-Wendroff scheme
+$$
+\partial_t u+V \partial_x u=-\frac{\Delta x^2 V}{6}\left(1-\lambda^2 V^2\right) \partial_x^3 u+O\left(\Delta x^3\right)
+$$
+- OSMP-3 scheme
+$$
+\partial_t u+V \partial_x u=\frac{\Delta x^3 V}{24}\left(-\lambda^3 V^2+2 \lambda^2 V^2+\lambda V-2\right) \partial_x^4 u+O\left(\Delta x^4\right)
+$$
+:::
+
+
+## How to include MRA
+
+
+We introduce the reconstruction operator $\hat{s}$ instead of $s$ on the cells $\left(\bar{\ell}, 2^{\Delta \ell} k+\delta\right)$ for any $\delta \in \mathbb{Z}$ at the finest level 
+
+- $\hat{s}=s$ : exact local flux reconstruction [Cohen et al. 2003]. 
+- $\hat{s}=0$ but $s>0$, direct evaluation or naive evaluation [Hovhannisyan et al 2010]. 
+
+$$
+\mathbf{w}_{\bar{\ell}, \bar{k}}^{n+1}=\mathbf{w}_{\bar{\ell}, \bar{k}}^n-\frac{\Delta t}{\Delta x}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+1 / 2}^n\right)-\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}^n\right)\right), \Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+\alpha}
+$$
+
+Let now $(\ell, k) \in S\left(\tilde{\Lambda}^{n+1}\right)$, taking the projection yields the multiresolution scheme
+
+$$
+\mathbf{w}_{\ell, k}^{n+1}=\mathbf{w}_{\ell, k}^n-\frac{\Delta t}{\Delta x_{\ell}}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell}(k+1)+1 / 2}^n\right)-\Phi\left(\hat{\mathbf{w}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}^n\right)\right),  \Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k+\alpha}
+$$
+
+Some information is loss because of the averaging procedure: two different schemes we can consider for the computation of the modified equations
+
+
+**Theorem** The local truncation error of the reference Finite Volume scheme and the one of the adaptive Finite Volume scheme are the same up to order $2\hat{s}+1$ included
+
+
+## Modified equations including MRA
+
+
+This result establishes at which order the modified equations of the reference scheme are perturbed by the introduction of the adaptive scheme. However, it does not characterize the terms in the modified equations of (11) above order $2\hat{s}+1$ in $\Delta x$ (symbolic computations). 
+
+
+::: {.incremental}
+- Upwind scheme
+$$
+\begin{array}{lr}
+\partial_t u+V \partial_x u=\frac{\Delta x V}{2}\left(2^{\Delta \ell}-\lambda V\right) \partial_{x x} u+O\left(\Delta x^2\right), & \text { for } \hat{s}=0 \\
+\partial_t u+V \partial_x u=\frac{\Delta x V}{2}(1-\lambda V) \partial_{x x} u-\frac{\Delta x^2 V}{6}\left(1-\lambda^2 V^2\right) \partial_x^3 u+& \\
+\ \ \ \ \ \ \ \ \ \ \frac{\Delta x^3 V}{24}\left(-3 \Delta \ell 2^{2 \Delta \ell}+2^{2 \Delta \ell}-\lambda^3 V^3\right) \partial_x^4 u+O\left(\Delta x^4\right), & \text { for } \hat{s}=1
+\end{array}
+$$
+- Lax-Wendroff scheme
+$$
+\begin{array}{lr}
+\partial_t u+V \partial_x u=\frac{\Delta x \lambda V^2}{2}\left(2^{\Delta \ell}-1\right) \partial_{x x} u+O\left(\Delta x^2\right), &  \text { for } \hat{s}=0 \\
+\partial_t u+V \partial_x u=-\frac{\Delta x^2 V}{6}\left(1-\lambda^2 V^2\right) \partial_x^3 u+&\\
+\ \ \ \ \ \ \ \ \ \ \frac{\Delta x^3 \lambda V^2}{24}\left(-3 \Delta \ell 2^{2 \Delta \ell}+2^{2 \Delta \ell}-\lambda^2 V^2\right) \partial_x^4 u+O\left(\Delta x^4\right), & \text { for }  \hat{s}=1
+\end{array}
+$$
+
+:::
+
+## Theoretical results on the global error
+
+**Theorem 2**  Assume that
+
+- The reference scheme satisfies the restricted stability condition $\|E\| \leq 1$
+- The Harten-like scheme satisfies the restricted stability condition $\left\|\bar{E}_{\Lambda}\right\| \leq 1$ for any $\Lambda$.
+
+Then, for smooth solution, in the limit $\Delta x \rightarrow 0$ (i.e. $\bar{\ell} \rightarrow+\infty$ ) and for $\Delta \underline{\ell}=\bar{\ell}-\underline{\ell}$ kept fixed, we have the error estimate
+
+$$
+\left\|\mathbf{v}_{\bar{\ell}}^n-\mathbf{w}_{\bar{\ell}}^n\right\| \leq C_{t r} t^n \Delta x^{2 \hat{s}+1}+C_{m r} \frac{t^n}{\lambda \Delta x} \epsilon
+$$
+
+where $C_{t r}=C_{t r}\left(\bar{\ell}-\underline{\ell},\left(\phi_\alpha\right)_\alpha, \lambda, \hat{s}, V\right)$ and $C_{m r}=C_{m r}\left(\bar{\ell}-\underline{\ell},\left(\phi_\alpha\right)_\alpha, \lambda, \hat{s}, s, V\right)$.
+$$
+\left\|\mathbf{u}_{\bar{\ell}}^n-\mathbf{w}_{\bar{\ell}}^n\right\| \leq C_{r e f} t^n \Delta x^\theta+C_{t r} t^n \Delta x^{2 \hat{s}+1}+C_{m r} \frac{t^n}{\lambda \Delta x} \epsilon
+$$
+
+:::{.notes}
+Let us start by discussing the assumption that we have placed in the statement of Theorem 2:
+- The restricted stability condition $\|E\| \leq 1$ could be replaced by a milder condition $\|E\| \leq 1+C \Delta t$ for some constant $C \geq 0$, see (69) in [7] and (A2) in [15]. This would not change the result. The technical assumption $\left\|\bar{E}_{\Lambda}\right\| \leq 1$ is harder to relax and also difficult to check in practice.
+- The fact of considering smooth solutions comes from the fact that we want to apply the analysis of the modified equations to obtain the convergence rates, in the spirit of the Lax theorem [1]. For the same reason, we take $\Delta x \rightarrow 0$ (or $\bar{\ell} \rightarrow+\infty$ ).
+- The distance between maximum and minimum level $\Delta \underline{\ell}=\bar{\ell}-\underline{\ell}$ has to be fixed, because otherwise the constant $C_{\text {tr }}$ potentially explodes and dominates $\Delta x^{2 \hat{s}+1}$ when $\Delta x \rightarrow 0$. This would prevent us from comparing orders. Moreover, this is also reasonable from the standpoint of actual computations, where we refine the mesh to achieve convergence (or nearly so) keeping the number of different available grid levels fixed. Still, we shall also perform numerical demonstration without fixing $\Delta \underline{\ell}=\bar{\ell}-\underline{\ell}$ to show that the modified equations that we have previously developed provide important information on the behavior of $\left\|\mathbf{v}_{\bar{\ell}}^n-\mathbf{w}_{\bar{\ell}}^n\right\|$.
+:::
+
+## Comments on theorem 
+
+::: {.incremental}
+* The error estimate contains three contributions: the discretization error of the reference scheme, the perturbation error between the reference and the adaptive scheme, and the thresholding error coming from the multiresolution
+* The constant $C_{\mathrm{tr}}$ generally grows exponentially with $\bar{\ell}-\underline{\ell}$, sometimes also involving linear terms, i.e. $\hat{s}=1$. We have the following cases:
+    + $\theta<2 \hat{s}+1$. The error of the reference scheme dominates the perturbation introduced by the adaptive scheme $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{ref}} T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$. A thresholding error of the same order as the reference error $\epsilon \sim \Delta x^{\theta+1}$. 
+    + $\theta=2 \hat{s}+1$.  The error of the reference scheme and the perturbation order are comparable (first example!) We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq\left(C_{\mathrm{ref}}+C_{\mathrm{tr}}\right) T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$. 
+    +  $\theta>2 \hat{s}+1$. The perturbation introduced by the adaptive scheme dominates the error of the reference scheme. Therefore, multiresolution introduces a large perturbation that yields a different convergence rate. We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{tr}} T \Delta x^{2 \hat{s}+1}+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$, thus one takes $\epsilon \sim \Delta x^{2 \hat{s}+2}$ (AMR !)
+:::
+
+:::
+
+:::{.notes}
+Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_{\mathrm{tr}} \sim C_{\mathrm{ref}}$, then w
+:::
 
 # Burgers results for upwind scheme
 
@@ -902,6 +1060,11 @@ for(std::size_t level = min_level; level < max_level; ++level)
 :::{.text-center}
 <video data-autoplay width="80%" src="videos/burgers/AMR_second_derivative_eps_100_upwind_with_portion.mp4" />
 :::
+
+
+<!-- {{< include sections/examples.qmd >}} -->
+{{< include sections/splitting_imex.qmd >}}
+
 
 ## BZ
 
