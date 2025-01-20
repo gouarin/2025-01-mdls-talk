@@ -13,6 +13,31 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 ---
 
 
+## "HPC_at_Maths"
+
+::: {.row}
+
+:::: {.col-8}
+
+The present work is the result of a team work involving
+
+- Thomas Bellotti (CR CNRS  - EM2C - Fédé Maths CS)
+- Josselin Massot (IR École polytechnique, CMAP)
+- Pierre Matalon (IR École polytechnique, CMAP)
+- Laurent Séries (IR École polytechnique, CMAP)
+- Christian Tenaud (CR CNRS  - EM2C - Fédé Maths CS)
+
+
+::::
+
+:::: {.col}
+![](figures/logo_HPC@Maths.jpg)
+::::
+:::
+
+Website + image + sponsors of the team - github - Fondation / Quantstack / CEA 
+
+
 # Context
 
 ```{=html}
@@ -1159,7 +1184,7 @@ Let us start by discussing the assumption that we have placed in the statement o
 ## Comments on theorem
 
 ::: {.incremental}
-* The error estimate contains three contributions: the discretization error of the reference scheme, the perturbation error between the reference and the adaptive scheme, and the thresholding error coming from the multiresolution
+* The error estimate contains three contributions: the **discretization error** of the reference scheme, the **perturbation error** between the reference and the adaptive scheme, and the **thresholding error** coming from the multiresolution
 * The constant $C_{\mathrm{tr}}$ generally grows exponentially with $\bar{\ell}-\underline{\ell}$, sometimes also involving linear terms, i.e. $\hat{s}=1$. We have the following cases:
     + $\theta<2 \hat{s}+1$. The error of the reference scheme dominates the perturbation introduced by the adaptive scheme $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{ref}} T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$. A thresholding error of the same order as the reference error $\epsilon \sim \Delta x^{\theta+1}$.
     + $\theta=2 \hat{s}+1$.  The error of the reference scheme and the perturbation order are comparable (first example!) We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq\left(C_{\mathrm{ref}}+C_{\mathrm{tr}}\right) T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$.
@@ -1171,6 +1196,15 @@ Let us start by discussing the assumption that we have placed in the statement o
 :::{.notes}
 Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_{\mathrm{tr}} \sim C_{\mathrm{ref}}$, then w
 :::
+
+## References 
+
+List of papers for this part :
+
+- Course AMS X02 
+- Bellotti LBM -  High accuracy analysis of adaptive multiresolution-based lattice Boltzmann schemes via the equivalent equations T. Bellotti , L. Gouarin , B. Graille , M. Massot SMAI Journal of Computational Mathematics Volume 8 (2022), pp. 161-199
+- Bellotti PhD - TEL
+- papier Thomas 2025
 
 # Burgers results for upwind scheme
 
@@ -1236,6 +1270,18 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 :::
 
 :::
+
+
+## References 
+
+List of papers for this part :
+
+- PhD Max 
+- Travaux Max
+- PhD Lecointre
+- CRAS Mecanique
+- Lien ponio (presenter qqpart)
+
 
 ## Key point
 
