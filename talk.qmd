@@ -594,7 +594,7 @@ Peano and p4est don't have any adaptation or time-scheme criteria, as they are s
 
 ## Design principles
 
-:::{.center-page-vertically}
+:::{.center-page-vertically .lh-lg}
 - Compress the mesh according to the level-wise spatial connectivity along each Cartesian axis.
 - Achieve fast look-up for a cell into the structure, especially for parents and neighbors.
 - Maximize the memory contiguity of the stored data to allow for caching and vectorization.
@@ -664,6 +664,7 @@ The offset is used here to find the right range of x-intervals in the 1d array o
 
 ## Mesh constraints
 
+:::{.lh-lg}
 - A refined cell is split into 2 in 1d, 4 in 2d and 8 in 3d equal parts.
 - At a given resolution level, the size of the cells is equal.
 - The size of the cells is defined by the resolution level.
@@ -671,7 +672,7 @@ $$\Delta x = s2^{-level}$$
 - A cell is represented by integer coordinates given its location.
 $$center = \Delta x (indices + 0.5)$$
 - The adapted mesh is generally graded.
-
+:::
 
 ## Identify the different types of cells
 
