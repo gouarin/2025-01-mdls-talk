@@ -1060,7 +1060,7 @@ $$
 $$
 
 where $V$ is the transport velocity, taken $V>0$ without loss of generality.
-we consider 1 d problems. The extension to $2 \mathrm{~d} / 3 \mathrm{~d}$ problems is straightforward and usually done by tensorization [Bellotti2022] and yields analogous conclusions.
+we consider 1 d problems. The extension to $2\mathrm{~d}$ / $3\mathrm{~d}$ problems is straightforward and usually done by tensorization [Bellotti2022] and yields analogous conclusions.
 
 The discrete volumes are
 $$
@@ -1106,7 +1106,7 @@ $$
 :::
 
 
-## How to include MRA
+## How to include MRA I
 
 
 We introduce the reconstruction operator $\hat{s}$ instead of $s$ on the cells $\left(\bar{\ell}, 2^{\Delta \ell} k+\delta\right)$ for any $\delta \in \mathbb{Z}$ at the finest level
@@ -1114,18 +1114,33 @@ We introduce the reconstruction operator $\hat{s}$ instead of $s$ on the cells $
 - $\hat{s}=s$ : exact local flux reconstruction [Cohen et al. 2003].
 - $\hat{s}=0$ but $s>0$, direct evaluation or naive evaluation [Hovhannisyan et al 2010].
 
+
+:::: {.fragment}
+
 $$
-\mathbf{w}_{\bar{\ell}, \bar{k}}^{n+1}=\mathbf{w}_{\bar{\ell}, \bar{k}}^n-\frac{\Delta t}{\Delta x}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+1 / 2}^n\right)-\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}^n\right)\right), \Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+\alpha}
+\mathbf{w}_{\bar{\ell}, \bar{k}}^{n+1}=\mathbf{w}_{\bar{\ell}, \bar{k}}^n-\frac{\Delta t}{\Delta x}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+1 / 2}^n\right)-\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}^n\right)\right)
 $$
+$$
+\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+\alpha}
+$$
+ 
+:::: 
+
+## How to include MRA II
 
 Let now $(\ell, k) \in S\left(\tilde{\Lambda}^{n+1}\right)$, taking the projection yields the multiresolution scheme
 
 $$
-\mathbf{w}_{\ell, k}^{n+1}=\mathbf{w}_{\ell, k}^n-\frac{\Delta t}{\Delta x_{\ell}}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell}(k+1)+1 / 2}^n\right)-\Phi\left(\hat{\mathbf{w}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}^n\right)\right),  \Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k+\alpha}
+\mathbf{w}_{\ell, k}^{n+1}=\mathbf{w}_{\ell, k}^n-\frac{\Delta t}{\Delta x_{\ell}}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell}(k+1)+1 / 2}^n\right)-\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}^n\right)\right)
 $$
 
-Some information is loss because of the averaging procedure: two different schemes we can consider for the computation of the modified equations
+$$
+\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k+\alpha}
+$$
 
+:::{.my-4}
+Some information is loss because of the averaging procedure: two different schemes we can consider for the computation of the modified equations
+:::
 
 **Theorem** The local truncation error of the reference Finite Volume scheme and the one of the adaptive Finite Volume scheme are the same up to order $2\hat{s}+1$ included
 
@@ -1197,14 +1212,6 @@ Let us start by discussing the assumption that we have placed in the statement o
 Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_{\mathrm{tr}} \sim C_{\mathrm{ref}}$, then w
 :::
 
-## References 
-
-List of papers for this part :
-
-- Course AMS X02 
-- Bellotti LBM -  High accuracy analysis of adaptive multiresolution-based lattice Boltzmann schemes via the equivalent equations T. Bellotti , L. Gouarin , B. Graille , M. Massot SMAI Journal of Computational Mathematics Volume 8 (2022), pp. 161-199
-- Bellotti PhD - TEL
-- papier Thomas 2025
 
 # Burgers results for upwind scheme
 
@@ -1257,6 +1264,16 @@ List of papers for this part :
 :::
 
 
+## References 
+
+List of papers for this part :
+
+- Course AMS X02 
+- Bellotti LBM -  High accuracy analysis of adaptive multiresolution-based lattice Boltzmann schemes via the equivalent equations T. Bellotti , L. Gouarin , B. Graille , M. Massot SMAI Journal of Computational Mathematics Volume 8 (2022), pp. 161-199
+- Bellotti PhD - TEL
+- papier Thomas 2025
+
+
 <!-- {{< include sections/examples.qmd >}} -->
 {{< include sections/splitting_imex.qmd >}}
 
@@ -1265,9 +1282,7 @@ List of papers for this part :
 
 :::{.center-page-vertically}
 
-<div class="text-center">
 <video data-autoplay loop="true" src="videos/bz_pirock_animation.mp4" width="45%" />
-:::
 
 :::
 
