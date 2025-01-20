@@ -61,7 +61,7 @@ Github lien
 
 ---
 
-##  Burgers equation (1948) - small hat
+##  Burgers equation - small hat problem
 
 $$
 \partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
