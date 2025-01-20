@@ -23,7 +23,7 @@ section.has-dark-background h6 {
     --r-background-color: #FAFAFA;
     --r-main-font: "Lato", sans-serif;
     --r-line-color: #9b001a;
-    --r-main-font-size: 26px;
+    --r-main-font-size: 1.4em;
     --r-main-color: #222;
     --r-block-margin: 2px;
     --r-heading-margin: 0 0 20px 0;
@@ -45,6 +45,11 @@ section.has-dark-background h6 {
     --r-link-color-hover: #9a001a79;
     --r-selection-background-color: #98bdef;
     --r-selection-color: #fff;
+}
+
+.math.inline
+{
+    font-size: 0.9em;
 }
 
 .reveal .center-page
@@ -455,6 +460,10 @@ border-bottom: none;
     }
 }
 
+.reveal .slide-logo
+{
+    margin: 15px;
+}
 /* .slide-title
 {
 position: absolute;
