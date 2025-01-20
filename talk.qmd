@@ -1308,10 +1308,13 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 
 - Master "AMS" (*Analyse Modélisation Simulation*) Course MSX2TA **Méthodes Numériques Avancées et Calcul Haute performance pour la simulation de phénomènes complexes** (L. Séries, M. M.)
 
+**Theses**
+
+- T. Bellotti, **Numerical analysis of lattice Boltzmann schemes : from fundamental issues to efficient and accurate adaptive methods**, PhD Thesis, *Institut Polytechnique de Paris*, EDMH (2023) https://theses.hal.science/tel-04266822 
+
 **Publications**
 
 - T. Bellotti , L. G. , B. Graille , M. M.. **High accuracy analysis of adaptive multiresolution-based lattice Boltzmann schemes via the equivalent equations**, *SMAI Journal of Computational Mathematics*, Volume 8 (2022), pp. 161-199
-- T. Bellotti, **Numerical analysis of lattice Boltzmann schemes : from fundamental issues to efficient and accurate adaptive methods**, PhD Thesis, *Institut Polytechnique de Paris*, EDMH, Prix SMAI/GAMNI - Prix Paul Caseau 2024 - https://theses.hal.science/tel-04266822 
 - T. Bellotti, J. Massot, M. M., L. Séries, C. Tenaud, **Modified equation and error analyses of adaptive multiresolution Finite Volume schemes**, in preparation - to be submitted (2025) 
 
 
@@ -1330,13 +1333,27 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 
 ## References
 
-List of papers for this part :
 
-- PhD Max
-- Travaux Max
-- PhD Lecointre
-- CRAS Mecanique
-- Lien ponio (presenter qqpart)
+
+**Theses**
+
+- M. Duarte, **Adaptive numerical methods in time and space for the simulation of multi-scale reaction fronts**, PhD Thesis, *École Centrale Paris*, (2011) https://theses.hal.science/tel-00667857  
+- L. Lecointre, **Hydrogen flame acceleration in non-uniform mixtures**, PhD Thesis, *Université Paris Saclay*, (2022) - https://theses.hal.science/tel-03879925 
+
+
+**Publications**
+
+
+- M. Duarte , M. M., S. Descombes, C. Tenaud, T. Dumont, **New resolution strategy for multi-scale reaction waves using time operator splitting, space adaptive multiresolution and dedicated high order implicit/explicit time integrators**, *SIAM SISC*, vol. 34, No. 1 (2012) pp.76-104
+- M. Duarte, S. Descombes, C. Tenaud, S. Candel, M. M., **Time-space adaptive numerical methods for the simulation of combustion fronts**, *Combustion and Flame*, vol. 160, No. 6 (2013) pp.1083-1101 
+- J. Massot, L. Séries, L. G., P. Matalon, C. Tenaud,  M. M., **A splitting/ImEx strategy for stiff PDEs with time adaptation and error control**, invited contribution to Comptes Rendus Mécanique (2025) 
+
+
+
+**Software** 
+
+-  J. Massot, M. M., L. Series, **ponio** (2024) https://hal.science/hal-04710549v1 
+-  T. Bellotti, L. G.,  M. M., P. Matalon, **samurai** (2023) https://hal.science/hal-04545389v1
 
 
 ## Key point
