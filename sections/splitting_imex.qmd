@@ -2,16 +2,16 @@
 
 ## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
 
-:::{.row .fs-6}
+:::{.row .fs-5}
 ::::{.col-7 .align-self-center}
-- A strategy has been designed (PhD M. Duarte) relying on time-adaptive operator splitting with dynamically adapted mesh (multiresolution) with error control:
-  - optimal computational cost and parallelization properties when large splitting time steps compared to the smallest time scale can be taken without impairing precision
-- We aim at resolving stiff PDEs with samurai and ponio (time integrators) libraries with the same computation favorable properties:
-  - the same computational properties (local implicitation of the source term - allowing for very stiff source with local time integration in space)
+- A strategy has been designed (PhD M. Duarte) relying on time-adaptive operator splitting with dynamically adapted mesh (multiresolution) and error control:
+  - optimal computational cost and parallelization properties (large splitting time steps) 
+- We aim at resolving stiff PDEs with samurai and ponio libraries with the same computation favorable properties:
+  - local implicitation of the source term
   - explicit diffusion integration without von Neumann stability limit (ROCK)
   - high-order in space and time integration of convection, including shocks
   - strong acceleration through adaptation in space and time
-- Stumbling block: what to do when reaction and diffusion coupled to the smallest time scale (complex chemistry - ignition)
+- Stumbling block: what to do when reaction and diffusion coupled at smallest time scale (complex chem. - ignition)
 ::::
 
 ::::{.col .align-self-center}
@@ -22,7 +22,7 @@
 ::::
 :::
 
-## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
+## A dual Splitting/IMEX strategy for stiff PDEs {.fs-5}
 
 :::{.row }
 ::::{.col-8 .align-self-center}
@@ -45,7 +45,7 @@
 ::::
 :::
 
-## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
+## A dual Splitting/IMEX strategy for stiff PDEs {.fs-5}
 
 :::{.row .fs-5 }
 ::::{.col-6 .align-self-center}
@@ -65,7 +65,7 @@ $$
 ::::
 :::
 
-## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
+## A dual Splitting/IMEX strategy for stiff PDEs {.fs-5}
 
 :::{.row .fs-5 }
 ::::{.col-6 .align-self-center}
@@ -108,7 +108,7 @@ IMEX reasonable overhead compared to fully explicit methods (ROCK2 - ROCK4) even
 ::::
 :::
 
-## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
+## A dual Splitting/IMEX strategy for stiff PDEs {.fs-5}
 
 :::{.row .fs-6 }
 
@@ -143,7 +143,7 @@ $$
 ::::
 :::
 
-## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
+## A dual Splitting/IMEX strategy for stiff PDEs {.fs-5}
 
 :::{.row .fs-6 }
 
@@ -181,7 +181,7 @@ $$
 
 &nbsp;
 
-| | PIROCK (tol=1e-3) | STRANG (dt=2/512) |
+| | ImEx (tol=1e-3) | STRANG (dt=2/512) |
 |------------------------------|:------------------:|:--------------------:|
 |L2 norm of error (variable b) | 4.94e-3 | 1.55e-3 |
 |L2 norm of error (variable c) | 4.31e-4 | 1.41e-4 |
@@ -190,7 +190,7 @@ $$
 
 &nbsp;
 
-| | PIROCK (tol=1e-4) | STRANG (dt=2/16384) |
+| | ImEx (tol=1e-4) | STRANG (dt=2/16384) |
 |------------------------------|:------------------:|:--------------------:|
 |L2 norm of error (variable b) | 7.72e-6 | 1.81e-5 |
 |L2 norm of error (variable c) | 6.97e-7 | 1.57e-6 |
@@ -201,7 +201,7 @@ $$
 :::
 
 
-## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
+## A dual Splitting/IMEX strategy for stiff PDEs {.fs-5}
 
 :::{.row .fs-6 }
 
@@ -250,7 +250,121 @@ $\epsilon = 1e-3$, $\underline{\ell} = 2$, $\bar{\ell} = 10$
 ::::
 :::
 
+## A dual Splitting/IMEX strategy for stiff PDEs {.fs-5}
 
+**Ignition of a diffusion flame at 4 instants (cold fuel, hot oxydizer - [Candel & Thevenin 1995])**
+
+$$
+\left\{
+\begin{array}{l}
+\partial _{t_\star} Z +
+v_{x,\star}  \partial _{x_\star} Z +
+v_{y,\star}  \partial _{y_\star} Z -
+\left(\partial ^2_{x_\star} Z  +
+\partial ^2_{y_\star} Z \right)= 0, \\[2.5ex]
+a
+\partial _{t_\star} \theta +
+v_{x,\star}  \partial _{x_\star} \theta +
+v_{y,\star}  \partial _{y_\star} \theta -
+\left(\partial ^2_{x_\star} \theta  +
+\partial ^2_{y_\star} \theta \right)
+= F(Z,\theta),
+\end{array}
+\right.
+$$
+
+with
+
+$$
+F(Z,\theta)=
+D_a \, \phi \chi Y_{O,0}
+\left[
+\frac{1-Z}{\phi \tau} + \frac{1}{\chi}(Z-\theta)
+\right]
+\left[
+Z + \frac{\tau}{\chi}(Z-\theta)
+\right] 
+\mathrm{e}^{\left(- \tau_a/(1+\tau \theta)\right)}
+$$
+
+Quasi-exact solution calculated with Strang's method using :
+
+- a splitting time step of $10^{-8}$, and
+- the RADAUIIA method for the reaction, with absolute and relative tolerances of $10^{-12}$.
+- the ROCK4 method for diffusion, with absolute and relative tolerances of $10^{-12}$.
+- the RK3 method associated with a WENO5 spatial discretisation for convection
+
+
+
+
+
+
+## A dual Splitting/IMEX strategy for stiff PDEs {.fs-5}
+
+:::{.row .fs-6 .text-center}
+Evolution of the variable $T = \theta (T_{F,0}-T_{O,0}) + T_{O,0}$ at $t=0$, $5\times10^{-5}$, $1\times10^{-5}$, $1.5\times10^{-4}$
+
+::::{ .text-center}
+
+::::
+
+::::{.col-6 .text-center}
+
+![](figures/sol00.png){width="58%"}
+
+![](figures/sol02.png){width="58%"}
+::::
+
+::::{.col-6 .text-center}
+
+![](figures/sol01.png){width="58%"}
+
+![](figures/sol03.png){width="58%"}
+
+::::
+:::
+
+## A dual Splitting/IMEX strategy for stiff PDEs {.fs-5}
+
+
+ Strang (with RADAUIIA and ROCK4 tolerance at $10^{-12}$) :
+
+|                 |  $dt=1 \times 10^{-5}$      |  $dt=1 \times 10^{-6}$     |  $dt=1 \times 10^{-7}$     |   
+|---              |:-:                          |:-:                         |:-:                         |
+|  $|E_z|$        |  $1.55513306\times 10^{-4}$ |  $2.81342860\times10^{-6}$ |  $2.88674760\times10^{-8}$ | 
+|  $|E_{\theta}|$ |  $2.69304858\times 10^{-3}$ |  $3.74837111\times10^{-5}$ |  $3.82828537\times10^{-7}$ | 
+|  Temps RD (s)   |  $25+213$ |  $207+287$ |  $2060+520$ | 
+|  Temps C  (s)   |  $13316$|  $13471$ | $14921$  | 
+
+
+:::{.my-4}
+Dual Splitting/ImEx (ImEx tolerance set at $10^{-4}$ - should be decreased) :
+
+|                 |  $dt=1 \times 10^{-5}$      |  $dt=1 \times 10^{-6}$     |  $dt=1 \times 10^{-7}$     |   
+|---              |:-:                          |:-:                         |:-:                         |
+|  $|E_z|$        |  $1.57299998\times 10^{-5}$ |  $2.71930151\times10^{-6}$ |  $2.87698144\times10^{-8}$ | 
+|  $|E_{\theta}|$ |  $1.93940574\times 10^{-3}$ |  $4.15846000\times10^{-6}$ |  $5.35535514\times10^{-6}$ |
+|  Temps RD (s)   |  $28$ |  $123$ |  $1202$ | 
+|  Temps C  (s)   |  $11221$|  $11361$ | $12575$  | 
+:::
+
+
+
+## A dual Splitting/IMEX strategy for stiff PDEs {.fs-5}
+
+::::{ .text-center .my-4}
+
+![](figures/time_order.png){width="68%"}
+
+::::
+
+:::{ .fragment .text-center .my-4}
+**OSMP scheme leads to roughly an order of magnitude acceleration compared to WENO5/RK3**
+:::
+
+:::{ .fragment .text-center .my-4}
+**Basis for the CEA collaboration - hydrogen risk (Full compressible Fourrier-Navier-Stokes)**
+:::
 
 ## References
 
