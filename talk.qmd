@@ -1276,28 +1276,23 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 
 {{< include sections/splitting_imex.qmd >}}
 
-
-## Key point of samurai
-
-:::{.center-page}
-::::{.text-center}
-Implement your finite volume scheme on a uniform Cartesian grid
-
-and
-
-<span>you have explicit and implicit at your disposal</span></p>
-
-<span>you have a large range of time schemes available</span>
-
-<span>you have the adaptation (MRA / AMR) without further effort</span>
-
-<span>you have parallelism</span>
-::::
-:::
-
 ## Roadmap
 
+:::{.text-center}
 ![](figures/roadmap.png)
+:::
+
+:::{.row .text-center .align-items-center}
+::::{.col}
+![](figures/numpex_logo.png){height="110px"}
+::::
+::::{.col}
+![](figures/quantstack.png){height="50px"}
+::::
+::::{.col}
+![](figures/cea.png){height="100px"}
+::::
+:::
 
 ---
 
