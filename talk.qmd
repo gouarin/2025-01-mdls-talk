@@ -37,7 +37,9 @@ The present work is the result of a team work involving
 ::::
 
 :::: {.col .text-center .align-self-center}
+:::{.my-4}
 ![](figures/logo_polytechnique.png){width=70%}
+:::
 
 ![](figures/logo_HPC@Maths.jpg){width=70%}
 ::::
