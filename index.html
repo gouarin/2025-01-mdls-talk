@@ -1851,21 +1851,21 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 </section>
 <section id="a-dual-splittingimex-strategy-for-stiff-pdes" class="slide level2 fs-4">
 <h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
-<div class="row fs-6">
+<div class="row fs-5">
 <div class="col-7 align-self-center">
 <ul>
-<li>A strategy has been designed (PhD M. Duarte) relying on time-adaptive operator splitting with dynamically adapted mesh (multiresolution) with error control:
+<li>A strategy has been designed (PhD M. Duarte) relying on time-adaptive operator splitting with dynamically adapted mesh (multiresolution) and error control:
 <ul>
-<li>optimal computational cost and parallelization properties when large splitting time steps compared to the smallest time scale can be taken without impairing precision</li>
+<li>optimal computational cost and parallelization properties (large splitting time steps)</li>
 </ul></li>
-<li>We aim at resolving stiff PDEs with samurai and ponio (time integrators) libraries with the same computation favorable properties:
+<li>We aim at resolving stiff PDEs with samurai and ponio libraries with the same computation favorable properties:
 <ul>
-<li>the same computational properties (local implicitation of the source term - allowing for very stiff source with local time integration in space)</li>
+<li>local implicitation of the source term</li>
 <li>explicit diffusion integration without von Neumann stability limit (ROCK)</li>
 <li>high-order in space and time integration of convection, including shocks</li>
 <li>strong acceleration through adaptation in space and time</li>
 </ul></li>
-<li>Stumbling block: what to do when reaction and diffusion coupled to the smallest time scale (complex chemistry - ignition)</li>
+<li>Stumbling block: what to do when reaction and diffusion coupled at smallest time scale (complex chem. - ignition)</li>
 </ul>
 </div>
 <div class="col align-self-center">
@@ -1876,7 +1876,7 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 </div>
 </div>
 </section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes-1" class="slide level2 fs-4">
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-1" class="slide level2 fs-5">
 <h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
 <div class="row">
 <div class="col-8 align-self-center">
@@ -1897,7 +1897,7 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 </div>
 </div>
 </section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes-2" class="slide level2 fs-4">
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-2" class="slide level2 fs-5">
 <h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
 <div class="row fs-5">
 <div class="col-6 align-self-center">
@@ -1917,7 +1917,7 @@ u_t = d \Delta u + \frac{R}{\alpha \delta} (1 + \alpha - u) e^{\delta( 1 - 1/u )
 </div>
 </div>
 </section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes-3" class="slide level2 fs-4">
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-3" class="slide level2 fs-5">
 <h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
 <div class="row fs-5">
 <div class="col-6 align-self-center">
@@ -2013,7 +2013,7 @@ No splitting errors
 </div>
 </div>
 </section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes-4" class="slide level2 fs-4">
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-4" class="slide level2 fs-5">
 <h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
 <div class="row fs-6">
 <div class="col-6 align-self-center">
@@ -2043,7 +2043,7 @@ qa
 </div>
 </div>
 </section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes-5" class="slide level2 fs-4">
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-5" class="slide level2 fs-5">
 <h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
 <div class="row fs-6">
 <div class="col-6 align-self-center">
@@ -2115,7 +2115,7 @@ qa
 <thead>
 <tr class="header">
 <th></th>
-<th style="text-align: center;">PIROCK (tol=1e-3)</th>
+<th style="text-align: center;">ImEx (tol=1e-3)</th>
 <th style="text-align: center;">STRANG (dt=2/512)</th>
 </tr>
 </thead>
@@ -2152,7 +2152,7 @@ qa
 <thead>
 <tr class="header">
 <th></th>
-<th style="text-align: center;">PIROCK (tol=1e-4)</th>
+<th style="text-align: center;">ImEx (tol=1e-4)</th>
 <th style="text-align: center;">STRANG (dt=2/16384)</th>
 </tr>
 </thead>
@@ -2182,7 +2182,7 @@ qa
 </div>
 </div>
 </section>
-<section id="a-dual-splittingimex-strategy-for-stiff-pdes-6" class="slide level2 fs-4">
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-6" class="slide level2 fs-5">
 <h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
 <div class="row fs-6">
 <div class="col-6 align-self-center">
@@ -2227,6 +2227,167 @@ qa
 <p><span class="math inline">\(\epsilon = 1e-3\)</span>, <span class="math inline">\(\underline{\ell} = 2\)</span>, <span class="math inline">\(\bar{\ell} = 10\)</span></p>
 </div>
 </div>
+</div>
+</section>
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-7" class="slide level2 fs-5">
+<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
+<p><strong>Ignition of a diffusion flame at 4 instants (cold fuel, hot oxydizer - [Candel &amp; Thevenin 1995])</strong></p>
+<p><span class="math display">\[
+\left\{
+\begin{array}{l}
+\partial _{t_\star} Z +
+v_{x,\star}  \partial _{x_\star} Z +
+v_{y,\star}  \partial _{y_\star} Z -
+\left(\partial ^2_{x_\star} Z  +
+\partial ^2_{y_\star} Z \right)= 0, \\[2.5ex]
+a
+\partial _{t_\star} \theta +
+v_{x,\star}  \partial _{x_\star} \theta +
+v_{y,\star}  \partial _{y_\star} \theta -
+\left(\partial ^2_{x_\star} \theta  +
+\partial ^2_{y_\star} \theta \right)
+= F(Z,\theta),
+\end{array}
+\right.
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+F(Z,\theta)=
+D_a \, \phi \chi Y_{O,0}
+\left[
+\frac{1-Z}{\phi \tau} + \frac{1}{\chi}(Z-\theta)
+\right]
+\left[
+Z + \frac{\tau}{\chi}(Z-\theta)
+\right]
+\mathrm{e}^{\left(- \tau_a/(1+\tau \theta)\right)}
+\]</span></p>
+<p>Quasi-exact solution calculated with Strang’s method using :</p>
+<ul>
+<li>a splitting time step of <span class="math inline">\(10^{-8}\)</span>, and</li>
+<li>the RADAUIIA method for the reaction, with absolute and relative tolerances of <span class="math inline">\(10^{-12}\)</span>.</li>
+<li>the ROCK4 method for diffusion, with absolute and relative tolerances of <span class="math inline">\(10^{-12}\)</span>.</li>
+<li>the RK3 method associated with a WENO5 spatial discretisation for convection</li>
+</ul>
+</section>
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-8" class="slide level2 fs-5">
+<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
+<div class="row fs-6 text-center">
+<p>Evolution of the variable <span class="math inline">\(T = \theta (T_{F,0}-T_{O,0}) + T_{O,0}\)</span> at <span class="math inline">\(t=0\)</span>, <span class="math inline">\(5\times10^{-5}\)</span>, <span class="math inline">\(1\times10^{-5}\)</span>, <span class="math inline">\(1.5\times10^{-4}\)</span></p>
+<div class="text-center">
+
+</div>
+<div class="col-6 text-center">
+<p><img data-src="figures/sol00.png" style="width:58.0%"></p>
+<p><img data-src="figures/sol02.png" style="width:58.0%"></p>
+</div>
+<div class="col-6 text-center">
+<p><img data-src="figures/sol01.png" style="width:58.0%"></p>
+<p><img data-src="figures/sol03.png" style="width:58.0%"></p>
+</div>
+</div>
+</section>
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-9" class="slide level2 fs-5">
+<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
+<p>Strang (with RADAUIIA and ROCK4 tolerance at <span class="math inline">\(10^{-12}\)</span>) :</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><span class="math inline">\(dt=1 \times 10^{-5}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(dt=1 \times 10^{-6}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(dt=1 \times 10^{-7}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(|E_z|\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1.55513306\times 10^{-4}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2.81342860\times10^{-6}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2.88674760\times10^{-8}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(|E_{\theta}|\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2.69304858\times 10^{-3}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3.74837111\times10^{-5}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3.82828537\times10^{-7}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Temps RD (s)</td>
+<td style="text-align: center;"><span class="math inline">\(25+213\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(207+287\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2060+520\)</span></td>
+</tr>
+<tr class="even">
+<td>Temps C (s)</td>
+<td style="text-align: center;"><span class="math inline">\(13316\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(13471\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(14921\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="my-4">
+<p>Dual Splitting/ImEx (ImEx tolerance set at <span class="math inline">\(10^{-4}\)</span> - should be decreased) :</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><span class="math inline">\(dt=1 \times 10^{-5}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(dt=1 \times 10^{-6}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(dt=1 \times 10^{-7}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(|E_z|\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1.57299998\times 10^{-5}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2.71930151\times10^{-6}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2.87698144\times10^{-8}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(|E_{\theta}|\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1.93940574\times 10^{-3}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(4.15846000\times10^{-6}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(5.35535514\times10^{-6}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Temps RD (s)</td>
+<td style="text-align: center;"><span class="math inline">\(28\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(123\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1202\)</span></td>
+</tr>
+<tr class="even">
+<td>Temps C (s)</td>
+<td style="text-align: center;"><span class="math inline">\(11221\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(11361\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(12575\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-10" class="slide level2 fs-5">
+<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
+<div class="text-center my-4">
+<p><img data-src="figures/time_order.png" style="width:68.0%"></p>
+</div>
+<div class="fragment text-center my-4">
+<p><strong>OSMP scheme leads to roughly an order of magnitude acceleration compared to WENO5/RK3</strong></p>
+</div>
+<div class="fragment text-center my-4">
+<p><strong>Basis for the CEA collaboration - hydrogen risk (Full compressible Fourrier-Navier-Stokes)</strong></p>
 </div>
 </section>
 <section id="references-1" class="slide level2">
