@@ -738,7 +738,7 @@ error
 
 <div class="text-center">
 <div>
-<video data-autoplay="" width="80%" src="videos/upwind_without_portion.mp4">
+<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.01-reg_0.mp4">
 </video></div>
 </div>
 <div class="text-center mt-0">
@@ -1201,6 +1201,20 @@ samurai
 <li>the <span>extension</span> of a set.</li>
 </ul>
 </div>
+<aside class="notes">
+<p>The search for an admissible set is completely recursive. We’ll start by searching in the largest dimension and if we don’t find anything we’ll stop.</p>
+<p>If an admissible interval is found, we look at it in the lower dimension, which means we manipulate very few intervals because we’re only looking at a subset.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="algebra-of-sets-usage-to-mra" class="slide level2">
 <h2>Algebra of sets: Usage to MRA</h2>
@@ -1563,6 +1577,21 @@ $$ -->
 </tbody>
 </table>
 </div>
+<aside class="notes">
+<p>We can see here that the mesh is very compressed compared to a version using a tree structure.</p>
+<p>The total size of the mesh is multiplied by just under 4, as we build different meshes to handle ghost cells and prediction cells.</p>
+<p>What’s important to note is that in a parallel context, it doesn’t cost much for each process to have the meshes of its neighboring domains.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="other-features" class="slide level2">
 <h2>Other features</h2>
@@ -1761,35 +1790,114 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 <div class="text-center">
 <video data-autoplay="" src="videos/portions/portion_0000_autocreated.mp4">
 </video></div>
+<aside class="notes">
+<p>As we have seen, calculating the flow at the finest level is crucial to obtaining good error estimates. But how does this work in practice?</p>
+<p>Let’s take a simple example.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="how-to-compute-fluxes-at-the-finest-level-1" class="slide level2">
 <h2>How to compute fluxes at the finest level</h2>
 <div class="text-center">
 <video data-autoplay="" src="videos/portions/portion_0001_unnamed.mp4">
 </video></div>
+<aside class="notes">
+<p>Let’s imagine that our finest level is 4 levels away from where we are.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="how-to-compute-fluxes-at-the-finest-level-2" class="slide level2">
 <h2>How to compute fluxes at the finest level</h2>
 <div class="text-center">
 <video data-autoplay="" src="videos/portions/portion_0002_unnamed.mp4">
 </video></div>
+<aside class="notes">
+<p>Now let’s imagine that we want to calculate the flow using this small cell on the left. We use an operator with s = 1, so we need 3 cells on the level below to calculate it. These 3 cells need 4 cells on the level below to be calculated. We can repeat the process indefinitely and we’ll still need 4 cells on the bottom level.</p>
+<p>We can determine the coefficients of our linear application to go from our level to any cell on a higher level. There’s no need for an intermediate level.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="how-to-compute-fluxes-at-the-finest-level-3" class="slide level2">
 <h2>How to compute fluxes at the finest level</h2>
 <div class="text-center">
 <video data-autoplay="" src="videos/portions/portion_0003_unnamed.mp4">
 </video></div>
+<aside class="notes">
+<p>We can do the same for the right-hand cell. We can see that the cells used are not exactly the same.</p>
+<p>Now, if we wanted to reconstruct all the cells of the finest level, we’d only need these 5 cells, with different coefficients depending on the cell we’re trying to reconstruct.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="mra-epsilon-1e-3-without-portion" class="slide level2 fs-6">
-<h2>MRA <span class="math inline">\(\epsilon = 1e-3\)</span> without portion</h2>
+<section id="mra-epsilon-1e-2-underlineell-1-barell-12-without-portion" class="slide level2 fs-6">
+<h2>MRA <span class="math inline">\(\epsilon = 1e-2\)</span>, <span class="math inline">\(\underline{\ell} = 1\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span> without portion</h2>
 <div class="text-center">
-<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_without_portion.mp4">
+<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.01-reg_0.mp4">
 </video></div>
 </section>
-<section id="mra-epsilon-1e-3-with-portion" class="slide level2 fs-6">
-<h2>MRA <span class="math inline">\(\epsilon = 1e-3\)</span> with portion</h2>
+<section id="mra-epsilon-1e-3-underlineell-1-barell-12-without-portion" class="slide level2 fs-6">
+<h2>MRA <span class="math inline">\(\epsilon = 1e-3\)</span>, <span class="math inline">\(\underline{\ell} = 1\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span> without portion</h2>
 <div class="text-center">
-<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_with_portion.mp4">
+<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.001-reg_0.mp4">
+</video></div>
+</section>
+<section id="mra-epsilon-1e-4-underlineell-1-barell-12-without-portion" class="slide level2 fs-6">
+<h2>MRA <span class="math inline">\(\epsilon = 1e-4\)</span>, <span class="math inline">\(\underline{\ell} = 1\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span> without portion</h2>
+<div class="text-center">
+<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.0001-reg_0.mp4">
+</video></div>
+</section>
+<section id="mra-epsilon-1e-2-underlineell-1-barell-12-with-portion" class="slide level2 fs-6">
+<h2>MRA <span class="math inline">\(\epsilon = 1e-2\)</span>, <span class="math inline">\(\underline{\ell} = 1\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span> with portion</h2>
+<div class="text-center">
+<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_with_portion-min_1-max_12-eps_0.01-reg_0.mp4">
+</video></div>
+</section>
+<section id="mra-epsilon-1e-3-underlineell-1-barell-12-with-portion" class="slide level2 fs-6">
+<h2>MRA <span class="math inline">\(\epsilon = 1e-3\)</span>, <span class="math inline">\(\underline{\ell} = 1\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span> with portion</h2>
+<div class="text-center">
+<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_with_portion-min_1-max_12-eps_0.001-reg_0.mp4">
+</video></div>
+</section>
+<section id="mra-epsilon-1e-4-underlineell-1-barell-12-with-portion" class="slide level2 fs-6">
+<h2>MRA <span class="math inline">\(\epsilon = 1e-4\)</span>, <span class="math inline">\(\underline{\ell} = 1\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span> with portion</h2>
+<div class="text-center">
+<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_with_portion-min_1-max_12-eps_0.0001-reg_0.mp4">
 </video></div>
 </section>
 <section id="amr-with-the-modulus-of-the-gradient-1e-2-as-refinement-criteria-without-portion" class="slide level2 fs-6">
@@ -2425,6 +2533,22 @@ Z + \frac{\tau}{\chi}(Z-\theta)
 <p><img data-src="figures/cea.png" height="100"></p>
 </div>
 </div>
+<aside class="notes">
+<p>Here’s the samurai roadmap for the coming months and probably years.</p>
+<p>We now have the possibility of changing the containers in which our fields are stored. We did this so that we could start using Kokkos. So we’d be very interested in working with the people at Cexa on this.</p>
+<p>We have received several funding packages that have enabled us to hire two research engineers.</p>
+<p>As part of numpex, we also have an engineer position to work on the I/O part of AMR methods in collaboration with Dyablo developers.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
