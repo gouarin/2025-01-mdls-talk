@@ -22,10 +22,10 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 
 ---
 
-##  Burgers equation (1948) - small hat 
+##  Burgers equation (1948) - small hat
 
 $$
-\partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2}, 
+\partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
 $$
 
 
@@ -45,8 +45,8 @@ u^0(x)=\left\{%
 $$
 
 
-::: {.incremental}  
-- Shock formation at time $T^* = 1$ 
+::: {.incremental}
+- Shock formation at time $T^* = 1$
 - Leading to irreversible solution
 - RH condition governs shock dynamics
 :::
@@ -63,7 +63,7 @@ $$
 ##  Burgers equation - small hat problem
 
 $$
-\partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2}, 
+\partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
 $$
 
 
@@ -82,7 +82,7 @@ u^0(x)=\left\{%
        \right.
 $$
 
-- Shock formation at time $T^* = 1$ 
+- Shock formation at time $T^* = 1$
 - Leading to irreversible solution
 - RH condition governs shock dynamics
 
@@ -99,7 +99,7 @@ $$
 ##  Burgers equation - small hat problem
 
 $$
-\partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2}, 
+\partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
 $$
 
 
@@ -118,10 +118,10 @@ u^0(x)=\left\{%
        \right.
 $$
 
-::: {.incremental}  
+::: {.incremental}
 
-- Shock location $\varphi(t)=\sqrt{2(1+t)}-1$ 
-- Propagation speed shock $\sigma(t)={1}/{\sqrt{2(1+t)}}$ 
+- Shock location $\varphi(t)=\sqrt{2(1+t)}-1$
+- Propagation speed shock $\sigma(t)={1}/{\sqrt{2(1+t)}}$
 - Shock amplitude $[u]=\sqrt{{2}/{(1+t)}}$
 
 :::
@@ -162,14 +162,14 @@ $$
 
 
 :::{.notes}
-Just introducing the notations and the notion of level difference with Delta l 
+Just introducing the notations and the notion of level difference with Delta l
 :::
 
 ---
 
-## Wavelets 
+## Wavelets
 
-Decomposition of the solution on a wavelet basis [Daubechies, '88], [Mallat, '89] to measure its local regularity. 
+Decomposition of the solution on a wavelet basis [Daubechies, '88], [Mallat, '89] to measure its local regularity.
 "Practical" approach by [Harten, '95], [Cohen et al., '03].
 
 ::: {.row}
@@ -181,7 +181,7 @@ Decomposition of the solution on a wavelet basis [Daubechies, '88], [Mallat, '89
 **Prediction operator** at order $2 \gamma+1$
 
 $$
-{\hat f}_{\ell+1,2 k}={f}_{\ell, k}+\sum_{\sigma=1}^\gamma \psi_\sigma\left({f}_{\ell, k+\sigma}-{f}_{\ell, k-\sigma}\right) 
+{\hat f}_{\ell+1,2 k}={f}_{\ell, k}+\sum_{\sigma=1}^\gamma \psi_\sigma\left({f}_{\ell, k+\sigma}-{f}_{\ell, k-\sigma}\right)
 $$
 
 :::: {style="text-align: left"}
@@ -216,9 +216,9 @@ $$
 
 ----
 
-## Wavelets 
+## Wavelets
 
-Decomposition of the solution on a wavelet basis [Daubechies, '88], [Mallat, '89] to measure its local regularity. 
+Decomposition of the solution on a wavelet basis [Daubechies, '88], [Mallat, '89] to measure its local regularity.
 "Practical" approach by [Harten, '95], [Cohen et al., '03].
 
 ::: {.row}
@@ -230,7 +230,7 @@ Decomposition of the solution on a wavelet basis [Daubechies, '88], [Mallat, '89
 **Prediction operator** at order $2 \gamma+1$
 
 $$
-{\hat f}_{\ell+1,2 k}={f}_{\ell, k}+\sum_{\sigma=1}^\gamma \psi_\sigma\left({f}_{\ell, k+\sigma}-{f}_{\ell, k-\sigma}\right) 
+{\hat f}_{\ell+1,2 k}={f}_{\ell, k}+\sum_{\sigma=1}^\gamma \psi_\sigma\left({f}_{\ell, k+\sigma}-{f}_{\ell, k-\sigma}\right)
 $$
 
 :::: {style="text-align: left"}
@@ -256,7 +256,7 @@ $$
 
 **Fast wavelet transform:**
 
-means at the finest level can be recast as means at the coarsest level + details 
+means at the finest level can be recast as means at the coarsest level + details
 $$
 \begin{array}{rlr}
 {f}_{\overline{\ell}}
@@ -272,7 +272,7 @@ $$
 
 ----
 
-## Mesh coarsening (static) 
+## Mesh coarsening (static)
 
 Local regularity of the solution allows to select areas to coarsen
 
@@ -280,7 +280,7 @@ $$
 {{f}}_{\bar{\ell}} \rightarrow \left({f}_{\underline{\ell}}, {\mathbf{d}}_{\underline{\ell}+1}, \ldots, {\mathbf{d}}_{\bar{\ell}}\right)  \rightarrow \left({f}_{\underline{\ell}}, {\tilde{\mathbf{d}}}_{\underline{\ell}+1}, \ldots, \tilde{{\mathbf{d}}}_{\bar{\ell}}\right) \rightarrow  {\tilde{{f}}}_{\bar{\ell}}
 $$
 $$
- \tilde{{\mathrm{d}}}_{\ell, k}= 
+ \tilde{{\mathrm{d}}}_{\ell, k}=
  \begin{cases}0, & \text { if } \left|{\mathbf{d}}_{\ell, k}\right| \leq \epsilon_{\ell}=2^{-d \Delta \ell} \epsilon, \quad \rightarrow \quad\left\|{\mathbf{f}}_{\bar{\ell}}-\tilde{{\mathbf{f}}}_{\bar{\ell}}\right\|_{\ell^p} \lesssim \epsilon \\
 {\mathrm{d}}_{\ell, k}, & \text { otherwise}
 \end{cases}
@@ -290,25 +290,186 @@ Set a small (below $\epsilon_{\ell}$) detail to zero $\equiv$  erase the cell $C
 
 ---
 
-## Examples 
+## Examples
 
-Donner ici les caracteristiques du cas : espilon / maillage le plus fin / norme - regularité
+::::{.row}
 
-![](figures/compression.png){fig-align=center}
+:::::{.col}
+:::{.callout-tip title="Equation" icon=false}
+$$
+f(x) = exp(-50x^2) \; \text{for} \; x\in[-1, 1]
+$$
+:::
+::::
 
+:::::{.col}
 
-et les taux de compression
+<table>
+    <tr>
+        <td>min level</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>max level</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>&#949;</td>
+        <td>10<sup>-3</sup></td>
+    </tr>
+    <tr>
+        <td>compression rate</td>
+        <td>96.29%</td>
+    </tr>
+    <tr>
+        <td>error</td>
+        <td>0.00078</td>
+    </tr>
+</table>
+::::
 
+:::::
 
----
+![](figures/compression_exp.png){fig-align=center}
+
+## Examples
+
+::::{.row}
+
+:::::{.col}
+:::{.callout-tip title="Equation" icon=false}
+$$
+f(x) = \left\{
+    \begin{array}{l}
+    1 - |2x| \; \text{if} \; -0.5 < x < 0.5,\\
+    0 \; \text{elsewhere}
+    \end{array}
+    \right.
+$$
+:::
+::::
+
+:::::{.col}
+
+<table>
+    <tr>
+        <td>min level</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>max level</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>&#949;</td>
+        <td>10<sup>-3</sup></td>
+    </tr>
+    <tr>
+        <td>compression rate</td>
+        <td>98.49%</td>
+    </tr>
+    <tr>
+        <td>error</td>
+        <td>0</td>
+    </tr>
+</table>
+::::
+
+:::::
+
+![](figures/compression_abs.png){fig-align=center}
+
+## Examples
+
+::::{.row}
+
+:::::{.col}
+:::{.callout-tip title="Equation" icon=false}
+$$
+f(x) = 1 - \sqrt{\left| sin \left( \frac{\pi}{2} x \right) \right|} \; \text{for} \; x\in[-1, 1]
+$$
+:::
+::::
+
+:::::{.col}
+
+<table>
+    <tr>
+        <td>min level</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>max level</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>&#949;</td>
+        <td>10<sup>-3</sup></td>
+    </tr>
+    <tr>
+        <td>compression rate</td>
+        <td>96.29%</td>
+    </tr>
+    <tr>
+        <td>error</td>
+        <td>0.00053</td>
+    </tr>
+</table>
+::::
+
+:::::
+
+![](figures/compression_sqrt.png){fig-align=center}
+
+## Examples
+
+::::{.row}
+
+:::::{.col}
+:::{.callout-tip title="Equation" icon=false}
+$$
+f(x) = \tanh(50 |x|) - 1 \; \text{for} \; x\in[-1, 1]
+$$
+:::
+::::
+
+:::::{.col}
+
+<table>
+    <tr>
+        <td>min level</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>max level</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>&#949;</td>
+        <td>10<sup>-3</sup></td>
+    </tr>
+    <tr>
+        <td>compression rate</td>
+        <td>97.46%</td>
+    </tr>
+    <tr>
+        <td>error</td>
+        <td>0.002</td>
+    </tr>
+</table>
+::::
+
+:::::
+
+![](figures/compression_tanh.png){fig-align=center}
 
 ## Time evolution of PDEs
 
-- Finite volumes with global time step $\Delta t = \Lambda(\Delta x)$ 
+- Finite volumes with global time step $\Delta t = \Lambda(\Delta x)$
 - Use dynamic mesh refinement
 
 
-Mesh updated using “old” information at time $t$ to accommodate the one at time 
+Mesh updated using “old” information at time $t$ to accommodate the one at time
 $t + \Delta t$
 
 
@@ -322,7 +483,7 @@ $$
 \left|{\mathbf{d}}_{\ell, k}\right| \geq \epsilon_{\ell}\,2^{d+\mu}
 $$
 
-:::: 
+::::
 
 
 :::: {.col}
@@ -898,13 +1059,13 @@ $$
 
 ## Modified equations
 
-[Carpentier et al 97] or Cauchy-Kowalewski procedure [Harten et al 87] 
+[Carpentier et al 97] or Cauchy-Kowalewski procedure [Harten et al 87]
 
 $$
 \partial_t u\left(t^n, x_{\bar{\ell}, \bar{k}}\right)+V \partial_x u\left(t^n, x_{\bar{\ell}, \bar{k}}\right)=\sum_{h=2}^{+\infty} \Delta x^{h-1} \sigma_h \partial_x^h u\left(t^n, x_{\bar{\ell}, \bar{k}}\right)
 $$
 
-::: {.incremental}  
+::: {.incremental}
 - Upwind scheme
 $$
 \partial_t u+V \partial_x u=\frac{\Delta x V}{2}(1-\lambda V) \partial_{x x} u+O\left(\Delta x^2\right)
@@ -923,10 +1084,10 @@ $$
 ## How to include MRA
 
 
-We introduce the reconstruction operator $\hat{s}$ instead of $s$ on the cells $\left(\bar{\ell}, 2^{\Delta \ell} k+\delta\right)$ for any $\delta \in \mathbb{Z}$ at the finest level 
+We introduce the reconstruction operator $\hat{s}$ instead of $s$ on the cells $\left(\bar{\ell}, 2^{\Delta \ell} k+\delta\right)$ for any $\delta \in \mathbb{Z}$ at the finest level
 
-- $\hat{s}=s$ : exact local flux reconstruction [Cohen et al. 2003]. 
-- $\hat{s}=0$ but $s>0$, direct evaluation or naive evaluation [Hovhannisyan et al 2010]. 
+- $\hat{s}=s$ : exact local flux reconstruction [Cohen et al. 2003].
+- $\hat{s}=0$ but $s>0$, direct evaluation or naive evaluation [Hovhannisyan et al 2010].
 
 $$
 \mathbf{w}_{\bar{\ell}, \bar{k}}^{n+1}=\mathbf{w}_{\bar{\ell}, \bar{k}}^n-\frac{\Delta t}{\Delta x}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+1 / 2}^n\right)-\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}^n\right)\right), \Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+\alpha}
@@ -947,7 +1108,7 @@ Some information is loss because of the averaging procedure: two different schem
 ## Modified equations including MRA
 
 
-This result establishes at which order the modified equations of the reference scheme are perturbed by the introduction of the adaptive scheme. However, it does not characterize the terms in the modified equations of (11) above order $2\hat{s}+1$ in $\Delta x$ (symbolic computations). 
+This result establishes at which order the modified equations of the reference scheme are perturbed by the introduction of the adaptive scheme. However, it does not characterize the terms in the modified equations of (11) above order $2\hat{s}+1$ in $\Delta x$ (symbolic computations).
 
 
 ::: {.incremental}
@@ -995,13 +1156,13 @@ Let us start by discussing the assumption that we have placed in the statement o
 - The distance between maximum and minimum level $\Delta \underline{\ell}=\bar{\ell}-\underline{\ell}$ has to be fixed, because otherwise the constant $C_{\text {tr }}$ potentially explodes and dominates $\Delta x^{2 \hat{s}+1}$ when $\Delta x \rightarrow 0$. This would prevent us from comparing orders. Moreover, this is also reasonable from the standpoint of actual computations, where we refine the mesh to achieve convergence (or nearly so) keeping the number of different available grid levels fixed. Still, we shall also perform numerical demonstration without fixing $\Delta \underline{\ell}=\bar{\ell}-\underline{\ell}$ to show that the modified equations that we have previously developed provide important information on the behavior of $\left\|\mathbf{v}_{\bar{\ell}}^n-\mathbf{w}_{\bar{\ell}}^n\right\|$.
 :::
 
-## Comments on theorem 
+## Comments on theorem
 
 ::: {.incremental}
 * The error estimate contains three contributions: the discretization error of the reference scheme, the perturbation error between the reference and the adaptive scheme, and the thresholding error coming from the multiresolution
 * The constant $C_{\mathrm{tr}}$ generally grows exponentially with $\bar{\ell}-\underline{\ell}$, sometimes also involving linear terms, i.e. $\hat{s}=1$. We have the following cases:
-    + $\theta<2 \hat{s}+1$. The error of the reference scheme dominates the perturbation introduced by the adaptive scheme $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{ref}} T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$. A thresholding error of the same order as the reference error $\epsilon \sim \Delta x^{\theta+1}$. 
-    + $\theta=2 \hat{s}+1$.  The error of the reference scheme and the perturbation order are comparable (first example!) We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq\left(C_{\mathrm{ref}}+C_{\mathrm{tr}}\right) T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$. 
+    + $\theta<2 \hat{s}+1$. The error of the reference scheme dominates the perturbation introduced by the adaptive scheme $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{ref}} T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$. A thresholding error of the same order as the reference error $\epsilon \sim \Delta x^{\theta+1}$.
+    + $\theta=2 \hat{s}+1$.  The error of the reference scheme and the perturbation order are comparable (first example!) We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq\left(C_{\mathrm{ref}}+C_{\mathrm{tr}}\right) T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$.
     +  $\theta>2 \hat{s}+1$. The perturbation introduced by the adaptive scheme dominates the error of the reference scheme. Therefore, multiresolution introduces a large perturbation that yields a different convergence rate. We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{tr}} T \Delta x^{2 \hat{s}+1}+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$, thus one takes $\epsilon \sim \Delta x^{2 \hat{s}+2}$ (AMR !)
 :::
 
