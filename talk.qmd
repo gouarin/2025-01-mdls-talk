@@ -1162,7 +1162,7 @@ Some information is loss because of the averaging procedure: two different schem
 ## Modified equations including MRA
 
 
-This result establishes at which order the modified equations of the reference scheme are perturbed by the introduction of the adaptive scheme. However, it does not characterize the terms in the modified equations of (11) above order $2\hat{s}+1$ in $\Delta x$ (symbolic computations).
+This result establishes at which order the modified equations of the reference scheme are perturbed by the introduction of the adaptive scheme. However, it does not characterize the terms in the modified equations above order $2\hat{s}+1$ in $\Delta x$ (symbolic computations).
 
 
 ::: {.incremental}
