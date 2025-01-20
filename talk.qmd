@@ -15,8 +15,6 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 ---
 
 
-## "HPC_at_Maths"
-
 ::: {.row}
 
 :::: {.col-8}
@@ -33,11 +31,25 @@ The present work is the result of a team work involving
 ::::
 
 :::: {.col}
-![](figures/logo_HPC@Maths.jpg)
+![](figures/logo_HPC@Maths.jpg){width=90%}
 ::::
 :::
 
-Website + image + sponsors of the team - github - Fondation / Quantstack / CEA
+::: {.row}
+
+:::: {.col-8}
+
+![](figures/logo_X.jpg){width=30%}
+
+
+::::
+
+:::: {.col}
+Github lien
+::::
+:::
+
+
 
 
 # Context
