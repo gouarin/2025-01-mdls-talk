@@ -15,6 +15,7 @@ footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
 ---
 
 
+::::{.center-page-vertically}
 ::: {.row}
 
 :::: {.col-8}
@@ -28,29 +29,20 @@ The present work is the result of a team work involving
 - Christian Tenaud (CR CNRS  - EM2C - Fédé Maths CS)
 
 
+:::{.text-center}
+[site web de l'équipe](https://initiative-hpc-maths.gitlab.labos.polytechnique.fr/site/)
+
+[https://github.com/hpc-maths/](https://github.com/hpc-maths/)
+:::
 ::::
 
-:::: {.col}
-![](figures/logo_HPC@Maths.jpg){width=90%}
+:::: {.col .text-center .align-self-center}
+![](figures/logo_polytechnique.png){width=70%}
+
+![](figures/logo_HPC@Maths.jpg){width=70%}
 ::::
 :::
-
-::: {.row}
-
-:::: {.col-8}
-
-![](figures/logo_X.jpg){width=30%}
-
-
 ::::
-
-:::: {.col}
-Github lien
-::::
-:::
-
-
-
 
 # Context
 
@@ -68,9 +60,10 @@ $$
 $$
 
 
-::: {.row}
+::: {.row .mb-4}
 
-:::: {.col-7}
+:::: {.col-7 .mt-4}
+
 Consider the Cauchy problem with initial cond.
 
 $$
@@ -106,9 +99,9 @@ $$
 $$
 
 
-::: {.row}
+::: {.row .mb-4}
 
-:::: {.col-7}
+:::: {.col-7 .mt-4}
 Consider the Cauchy problem with initial cond.
 
 $$
@@ -142,9 +135,9 @@ $$
 $$
 
 
-::: {.row}
+::: {.row .mb-4}
 
-:::: {.col-7}
+:::: {.col-7 .mt-4}
 Consider the Cauchy problem with initial cond.
 
 $$
@@ -211,9 +204,9 @@ Just introducing the notations and the notion of level difference with Delta l
 Decomposition of the solution on a wavelet basis [Daubechies, '88], [Mallat, '89] to measure its local regularity.
 "Practical" approach by [Harten, '95], [Cohen et al., '03].
 
-::: {.row}
+::: {.row .mt-4}
 
-:::: {.col-7}
+:::: {.col-6}
 
 **Projection operator**
 
@@ -223,10 +216,11 @@ $$
 {\hat f}_{\ell+1,2 k}={f}_{\ell, k}+\sum_{\sigma=1}^\gamma \psi_\sigma\left({f}_{\ell, k+\sigma}-{f}_{\ell, k-\sigma}\right)
 $$
 
-:::: {style="text-align: left"}
+::::: {style="text-align: left"}
 ![](figures/prediction.jpg)
-
-:::: {.fragment}
+:::::
+::::
+:::: {.col-6 .fragment}
 
 Details are **regularity indicator**
 $$
@@ -239,59 +233,9 @@ $$
 \left|{\mathrm{d}}_{\ell, k}\right| \lesssim 2^{-\ell \min (\nu, 2 \gamma+1)}|f|_{W^{\min (\nu, 2 \gamma+1), \infty}}
 $$
 
-
-
 ::::
-::::
-::::
-
-:::: {.col}
-
-::::
-
-
-
 :::
-
-----
-
-## Wavelets
-
-Decomposition of the solution on a wavelet basis [Daubechies, '88], [Mallat, '89] to measure its local regularity.
-"Practical" approach by [Harten, '95], [Cohen et al., '03].
-
-::: {.row}
-
-:::: {.col-7}
-
-**Projection operator**
-
-**Prediction operator** at order $2 \gamma+1$
-
-$$
-{\hat f}_{\ell+1,2 k}={f}_{\ell, k}+\sum_{\sigma=1}^\gamma \psi_\sigma\left({f}_{\ell, k+\sigma}-{f}_{\ell, k-\sigma}\right)
-$$
-
-:::: {style="text-align: left"}
-![](figures/prediction.jpg)
-
-
-Details are **regularity indicator**
-$$
-{\mathrm{d}}_{\ell, {k}}:={f}_{\ell, {k}}-{\hat{f}}_{\ell, {k}}
-$$
-
-
-Let $f \in W^{\nu, \infty}$ (neigh. of $C_{\ell, k}$ ), then
-$$
-\left|{\mathrm{d}}_{\ell, k}\right| \lesssim 2^{-\ell \min (\nu, 2 \gamma+1)}|f|_{W^{\min (\nu, 2 \gamma+1), \infty}}
-$$
-
-
-::::
-::::
-
-:::: {.col}
+::: {.text-center .mt-4 .fragment}
 
 **Fast wavelet transform:**
 
@@ -302,10 +246,6 @@ $$
 & \Longleftrightarrow & \left({f}_{\underline{\ell}}, {{d}}_{\underline{\ell} +1}, \ldots, {d}_{\bar{\ell}}\right)\\
 \end{array}
 $$
-
-::::
-
-
 
 :::
 
@@ -553,7 +493,7 @@ Using the prediction operator allows to evaluate fluxes at the same level
 
 ::::
 
-:::{.callout-note .mt-3}
+:::{.callout-note .mt-3 icon=false title="Finite volume method"}
 We use a Godunov flux for the small hat problem
 :::
 
@@ -562,11 +502,14 @@ We use a Godunov flux for the small hat problem
 ---
 
 :::{.text-center}
-```{=html}
-<video data-autoplay src="videos/upwind_without_portion.mp4" />
-```
+<div>
+<video data-autoplay width="80%" src="videos/upwind_without_portion.mp4" />
+</div>
 :::
 
+:::{.text-center .mt-0}
+$\epsilon = 1e-2$, $\underline{\ell} = 2$, $\bar{\ell} = 12$
+:::
 
 
 # Adaptive mesh refinement software
@@ -612,9 +555,9 @@ Finally, given that the mesh is dynamic, the load balancing must be reviewed reg
 
 ## Open source software
 
-:::::{.center-page-vertically}
+:::::{.center-page}
 
-::: {.fs-6}
+::: {.fs-5}
 | Name    | Data structure | Adaptation criteria | Time scheme                     | Load balancing               |
 |---------|----------------|---------------------|---------------------------------|------------------------------|
 | AMReX   | block          | heuristic           | global/local                    | SFC                          |
@@ -625,7 +568,7 @@ Finally, given that the mesh is dynamic, the load balancing must be reviewed reg
 | samurai | interval       | heuristic/wavelet   | RK/splitting/IMEX<br>time-space/code coupling               | SFC/diffusion algorithm      |
 :::
 
-::: {.text-center .color_0 .mt-5}
+::: {.text-center .color .mt-5 .fragment}
 *samurai: create a unified framework for testing a whole range<br class='m-0'>of mesh adaptation methods with the latest generation of numerical schemes.*
 :::
 :::::
@@ -806,13 +749,17 @@ We need to add a set algebra that allows us to switch from one to the other easi
 
 The search of an admissible set is recursive. The algorithm starts from the last dimension (y in 2d, z in 3d,...).
 
+:::{.my-3}
 The available operators in samurai are for now
+:::
 
+:::{.lh-lg}
 - the <span>intersection</span> of sets,
 - the <span>union</span> of sets,
 - the <span>difference</span> between two sets,
 - the <span>translation</span> of a set,
 - the <span>extension</span> of a set.
+:::
 
 ## Algebra of sets: Usage to MRA
 
@@ -1001,7 +948,9 @@ for(std::size_t level = min_level + 1; level <= max_level; ++level)
 }
 ```
 
+ <br/>
 
+:::{.fragment}
 ```{.cpp}
 for(std::size_t level = min_level + 2; level <= max_level; ++level)
 {
@@ -1012,6 +961,7 @@ for(std::size_t level = min_level + 2; level <= max_level; ++level)
     })
 }
 ```
+:::
 
 ## Meshes description with samurai
 
@@ -1039,7 +989,7 @@ for(std::size_t level = min_level; level < max_level; ++level)
 
 ## Compression rates
 
-::: {.fs-5}
+::: {.center-page .fs-5}
 | Level | Num. of cells | p4est       | samurai (leaves) | samurai (all) | ratio  |
 |-------|---------------|-------------|------------------|---------------|--------|
 | $9$   | 66379         | 2.57 Mb     | 33.68 Kb         | 121 Kb        | 21.24  |
@@ -1052,7 +1002,7 @@ for(std::size_t level = min_level; level < max_level; ++level)
 
 ## Other features
 
-:::{.center-page-vertically}
+:::{.center-page-vertically .lh-lg}
 - Loop algorithms over the levels and the cells
 - Simplified access operator
 - Helper classes to construct complex meshes
@@ -1153,10 +1103,12 @@ $$
 $$
 
 :::{.my-4}
-Some information is loss because of the averaging procedure: two different schemes we can consider for the computation of the modified equations
+Some information is loss because of the averaging procedure: two different schemes we can consider for the computation of the modified equations.
 :::
 
-**Theorem** The local truncation error of the reference Finite Volume scheme and the one of the adaptive Finite Volume scheme are the same up to order $2\hat{s}+1$ included
+:::{.callout-important icon=false title="Theorem"}
+The local truncation error of the reference Finite Volume scheme and the one of the adaptive Finite Volume scheme are the same up to order $2\hat{s}+1$ included.
+:::
 
 
 ## Modified equations including MRA
@@ -1187,7 +1139,8 @@ $$
 
 ## Theoretical results on the global error
 
-**Theorem 2**  Assume that
+:::{.callout-important icon=false title="Theorem 2"}
+Assume that
 
 - The reference scheme satisfies the restricted stability condition $\|E\| \leq 1$
 - The Harten-like scheme satisfies the restricted stability condition $\left\|\bar{E}_{\Lambda}\right\| \leq 1$ for any $\Lambda$.
@@ -1202,6 +1155,7 @@ where $C_{t r}=C_{t r}\left(\bar{\ell}-\underline{\ell},\left(\phi_\alpha\right)
 $$
 \left\|\mathbf{u}_{\bar{\ell}}^n-\mathbf{w}_{\bar{\ell}}^n\right\| \leq C_{r e f} t^n \Delta x^\theta+C_{t r} t^n \Delta x^{2 \hat{s}+1}+C_{m r} \frac{t^n}{\lambda \Delta x} \epsilon
 $$
+:::
 
 :::{.notes}
 Let us start by discussing the assumption that we have placed in the statement of Theorem 2:
@@ -1216,8 +1170,8 @@ Let us start by discussing the assumption that we have placed in the statement o
 * The error estimate contains three contributions: the **discretization error** of the reference scheme, the **perturbation error** between the reference and the adaptive scheme, and the **thresholding error** coming from the multiresolution
 * The constant $C_{\mathrm{tr}}$ generally grows exponentially with $\bar{\ell}-\underline{\ell}$, sometimes also involving linear terms, i.e. $\hat{s}=1$. We have the following cases:
     + $\theta<2 \hat{s}+1$. The error of the reference scheme dominates the perturbation introduced by the adaptive scheme $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{ref}} T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$. A thresholding error of the same order as the reference error $\epsilon \sim \Delta x^{\theta+1}$.
-    + $\theta=2 \hat{s}+1$.  The error of the reference scheme and the perturbation order are comparable (first example!) We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq\left(C_{\mathrm{ref}}+C_{\mathrm{tr}}\right) T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$.
-    +  $\theta>2 \hat{s}+1$. The perturbation introduced by the adaptive scheme dominates the error of the reference scheme. Therefore, multiresolution introduces a large perturbation that yields a different convergence rate. We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{tr}} T \Delta x^{2 \hat{s}+1}+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$, thus $\epsilon \sim \Delta x^{2 \hat{s}+2}$ (AMR !)
+    + $\theta=2 \hat{s}+1$.  The error of the reference scheme and the perturbation order are comparable (**first example!**) We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq\left(C_{\mathrm{ref}}+C_{\mathrm{tr}}\right) T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$.
+    +  $\theta>2 \hat{s}+1$. The perturbation introduced by the adaptive scheme dominates the error of the reference scheme. Therefore, multiresolution introduces a large perturbation that yields a different convergence rate. We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{tr}} T \Delta x^{2 \hat{s}+1}+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$, thus $\epsilon \sim \Delta x^{2 \hat{s}+2}$ (**AMR !**)
 :::
 
 
@@ -1310,12 +1264,12 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 
 **Theses**
 
-- T. Bellotti, **Numerical analysis of lattice Boltzmann schemes : from fundamental issues to efficient and accurate adaptive methods**, PhD Thesis, *Institut Polytechnique de Paris*, EDMH (2023) https://theses.hal.science/tel-04266822 
+- T. Bellotti, **Numerical analysis of lattice Boltzmann schemes : from fundamental issues to efficient and accurate adaptive methods**, PhD Thesis, *Institut Polytechnique de Paris*, EDMH (2023) https://theses.hal.science/tel-04266822
 
 **Publications**
 
 - T. Bellotti , L. G. , B. Graille , M. M.. **High accuracy analysis of adaptive multiresolution-based lattice Boltzmann schemes via the equivalent equations**, *SMAI Journal of Computational Mathematics*, Volume 8 (2022), pp. 161-199
-- T. Bellotti, J. Massot, M. M., L. Séries, C. Tenaud, **Modified equation and error analysis of adaptive multiresolution Finite Volume schemes**, in preparation - to be submitted (2025) 
+- T. Bellotti, J. Massot, M. M., L. Séries, C. Tenaud, **Modified equation and error analysis of adaptive multiresolution Finite Volume schemes**, in preparation - to be submitted (2025)
 
 
 
@@ -1337,22 +1291,22 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 
 **Theses**
 
-- M. Duarte, **Adaptive numerical methods in time and space for the simulation of multi-scale reaction fronts**, PhD Thesis, *École Centrale Paris*, (2011) https://theses.hal.science/tel-00667857  
-- L. Lecointre, **Hydrogen flame acceleration in non-uniform mixtures**, PhD Thesis, *Université Paris Saclay*, (2022) - https://theses.hal.science/tel-03879925 
+- M. Duarte, **Adaptive numerical methods in time and space for the simulation of multi-scale reaction fronts**, PhD Thesis, *École Centrale Paris*, (2011) https://theses.hal.science/tel-00667857
+- L. Lecointre, **Hydrogen flame acceleration in non-uniform mixtures**, PhD Thesis, *Université Paris Saclay*, (2022) - https://theses.hal.science/tel-03879925
 
 
 **Publications**
 
 
 - M. Duarte , M. M., S. Descombes, C. Tenaud, T. Dumont, **New resolution strategy for multi-scale reaction waves using time operator splitting, space adaptive multiresolution and dedicated high order implicit/explicit time integrators**, *SIAM SISC*, vol. 34, No. 1 (2012) pp.76-104
-- M. Duarte, S. Descombes, C. Tenaud, S. Candel, M. M., **Time-space adaptive numerical methods for the simulation of combustion fronts**, *Combustion and Flame*, vol. 160, No. 6 (2013) pp.1083-1101 
-- J. Massot, L. Séries, L. G., P. Matalon, C. Tenaud,  M. M., **A splitting/ImEx strategy for stiff PDEs with time adaptation and error control**, invited contribution to Comptes Rendus Mécanique (2025) 
+- M. Duarte, S. Descombes, C. Tenaud, S. Candel, M. M., **Time-space adaptive numerical methods for the simulation of combustion fronts**, *Combustion and Flame*, vol. 160, No. 6 (2013) pp.1083-1101
+- J. Massot, L. Séries, L. G., P. Matalon, C. Tenaud,  M. M., **A splitting/ImEx strategy for stiff PDEs with time adaptation and error control**, invited contribution to Comptes Rendus Mécanique (2025)
 
 
 
-**Software** 
+**Software**
 
--  J. Massot, M. M., L. Series, **ponio** (2024) https://hal.science/hal-04710549v1 
+-  J. Massot, M. M., L. Series, **ponio** (2024) https://hal.science/hal-04710549v1
 -  T. Bellotti, L. G.,  M. M., P. Matalon, **samurai** (2023) https://hal.science/hal-04545389v1
 
 
