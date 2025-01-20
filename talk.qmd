@@ -11,7 +11,7 @@ format:
 resources:
   - videos/**
 highlight-style: github
-footer: "Maison de la Simulation - 21 janvier 2025 - cc-by"
+footer: Maison de la Simulation - <img width="5%" src="figures/by.png"/> - 21 January 2025
 ---
 
 
@@ -1335,7 +1335,7 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 -  T. Bellotti, L. G.,  M. M., P. Matalon, **samurai** (2023) https://hal.science/hal-04545389v1
 
 
-## Key point
+## Key point of samurai
 
 :::{.center-page}
 ::::{.text-center}
