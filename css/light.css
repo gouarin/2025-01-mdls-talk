@@ -23,7 +23,7 @@ section.has-dark-background h6 {
     --r-background-color: #FAFAFA;
     --r-main-font: "Lato", sans-serif;
     --r-line-color: #9b001a;
-    --r-main-font-size: 1.4em;
+    --r-main-font-size: 1.4rem;
     --r-main-color: #222;
     --r-block-margin: 2px;
     --r-heading-margin: 0 0 20px 0;
@@ -35,10 +35,10 @@ section.has-dark-background h6 {
     --r-heading-text-shadow: none;
     --r-heading-font-weight: 600;
     --r-heading1-text-shadow: none;
-    --r-heading1-size: 1.8em;
-    --r-heading2-size: 1.6em;
-    --r-heading3-size: 1.3em;
-    --r-heading4-size: 1.8em;
+    --r-heading1-size: 2.2rem;
+    --r-heading2-size: 1.8rem;
+    --r-heading3-size: 1.5rem;
+    --r-heading4-size: 4rem;
     --r-code-font: monospace;
     --r-link-color: #9b001a;
     --r-link-color-dark: #9b001a;
@@ -49,7 +49,12 @@ section.has-dark-background h6 {
 
 .math.inline
 {
-    font-size: 0.9em;
+    font-size: 0.9rem;
+}
+
+.math
+{
+    font-size: 1rem;
 }
 
 .reveal .center-page
@@ -142,7 +147,7 @@ section.has-dark-background h6 {
 }
 
 h1.title {
-    font-size: 1.3em !important;
+    font-size: 2.2rem !important;
 }
 
 .reveal h2 {

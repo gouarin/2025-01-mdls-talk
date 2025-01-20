@@ -212,6 +212,7 @@ Marc Massot
 </section>
 <section class="slide level2">
 
+<div class="center-page-vertically">
 <div class="row">
 <div class="col-8">
 <p>The present work is the result of a team work involving</p>
@@ -222,17 +223,15 @@ Marc Massot
 <li>Laurent Séries (IR École polytechnique, CMAP)</li>
 <li>Christian Tenaud (CR CNRS - EM2C - Fédé Maths CS)</li>
 </ul>
+<div class="text-center">
+<p><a href="https://initiative-hpc-maths.gitlab.labos.polytechnique.fr/site/">site web de l’équipe</a></p>
+<p><a href="https://github.com/hpc-maths/">https://github.com/hpc-maths/</a></p>
 </div>
-<div class="col">
-<p><img data-src="figures/logo_HPC@Maths.jpg" style="width:90.0%"></p>
 </div>
+<div class="col text-center align-self-center">
+<p><img data-src="figures/logo_polytechnique.png" style="width:70.0%"></p>
+<p><img data-src="figures/logo_HPC@Maths.jpg" style="width:70.0%"></p>
 </div>
-<div class="row">
-<div class="col-8">
-<p><img data-src="figures/logo_X.jpg" style="width:30.0%"></p>
-</div>
-<div class="col">
-<p>Github lien</p>
 </div>
 </div>
 </section>
@@ -247,8 +246,8 @@ Marc Massot
 <p><span class="math display">\[
 \partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
 \]</span></p>
-<div class="row">
-<div class="col-7">
+<div class="row mb-4">
+<div class="col-7 mt-4">
 <p>Consider the Cauchy problem with initial cond.</p>
 <p><span class="math display">\[
 u^0(x)=\left\{%
@@ -277,8 +276,8 @@ u^0(x)=\left\{%
 <p><span class="math display">\[
 \partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
 \]</span></p>
-<div class="row">
-<div class="col-7">
+<div class="row mb-4">
+<div class="col-7 mt-4">
 <p>Consider the Cauchy problem with initial cond.</p>
 <p><span class="math display">\[
 u^0(x)=\left\{%
@@ -305,8 +304,8 @@ u^0(x)=\left\{%
 <p><span class="math display">\[
 \partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
 \]</span></p>
-<div class="row">
-<div class="col-7">
+<div class="row mb-4">
+<div class="col-7 mt-4">
 <p>Consider the Cauchy problem with initial cond.</p>
 <p><span class="math display">\[
 u^0(x)=\left\{%
@@ -377,8 +376,8 @@ C_{\ell, k}:=\prod_{\alpha=1}^d\left[2^{-\ell} k_\alpha, 2^{-\ell}\left(k_\alpha
 <section id="wavelets" class="slide level2">
 <h2>Wavelets</h2>
 <p>Decomposition of the solution on a wavelet basis [Daubechies, ’88], [Mallat, ’89] to measure its local regularity. “Practical” approach by [Harten, ’95], [Cohen et al., ’03].</p>
-<div class="row">
-<div class="col-7">
+<div class="row mt-4">
+<div class="col-6">
 <p><strong>Projection operator</strong></p>
 <p><strong>Prediction operator</strong> at order <span class="math inline">\(2 \gamma+1\)</span></p>
 <p><span class="math display">\[
@@ -386,7 +385,9 @@ C_{\ell, k}:=\prod_{\alpha=1}^d\left[2^{-\ell} k_\alpha, 2^{-\ell}\left(k_\alpha
 \]</span></p>
 <div style="text-align: left">
 <p><img data-src="figures/prediction.jpg"></p>
-<div class="fragment">
+</div>
+</div>
+<div class="col-6 fragment">
 <p>Details are <strong>regularity indicator</strong> <span class="math display">\[
 {\mathrm{d}}_{\ell, {k}}:={f}_{\ell, {k}}-{\hat{f}}_{\ell, {k}}
 \]</span></p>
@@ -395,33 +396,7 @@ C_{\ell, k}:=\prod_{\alpha=1}^d\left[2^{-\ell} k_\alpha, 2^{-\ell}\left(k_\alpha
 \]</span></p>
 </div>
 </div>
-</div>
-<div class="col">
-
-</div>
-</div>
-</section>
-<section id="wavelets-1" class="slide level2">
-<h2>Wavelets</h2>
-<p>Decomposition of the solution on a wavelet basis [Daubechies, ’88], [Mallat, ’89] to measure its local regularity. “Practical” approach by [Harten, ’95], [Cohen et al., ’03].</p>
-<div class="row">
-<div class="col-7">
-<p><strong>Projection operator</strong></p>
-<p><strong>Prediction operator</strong> at order <span class="math inline">\(2 \gamma+1\)</span></p>
-<p><span class="math display">\[
-{\hat f}_{\ell+1,2 k}={f}_{\ell, k}+\sum_{\sigma=1}^\gamma \psi_\sigma\left({f}_{\ell, k+\sigma}-{f}_{\ell, k-\sigma}\right)
-\]</span></p>
-<div style="text-align: left">
-<p><img data-src="figures/prediction.jpg"></p>
-<p>Details are <strong>regularity indicator</strong> <span class="math display">\[
-{\mathrm{d}}_{\ell, {k}}:={f}_{\ell, {k}}-{\hat{f}}_{\ell, {k}}
-\]</span></p>
-<p>Let <span class="math inline">\(f \in W^{\nu, \infty}\)</span> (neigh. of <span class="math inline">\(C_{\ell, k}\)</span> ), then <span class="math display">\[
-\left|{\mathrm{d}}_{\ell, k}\right| \lesssim 2^{-\ell \min (\nu, 2 \gamma+1)}|f|_{W^{\min (\nu, 2 \gamma+1), \infty}}
-\]</span></p>
-</div>
-</div>
-<div class="col">
+<div class="text-center mt-4 fragment">
 <p><strong>Fast wavelet transform:</strong></p>
 <p>means at the finest level can be recast as means at the coarsest level + details <span class="math display">\[
 \begin{array}{rlr}
@@ -429,7 +404,6 @@ C_{\ell, k}:=\prod_{\alpha=1}^d\left[2^{-\ell} k_\alpha, 2^{-\ell}\left(k_\alpha
 &amp; \Longleftrightarrow &amp; \left({f}_{\underline{\ell}}, {{d}}_{\underline{\ell} +1}, \ldots, {d}_{\bar{\ell}}\right)\\
 \end{array}
 \]</span></p>
-</div>
 </div>
 </section>
 <section id="mesh-coarsening-static" class="slide level2">
@@ -747,14 +721,11 @@ error
 </div>
 <p><img data-src="figures/reconstruction.jpg"></p>
 </div>
-<div class="mt-3">
-<div class="callout callout-note callout-titled callout-style-default">
+<div class="mt-3" title="Finite volume method">
+<div class="callout callout-note no-icon callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
+<p><strong>Finite volume method</strong></p>
 </div>
 <div class="callout-content">
 <p>We use a Godunov flux for the small hat problem</p>
@@ -766,8 +737,13 @@ error
 <section class="slide level2">
 
 <div class="text-center">
-<video data-autoplay="" src="videos/upwind_without_portion.mp4">
+<div>
+<video data-autoplay="" width="80%" src="videos/upwind_without_portion.mp4">
 </video></div>
+</div>
+<div class="text-center mt-0">
+<p><span class="math inline">\(\epsilon = 1e-2\)</span>, <span class="math inline">\(\underline{\ell} = 2\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span></p>
+</div>
 </section></section>
 <section>
 <section id="adaptive-mesh-refinement-software" class="title-slide slide level1 center">
@@ -822,8 +798,8 @@ error
 </section>
 <section id="open-source-software" class="slide level2">
 <h2>Open source software</h2>
-<div class="center-page-vertically">
-<div class="fs-6">
+<div class="center-page">
+<div class="fs-5">
 <table class="caption-top">
 <colgroup>
 <col style="width: 8%">
@@ -887,7 +863,7 @@ error
 </tbody>
 </table>
 </div>
-<div class="text-center color_0 mt-5">
+<div class="text-center color mt-5 fragment">
 <p><em>samurai: create a unified framework for testing a whole range<br class="m-0">of mesh adaptation methods with the latest generation of numerical schemes.</em></p>
 </div>
 </div>
@@ -1211,7 +1187,10 @@ samurai
 <section id="algebra-of-sets-2" class="slide level2">
 <h2>Algebra of sets</h2>
 <p>The search of an admissible set is recursive. The algorithm starts from the last dimension (y in 2d, z in 3d,…).</p>
+<div class="my-3">
 <p>The available operators in samurai are for now</p>
+</div>
+<div class="lh-lg">
 <ul>
 <li>the <span>intersection</span> of sets,</li>
 <li>the <span>union</span> of sets,</li>
@@ -1219,6 +1198,7 @@ samurai
 <li>the <span>translation</span> of a set,</li>
 <li>the <span>extension</span> of a set.</li>
 </ul>
+</div>
 </section>
 <section id="algebra-of-sets-usage-to-mra" class="slide level2">
 <h2>Algebra of sets: Usage to MRA</h2>
@@ -1475,6 +1455,8 @@ $$ -->
 <span id="cb2-8"><a href=""></a>        mesh<span class="op">[</span>pred<span class="op">][</span>level <span class="op">-</span> <span class="dv">1</span><span class="op">].</span>add_interval<span class="op">({</span>i_above<span class="op">.</span>start <span class="op">-</span> prediction_size<span class="op">,</span> i_above<span class="op">.</span>end <span class="op">+</span> prediction_size<span class="op">});</span></span>
 <span id="cb2-9"><a href=""></a>    <span class="op">})</span></span>
 <span id="cb2-10"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<div class="fragment">
 <div class="sourceCode" id="cb3"><pre class="sourceCode numberSource cpp number-lines code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href=""></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>size_t level <span class="op">=</span> min_level <span class="op">+</span> <span class="dv">2</span><span class="op">;</span> level <span class="op">&lt;=</span> max_level<span class="op">;</span> <span class="op">++</span>level<span class="op">)</span></span>
 <span id="cb3-2"><a href=""></a><span class="op">{</span></span>
 <span id="cb3-3"><a href=""></a>    samurai<span class="op">::</span>for_each_interval<span class="op">(</span>mesh<span class="op">[</span>cells<span class="op">][</span>level<span class="op">],</span> <span class="op">[&amp;](</span><span class="bu">std::</span>size_t level<span class="op">,</span> <span class="kw">auto</span><span class="op">&amp;</span> i<span class="op">)</span></span>
@@ -1483,6 +1465,7 @@ $$ -->
 <span id="cb3-6"><a href=""></a>        mesh<span class="op">[</span>pred<span class="op">][</span>level <span class="op">-</span> <span class="dv">2</span><span class="op">].</span>add_interval<span class="op">({</span>i_above<span class="op">.</span>start <span class="op">-</span> prediction_size<span class="op">,</span> i_above<span class="op">.</span>end <span class="op">+</span> prediction_size<span class="op">});</span></span>
 <span id="cb3-7"><a href=""></a>    <span class="op">})</span></span>
 <span id="cb3-8"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="meshes-description-with-samurai-2" class="slide level2">
 <h2>Meshes description with samurai</h2>
@@ -1506,7 +1489,7 @@ $$ -->
 <img data-src="figures/p4est_3.png" class="r-stretch"></section>
 <section id="compression-rates-1" class="slide level2">
 <h2>Compression rates</h2>
-<div class="fs-5">
+<div class="center-page fs-5">
 <table class="caption-top" style="width:100%;">
 <colgroup>
 <col style="width: 9%">
@@ -1581,7 +1564,7 @@ $$ -->
 </section>
 <section id="other-features" class="slide level2">
 <h2>Other features</h2>
-<div class="center-page-vertically">
+<div class="center-page-vertically lh-lg">
 <ul>
 <li>Loop algorithms over the levels and the cells</li>
 <li>Simplified access operator</li>
@@ -1663,9 +1646,20 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 \Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k+\alpha}
 \]</span></p>
 <div class="my-4">
-<p>Some information is loss because of the averaging procedure: two different schemes we can consider for the computation of the modified equations</p>
+<p>Some information is loss because of the averaging procedure: two different schemes we can consider for the computation of the modified equations.</p>
 </div>
-<p><strong>Theorem</strong> The local truncation error of the reference Finite Volume scheme and the one of the adaptive Finite Volume scheme are the same up to order <span class="math inline">\(2\hat{s}+1\)</span> included</p>
+<div title="Theorem">
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Theorem</strong></p>
+</div>
+<div class="callout-content">
+<p>The local truncation error of the reference Finite Volume scheme and the one of the adaptive Finite Volume scheme are the same up to order <span class="math inline">\(2\hat{s}+1\)</span> included.</p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="modified-equations-including-mra" class="slide level2">
 <h2>Modified equations including MRA</h2>
@@ -1691,7 +1685,14 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 </section>
 <section id="theoretical-results-on-the-global-error" class="slide level2">
 <h2>Theoretical results on the global error</h2>
-<p><strong>Theorem 2</strong> Assume that</p>
+<div title="Theorem 2">
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Theorem 2</strong></p>
+</div>
+<div class="callout-content">
+<p>Assume that</p>
 <ul>
 <li>The reference scheme satisfies the restricted stability condition <span class="math inline">\(\|E\| \leq 1\)</span></li>
 <li>The Harten-like scheme satisfies the restricted stability condition <span class="math inline">\(\left\|\bar{E}_{\Lambda}\right\| \leq 1\)</span> for any <span class="math inline">\(\Lambda\)</span>.</li>
@@ -1703,6 +1704,10 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 <p>where <span class="math inline">\(C_{t r}=C_{t r}\left(\bar{\ell}-\underline{\ell},\left(\phi_\alpha\right)_\alpha, \lambda, \hat{s}, V\right)\)</span> and <span class="math inline">\(C_{m r}=C_{m r}\left(\bar{\ell}-\underline{\ell},\left(\phi_\alpha\right)_\alpha, \lambda, \hat{s}, s, V\right)\)</span>. <span class="math display">\[
 \left\|\mathbf{u}_{\bar{\ell}}^n-\mathbf{w}_{\bar{\ell}}^n\right\| \leq C_{r e f} t^n \Delta x^\theta+C_{t r} t^n \Delta x^{2 \hat{s}+1}+C_{m r} \frac{t^n}{\lambda \Delta x} \epsilon
 \]</span></p>
+</div>
+</div>
+</div>
+</div>
 <aside class="notes">
 <p>Let us start by discussing the assumption that we have placed in the statement of Theorem 2: - The restricted stability condition <span class="math inline">\(\|E\| \leq 1\)</span> could be replaced by a milder condition <span class="math inline">\(\|E\| \leq 1+C \Delta t\)</span> for some constant <span class="math inline">\(C \geq 0\)</span>, see (69) in [7] and (A2) in [15]. This would not change the result. The technical assumption <span class="math inline">\(\left\|\bar{E}_{\Lambda}\right\| \leq 1\)</span> is harder to relax and also difficult to check in practice. - The fact of considering smooth solutions comes from the fact that we want to apply the analysis of the modified equations to obtain the convergence rates, in the spirit of the Lax theorem [1]. For the same reason, we take <span class="math inline">\(\Delta x \rightarrow 0\)</span> (or <span class="math inline">\(\bar{\ell} \rightarrow+\infty\)</span> ). - The distance between maximum and minimum level <span class="math inline">\(\Delta \underline{\ell}=\bar{\ell}-\underline{\ell}\)</span> has to be fixed, because otherwise the constant <span class="math inline">\(C_{\text {tr }}\)</span> potentially explodes and dominates <span class="math inline">\(\Delta x^{2 \hat{s}+1}\)</span> when <span class="math inline">\(\Delta x \rightarrow 0\)</span>. This would prevent us from comparing orders. Moreover, this is also reasonable from the standpoint of actual computations, where we refine the mesh to achieve convergence (or nearly so) keeping the number of different available grid levels fixed. Still, we shall also perform numerical demonstration without fixing <span class="math inline">\(\Delta \underline{\ell}=\bar{\ell}-\underline{\ell}\)</span> to show that the modified equations that we have previously developed provide important information on the behavior of <span class="math inline">\(\left\|\mathbf{v}_{\bar{\ell}}^n-\mathbf{w}_{\bar{\ell}}^n\right\|\)</span>.</p>
 <style type="text/css">
@@ -1725,8 +1730,8 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 <li class="fragment">The constant <span class="math inline">\(C_{\mathrm{tr}}\)</span> generally grows exponentially with <span class="math inline">\(\bar{\ell}-\underline{\ell}\)</span>, sometimes also involving linear terms, i.e.&nbsp;<span class="math inline">\(\hat{s}=1\)</span>. We have the following cases:
 <ul>
 <li class="fragment"><span class="math inline">\(\theta&lt;2 \hat{s}+1\)</span>. The error of the reference scheme dominates the perturbation introduced by the adaptive scheme <span class="math inline">\(\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{ref}} T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon\)</span>. A thresholding error of the same order as the reference error <span class="math inline">\(\epsilon \sim \Delta x^{\theta+1}\)</span>.</li>
-<li class="fragment"><span class="math inline">\(\theta=2 \hat{s}+1\)</span>. The error of the reference scheme and the perturbation order are comparable (first example!) We have <span class="math inline">\(\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq\left(C_{\mathrm{ref}}+C_{\mathrm{tr}}\right) T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon\)</span>.</li>
-<li class="fragment"><span class="math inline">\(\theta&gt;2 \hat{s}+1\)</span>. The perturbation introduced by the adaptive scheme dominates the error of the reference scheme. Therefore, multiresolution introduces a large perturbation that yields a different convergence rate. We have <span class="math inline">\(\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{tr}} T \Delta x^{2 \hat{s}+1}+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon\)</span>, thus <span class="math inline">\(\epsilon \sim \Delta x^{2 \hat{s}+2}\)</span> (AMR !)</li>
+<li class="fragment"><span class="math inline">\(\theta=2 \hat{s}+1\)</span>. The error of the reference scheme and the perturbation order are comparable (<strong>first example!</strong>) We have <span class="math inline">\(\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq\left(C_{\mathrm{ref}}+C_{\mathrm{tr}}\right) T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\theta&gt;2 \hat{s}+1\)</span>. The perturbation introduced by the adaptive scheme dominates the error of the reference scheme. Therefore, multiresolution introduces a large perturbation that yields a different convergence rate. We have <span class="math inline">\(\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{tr}} T \Delta x^{2 \hat{s}+1}+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon\)</span>, thus <span class="math inline">\(\epsilon \sim \Delta x^{2 \hat{s}+2}\)</span> (<strong>AMR !</strong>)</li>
 </ul></li>
 </ul>
 </div>
@@ -2181,8 +2186,7 @@ qa
 <h2>References</h2>
 <p><strong>Theses</strong></p>
 <ul>
-<li>M. Duarte, <strong>Adaptive numerical methods in time and space for the simulation of multi-scale reaction fronts</strong>, PhD Thesis, <em>École Centrale Paris</em>, (2011) https://theses.hal.science/tel-00667857<br>
-</li>
+<li>M. Duarte, <strong>Adaptive numerical methods in time and space for the simulation of multi-scale reaction fronts</strong>, PhD Thesis, <em>École Centrale Paris</em>, (2011) https://theses.hal.science/tel-00667857</li>
 <li>L. Lecointre, <strong>Hydrogen flame acceleration in non-uniform mixtures</strong>, PhD Thesis, <em>Université Paris Saclay</em>, (2022) - https://theses.hal.science/tel-03879925</li>
 </ul>
 <p><strong>Publications</strong></p>
