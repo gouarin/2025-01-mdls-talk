@@ -1315,7 +1315,7 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 **Publications**
 
 - T. Bellotti , L. G. , B. Graille , M. M.. **High accuracy analysis of adaptive multiresolution-based lattice Boltzmann schemes via the equivalent equations**, *SMAI Journal of Computational Mathematics*, Volume 8 (2022), pp. 161-199
-- T. Bellotti, J. Massot, M. M., L. Séries, C. Tenaud, **Modified equation and error analyses of adaptive multiresolution Finite Volume schemes**, in preparation - to be submitted (2025) 
+- T. Bellotti, J. Massot, M. M., L. Séries, C. Tenaud, **Modified equation and error analysis of adaptive multiresolution Finite Volume schemes**, in preparation - to be submitted (2025) 
 
 
 
