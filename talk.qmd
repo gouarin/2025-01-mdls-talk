@@ -1354,6 +1354,16 @@ Now, if we wanted to reconstruct all the cells of the finest level, we'd only ne
 ::::
 :::
 
+:::{.notes}
+Here's the samurai roadmap for the coming months and probably years.
+
+We now have the possibility of changing the containers in which our fields are stored. We did this so that we could start using Kokkos. So we'd be very interested in working with the people at Cexa on this.
+
+We have received several funding packages that have enabled us to hire two research engineers.
+
+As part of numpex, we also have an engineer position to work on the I/O part of AMR methods in collaboration with Dyablo developers.
+:::
+
 ---
 
 :::::{.center-page}
