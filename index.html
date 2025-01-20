@@ -1596,7 +1596,7 @@ $$ -->
 <p><span class="math display">\[
 \partial_t u(t, x)+V \partial_x u(t, x)=0, \quad(t, x) \in \mathbb{R}^{+} \times \mathbb{R}
 \]</span></p>
-<p>where <span class="math inline">\(V\)</span> is the transport velocity, taken <span class="math inline">\(V&gt;0\)</span> without loss of generality. we consider 1 d problems. The extension to <span class="math inline">\(2 \mathrm{~d} / 3 \mathrm{~d}\)</span> problems is straightforward and usually done by tensorization [Bellotti2022] and yields analogous conclusions.</p>
+<p>where <span class="math inline">\(V\)</span> is the transport velocity, taken <span class="math inline">\(V&gt;0\)</span> without loss of generality. we consider 1 d problems. The extension to <span class="math inline">\(2\mathrm{~d}\)</span> / <span class="math inline">\(3\mathrm{~d}\)</span> problems is straightforward and usually done by tensorization [Bellotti2022] and yields analogous conclusions.</p>
 <p>The discrete volumes are <span class="math display">\[
 C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}-1 \},
 \]</span> for any <span class="math inline">\(\ell \in \{ \underline{\ell}, \bar{\ell} \}\)</span>. The measure of each cell at level <span class="math inline">\(\ell\)</span> is <span class="math inline">\(\Delta x_{\ell}:=2^{-\ell}\)</span> and we shall indicate <span class="math inline">\(\Delta x:=\Delta x_{\bar{\ell}}\)</span>. The cell centers are <span class="math inline">\(x_{\ell, k}:=\)</span> <span class="math inline">\(2^{-\ell}(k+1 / 2)\)</span>. Finally, we shall indicate <span class="math inline">\(\Delta \ell:=\bar{\ell}-\ell\)</span>, hence <span class="math inline">\(\Delta x_{\ell}=2^{\Delta \ell} \Delta x\)</span>.</p>
@@ -1631,21 +1631,33 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 </ul>
 </div>
 </section>
-<section id="how-to-include-mra" class="slide level2">
-<h2>How to include MRA</h2>
+<section id="how-to-include-mra-i" class="slide level2">
+<h2>How to include MRA I</h2>
 <p>We introduce the reconstruction operator <span class="math inline">\(\hat{s}\)</span> instead of <span class="math inline">\(s\)</span> on the cells <span class="math inline">\(\left(\bar{\ell}, 2^{\Delta \ell} k+\delta\right)\)</span> for any <span class="math inline">\(\delta \in \mathbb{Z}\)</span> at the finest level</p>
 <ul>
 <li><span class="math inline">\(\hat{s}=s\)</span> : exact local flux reconstruction [Cohen et al.&nbsp;2003].</li>
 <li><span class="math inline">\(\hat{s}=0\)</span> but <span class="math inline">\(s&gt;0\)</span>, direct evaluation or naive evaluation [Hovhannisyan et al 2010].</li>
 </ul>
+<div class="fragment">
 <p><span class="math display">\[
-\mathbf{w}_{\bar{\ell}, \bar{k}}^{n+1}=\mathbf{w}_{\bar{\ell}, \bar{k}}^n-\frac{\Delta t}{\Delta x}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+1 / 2}^n\right)-\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}^n\right)\right), \Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+\alpha}
+\mathbf{w}_{\bar{\ell}, \bar{k}}^{n+1}=\mathbf{w}_{\bar{\ell}, \bar{k}}^n-\frac{\Delta t}{\Delta x}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+1 / 2}^n\right)-\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}^n\right)\right)
+\]</span> <span class="math display">\[
+\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+\alpha}
 \]</span></p>
+</div>
+</section>
+<section id="how-to-include-mra-ii" class="slide level2">
+<h2>How to include MRA II</h2>
 <p>Let now <span class="math inline">\((\ell, k) \in S\left(\tilde{\Lambda}^{n+1}\right)\)</span>, taking the projection yields the multiresolution scheme</p>
 <p><span class="math display">\[
-\mathbf{w}_{\ell, k}^{n+1}=\mathbf{w}_{\ell, k}^n-\frac{\Delta t}{\Delta x_{\ell}}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell}(k+1)+1 / 2}^n\right)-\Phi\left(\hat{\mathbf{w}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}^n\right)\right),  \Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k+\alpha}
+\mathbf{w}_{\ell, k}^{n+1}=\mathbf{w}_{\ell, k}^n-\frac{\Delta t}{\Delta x_{\ell}}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell}(k+1)+1 / 2}^n\right)-\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}^n\right)\right)
 \]</span></p>
+<p><span class="math display">\[
+\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k+\alpha}
+\]</span></p>
+<div class="my-4">
 <p>Some information is loss because of the averaging procedure: two different schemes we can consider for the computation of the modified equations</p>
+</div>
 <p><strong>Theorem</strong> The local truncation error of the reference Finite Volume scheme and the one of the adaptive Finite Volume scheme are the same up to order <span class="math inline">\(2\hat{s}+1\)</span> included</p>
 </section>
 <section id="modified-equations-including-mra" class="slide level2">
@@ -1725,16 +1737,6 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section>
-<section id="references" class="slide level2">
-<h2>References</h2>
-<p>List of papers for this part :</p>
-<ul>
-<li>Course AMS X02</li>
-<li>Bellotti LBM - High accuracy analysis of adaptive multiresolution-based lattice Boltzmann schemes via the equivalent equations T. Bellotti , L. Gouarin , B. Graille , M. Massot SMAI Journal of Computational Mathematics Volume 8 (2022), pp.&nbsp;161-199</li>
-<li>Bellotti PhD - TEL</li>
-<li>papier Thomas 2025</li>
-</ul>
 </section></section>
 <section>
 <section id="burgers-results-for-upwind-scheme" class="title-slide slide level1 center">
@@ -1788,6 +1790,16 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 <div class="text-center">
 <video data-autoplay="" width="80%" src="videos/burgers/AMR_second_derivative_eps_100_upwind_with_portion.mp4">
 </video></div>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<p>List of papers for this part :</p>
+<ul>
+<li>Course AMS X02</li>
+<li>Bellotti LBM - High accuracy analysis of adaptive multiresolution-based lattice Boltzmann schemes via the equivalent equations T. Bellotti , L. Gouarin , B. Graille , M. Massot SMAI Journal of Computational Mathematics Volume 8 (2022), pp.&nbsp;161-199</li>
+<li>Bellotti PhD - TEL</li>
+<li>papier Thomas 2025</li>
+</ul>
 <!-- {{< include sections/examples.qmd >}} -->
 </section></section>
 <section>
@@ -2127,10 +2139,9 @@ qa
 <section id="bz" class="slide level2">
 <h2>BZ</h2>
 <div class="center-page-vertically">
-<div class="text-center">
 <video data-autoplay="" loop="true" src="videos/bz_pirock_animation.mp4" width="45%">
-<p>:::</p>
-<p>:::</p>
+</video></div>
+</section>
 <section id="references-1" class="slide level2">
 <h2>References</h2>
 <p>List of papers for this part :</p>
@@ -2158,8 +2169,10 @@ qa
 </section>
 <section id="roadmap" class="slide level2">
 <h2>Roadmap</h2>
-<p><img data-src="figures/roadmap.png"></p>
-<hr>
+
+<img data-src="figures/roadmap.png" class="r-stretch"></section>
+<section class="slide level2">
+
 <div class="center-page">
 <div class="row align-items-center">
 <div class="col-4">
@@ -2182,9 +2195,6 @@ qa
 </div>
 </div>
 
-</section>
-</video></div>
-</div>
 </section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
