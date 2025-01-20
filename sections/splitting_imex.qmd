@@ -28,7 +28,7 @@
 ::::{.col-8 .align-self-center}
 - Keep reaction and diffusion coupled (IMEX)!
 - No splitting time step limitation due to the coupling at small scale (complex chemistry and detailed transport in flames for example)
-- Inspired from strategy of G. Vilmart and A. Abdulle (ponio library : J. Massot)
+- Inspired from PIROCK strategy of G. Vilmart and A. Abdulle (ponio library : J. Massot)
 - Adaptation in space and time with error control
 - Project with CEA on hydrogen risk - DNS of hydrogen combustion with detailed transport and complex chemistry - Collaboration P.A. Masset and L. Lecointre
 ::::
@@ -362,7 +362,7 @@ Dual Splitting/ImEx (ImEx tolerance set at $10^{-4}$ - should be decreased) :
 :::
 
 :::{ .fragment .text-center .my-4}
-**Basis for the CEA collaboration - hydrogen risk (Full compressible Fourrier-Navier-Stokes)**
+**Basis for the CEA collaboration - hydrogen risk (Full compressible Fourier-Navier-Stokes)**
 :::
 
 ## References
