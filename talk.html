@@ -216,8 +216,8 @@ Marc Massot
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </section>
-<section id="burgers-equation-1948---small-hat-problem" class="slide level2">
-<h2>Burgers equation (1948) - small hat problem</h2>
+<section id="burgers-equation-1948---small-hat" class="slide level2">
+<h2>Burgers equation (1948) - small hat</h2>
 <p><span class="math display">\[
 \partial_t u + \partial_x \left ( f(u) \right ) = 0, \quad t \geq 0, \quad x \in \mathbb{R}, \qquad f(u) = \dfrac{u^2}{2},
 \]</span></p>
@@ -448,10 +448,31 @@ C_{\ell, k}:=\prod_{\alpha=1}^d\left[2^{-\ell} k_\alpha, 2^{-\ell}\left(k_\alpha
 </section>
 <section id="finite-volumes-conservation-order" class="slide level2">
 <h2>Finite volumes / conservation / order</h2>
+<div class="mb-3">
 <p>Flux evaluation at interfaces between levels</p>
+</div>
 <p><img data-src="figures/reconstruction_only_leaves.jpg"></p>
+<div class="fragment">
+<div class="my-3">
 <p>Using the prediction operator allows to evaluate fluxes at the same level</p>
+</div>
 <p><img data-src="figures/reconstruction.jpg"></p>
+</div>
+<div class="mt-3">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>We use a Godunov flux for the small hat problem</p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
@@ -1281,8 +1302,147 @@ $$ -->
 <li>HDF5 support</li>
 </ul>
 </div>
-<!-- {{< include sections/examples.qmd >}} -->
-<!-- {{< include sections/splitting_imex.qmd >}} -->
+</section></section>
+<section>
+<section id="numerical-analysis-and-modified-equations" class="title-slide slide level1 center">
+<h1>Numerical Analysis and Modified Equations</h1>
+
+</section>
+<section id="linear-scalar-transport-equation" class="slide level2">
+<h2>Linear scalar transport equation</h2>
+<p>In this work, we are concerned with the numerical solution of the Cauchy problem associated with the linear scalar conservation law</p>
+<p><span class="math display">\[
+\partial_t u(t, x)+V \partial_x u(t, x)=0, \quad(t, x) \in \mathbb{R}^{+} \times \mathbb{R}
+\]</span></p>
+<p>where <span class="math inline">\(V\)</span> is the transport velocity, taken <span class="math inline">\(V&gt;0\)</span> without loss of generality. we consider 1 d problems. The extension to <span class="math inline">\(2 \mathrm{~d} / 3 \mathrm{~d}\)</span> problems is straightforward and usually done by tensorization [Bellotti2022] and yields analogous conclusions.</p>
+<p>The discrete volumes are <span class="math display">\[
+C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}-1 \},
+\]</span> for any <span class="math inline">\(\ell \in \{ \underline{\ell}, \bar{\ell} \}\)</span>. The measure of each cell at level <span class="math inline">\(\ell\)</span> is <span class="math inline">\(\Delta x_{\ell}:=2^{-\ell}\)</span> and we shall indicate <span class="math inline">\(\Delta x:=\Delta x_{\bar{\ell}}\)</span>. The cell centers are <span class="math inline">\(x_{\ell, k}:=\)</span> <span class="math inline">\(2^{-\ell}(k+1 / 2)\)</span>. Finally, we shall indicate <span class="math inline">\(\Delta \ell:=\bar{\ell}-\ell\)</span>, hence <span class="math inline">\(\Delta x_{\ell}=2^{\Delta \ell} \Delta x\)</span>.</p>
+</section>
+<section id="finite-volume-scheme" class="slide level2">
+<h2>Finite Volume scheme</h2>
+<p>Finite Volume scheme at the finest level of resolution <span class="math inline">\(\bar{\ell}\)</span> for any cell of indices <span class="math inline">\(\bar{k} \in \{ 0,2^{\bar{\ell}}-1 \}\)</span>. Explicit schemes read:</p>
+<p><span class="math display">\[
+\mathrm{v}_{\bar{\ell}, \bar{k}}^{n+1}=\mathrm{v}_{\bar{\ell}, \bar{k}}^n-\frac{\Delta t}{\Delta x}\left(\Phi\left(\mathrm{v}_{\bar{\ell}, \bar{k}+1 / 2}^n\right)-\Phi\left(\mathrm{v}_{\bar{\ell}, \bar{k}-1 / 2}^n\right)\right)
+\]</span></p>
+<p>where we utilize the same linear numerical flux for the left and the right flux (conservativity) <span class="math display">\[
+\Phi\left(\mathbf{v}_{\bar{\ell}, \bar{k}-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \mathbf{v}_{\bar{\ell}, \bar{k}+\alpha}, \quad \Phi\left(\mathbf{v}_{\bar{\ell}, \bar{k}+1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha v_{\bar{\ell}, \bar{k}+1+\alpha}
+\]</span></p>
+</section>
+<section id="modified-equations" class="slide level2">
+<h2>Modified equations</h2>
+<p>[Carpentier et al 97] or Cauchy-Kowalewski procedure [Harten et al 87]</p>
+<p><span class="math display">\[
+\partial_t u\left(t^n, x_{\bar{\ell}, \bar{k}}\right)+V \partial_x u\left(t^n, x_{\bar{\ell}, \bar{k}}\right)=\sum_{h=2}^{+\infty} \Delta x^{h-1} \sigma_h \partial_x^h u\left(t^n, x_{\bar{\ell}, \bar{k}}\right)
+\]</span></p>
+<div>
+<ul>
+<li class="fragment">Upwind scheme <span class="math display">\[
+\partial_t u+V \partial_x u=\frac{\Delta x V}{2}(1-\lambda V) \partial_{x x} u+O\left(\Delta x^2\right)
+\]</span></li>
+<li class="fragment">Lax-Wendroff scheme <span class="math display">\[
+\partial_t u+V \partial_x u=-\frac{\Delta x^2 V}{6}\left(1-\lambda^2 V^2\right) \partial_x^3 u+O\left(\Delta x^3\right)
+\]</span></li>
+<li class="fragment">OSMP-3 scheme <span class="math display">\[
+\partial_t u+V \partial_x u=\frac{\Delta x^3 V}{24}\left(-\lambda^3 V^2+2 \lambda^2 V^2+\lambda V-2\right) \partial_x^4 u+O\left(\Delta x^4\right)
+\]</span></li>
+</ul>
+</div>
+</section>
+<section id="how-to-include-mra" class="slide level2">
+<h2>How to include MRA</h2>
+<p>We introduce the reconstruction operator <span class="math inline">\(\hat{s}\)</span> instead of <span class="math inline">\(s\)</span> on the cells <span class="math inline">\(\left(\bar{\ell}, 2^{\Delta \ell} k+\delta\right)\)</span> for any <span class="math inline">\(\delta \in \mathbb{Z}\)</span> at the finest level</p>
+<ul>
+<li><span class="math inline">\(\hat{s}=s\)</span> : exact local flux reconstruction [Cohen et al.&nbsp;2003].</li>
+<li><span class="math inline">\(\hat{s}=0\)</span> but <span class="math inline">\(s&gt;0\)</span>, direct evaluation or naive evaluation [Hovhannisyan et al 2010].</li>
+</ul>
+<p><span class="math display">\[
+\mathbf{w}_{\bar{\ell}, \bar{k}}^{n+1}=\mathbf{w}_{\bar{\ell}, \bar{k}}^n-\frac{\Delta t}{\Delta x}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+1 / 2}^n\right)-\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}^n\right)\right), \Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+\alpha}
+\]</span></p>
+<p>Let now <span class="math inline">\((\ell, k) \in S\left(\tilde{\Lambda}^{n+1}\right)\)</span>, taking the projection yields the multiresolution scheme</p>
+<p><span class="math display">\[
+\mathbf{w}_{\ell, k}^{n+1}=\mathbf{w}_{\ell, k}^n-\frac{\Delta t}{\Delta x_{\ell}}\left(\Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell}(k+1)+1 / 2}^n\right)-\Phi\left(\hat{\mathbf{w}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}^n\right)\right),  \Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, 2^{\Delta \ell} k+\alpha}
+\]</span></p>
+<p>Some information is loss because of the averaging procedure: two different schemes we can consider for the computation of the modified equations</p>
+<p><strong>Theorem</strong> The local truncation error of the reference Finite Volume scheme and the one of the adaptive Finite Volume scheme are the same up to order <span class="math inline">\(2\hat{s}+1\)</span> included</p>
+</section>
+<section id="modified-equations-including-mra" class="slide level2">
+<h2>Modified equations including MRA</h2>
+<p>This result establishes at which order the modified equations of the reference scheme are perturbed by the introduction of the adaptive scheme. However, it does not characterize the terms in the modified equations of (11) above order <span class="math inline">\(2\hat{s}+1\)</span> in <span class="math inline">\(\Delta x\)</span> (symbolic computations).</p>
+<div>
+<ul>
+<li class="fragment">Upwind scheme <span class="math display">\[
+\begin{array}{lr}
+\partial_t u+V \partial_x u=\frac{\Delta x V}{2}\left(2^{\Delta \ell}-\lambda V\right) \partial_{x x} u+O\left(\Delta x^2\right), &amp; \text { for } \hat{s}=0 \\
+\partial_t u+V \partial_x u=\frac{\Delta x V}{2}(1-\lambda V) \partial_{x x} u-\frac{\Delta x^2 V}{6}\left(1-\lambda^2 V^2\right) \partial_x^3 u+&amp; \\
+\ \ \ \ \ \ \ \ \ \ \frac{\Delta x^3 V}{24}\left(-3 \Delta \ell 2^{2 \Delta \ell}+2^{2 \Delta \ell}-\lambda^3 V^3\right) \partial_x^4 u+O\left(\Delta x^4\right), &amp; \text { for } \hat{s}=1
+\end{array}
+\]</span></li>
+<li class="fragment">Lax-Wendroff scheme <span class="math display">\[
+\begin{array}{lr}
+\partial_t u+V \partial_x u=\frac{\Delta x \lambda V^2}{2}\left(2^{\Delta \ell}-1\right) \partial_{x x} u+O\left(\Delta x^2\right), &amp;  \text { for } \hat{s}=0 \\
+\partial_t u+V \partial_x u=-\frac{\Delta x^2 V}{6}\left(1-\lambda^2 V^2\right) \partial_x^3 u+&amp;\\
+\ \ \ \ \ \ \ \ \ \ \frac{\Delta x^3 \lambda V^2}{24}\left(-3 \Delta \ell 2^{2 \Delta \ell}+2^{2 \Delta \ell}-\lambda^2 V^2\right) \partial_x^4 u+O\left(\Delta x^4\right), &amp; \text { for }  \hat{s}=1
+\end{array}
+\]</span></li>
+</ul>
+</div>
+</section>
+<section id="theoretical-results-on-the-global-error" class="slide level2">
+<h2>Theoretical results on the global error</h2>
+<p><strong>Theorem 2</strong> Assume that</p>
+<ul>
+<li>The reference scheme satisfies the restricted stability condition <span class="math inline">\(\|E\| \leq 1\)</span></li>
+<li>The Harten-like scheme satisfies the restricted stability condition <span class="math inline">\(\left\|\bar{E}_{\Lambda}\right\| \leq 1\)</span> for any <span class="math inline">\(\Lambda\)</span>.</li>
+</ul>
+<p>Then, for smooth solution, in the limit <span class="math inline">\(\Delta x \rightarrow 0\)</span> (i.e.&nbsp;<span class="math inline">\(\bar{\ell} \rightarrow+\infty\)</span> ) and for <span class="math inline">\(\Delta \underline{\ell}=\bar{\ell}-\underline{\ell}\)</span> kept fixed, we have the error estimate</p>
+<p><span class="math display">\[
+\left\|\mathbf{v}_{\bar{\ell}}^n-\mathbf{w}_{\bar{\ell}}^n\right\| \leq C_{t r} t^n \Delta x^{2 \hat{s}+1}+C_{m r} \frac{t^n}{\lambda \Delta x} \epsilon
+\]</span></p>
+<p>where <span class="math inline">\(C_{t r}=C_{t r}\left(\bar{\ell}-\underline{\ell},\left(\phi_\alpha\right)_\alpha, \lambda, \hat{s}, V\right)\)</span> and <span class="math inline">\(C_{m r}=C_{m r}\left(\bar{\ell}-\underline{\ell},\left(\phi_\alpha\right)_\alpha, \lambda, \hat{s}, s, V\right)\)</span>. <span class="math display">\[
+\left\|\mathbf{u}_{\bar{\ell}}^n-\mathbf{w}_{\bar{\ell}}^n\right\| \leq C_{r e f} t^n \Delta x^\theta+C_{t r} t^n \Delta x^{2 \hat{s}+1}+C_{m r} \frac{t^n}{\lambda \Delta x} \epsilon
+\]</span></p>
+<aside class="notes">
+<p>Let us start by discussing the assumption that we have placed in the statement of Theorem 2: - The restricted stability condition <span class="math inline">\(\|E\| \leq 1\)</span> could be replaced by a milder condition <span class="math inline">\(\|E\| \leq 1+C \Delta t\)</span> for some constant <span class="math inline">\(C \geq 0\)</span>, see (69) in [7] and (A2) in [15]. This would not change the result. The technical assumption <span class="math inline">\(\left\|\bar{E}_{\Lambda}\right\| \leq 1\)</span> is harder to relax and also difficult to check in practice. - The fact of considering smooth solutions comes from the fact that we want to apply the analysis of the modified equations to obtain the convergence rates, in the spirit of the Lax theorem [1]. For the same reason, we take <span class="math inline">\(\Delta x \rightarrow 0\)</span> (or <span class="math inline">\(\bar{\ell} \rightarrow+\infty\)</span> ). - The distance between maximum and minimum level <span class="math inline">\(\Delta \underline{\ell}=\bar{\ell}-\underline{\ell}\)</span> has to be fixed, because otherwise the constant <span class="math inline">\(C_{\text {tr }}\)</span> potentially explodes and dominates <span class="math inline">\(\Delta x^{2 \hat{s}+1}\)</span> when <span class="math inline">\(\Delta x \rightarrow 0\)</span>. This would prevent us from comparing orders. Moreover, this is also reasonable from the standpoint of actual computations, where we refine the mesh to achieve convergence (or nearly so) keeping the number of different available grid levels fixed. Still, we shall also perform numerical demonstration without fixing <span class="math inline">\(\Delta \underline{\ell}=\bar{\ell}-\underline{\ell}\)</span> to show that the modified equations that we have previously developed provide important information on the behavior of <span class="math inline">\(\left\|\mathbf{v}_{\bar{\ell}}^n-\mathbf{w}_{\bar{\ell}}^n\right\|\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="comments-on-theorem" class="slide level2">
+<h2>Comments on theorem</h2>
+<div>
+<ul>
+<li class="fragment">The error estimate contains three contributions: the discretization error of the reference scheme, the perturbation error between the reference and the adaptive scheme, and the thresholding error coming from the multiresolution</li>
+<li class="fragment">The constant <span class="math inline">\(C_{\mathrm{tr}}\)</span> generally grows exponentially with <span class="math inline">\(\bar{\ell}-\underline{\ell}\)</span>, sometimes also involving linear terms, i.e.&nbsp;<span class="math inline">\(\hat{s}=1\)</span>. We have the following cases:
+<ul>
+<li class="fragment"><span class="math inline">\(\theta&lt;2 \hat{s}+1\)</span>. The error of the reference scheme dominates the perturbation introduced by the adaptive scheme <span class="math inline">\(\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{ref}} T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon\)</span>. A thresholding error of the same order as the reference error <span class="math inline">\(\epsilon \sim \Delta x^{\theta+1}\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\theta=2 \hat{s}+1\)</span>. The error of the reference scheme and the perturbation order are comparable (first example!) We have <span class="math inline">\(\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq\left(C_{\mathrm{ref}}+C_{\mathrm{tr}}\right) T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\theta&gt;2 \hat{s}+1\)</span>. The perturbation introduced by the adaptive scheme dominates the error of the reference scheme. Therefore, multiresolution introduces a large perturbation that yields a different convergence rate. We have <span class="math inline">\(\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{tr}} T \Delta x^{2 \hat{s}+1}+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon\)</span>, thus one takes <span class="math inline">\(\epsilon \sim \Delta x^{2 \hat{s}+2}\)</span> (AMR !)</li>
+</ul></li>
+</ul>
+</div>
+<p>:::</p>
+<aside class="notes">
+<p>Assume that for the choice of <span class="math inline">\(\bar{\ell}-\underline{\ell}\)</span> at hand, we have <span class="math inline">\(C_{\mathrm{tr}} \sim C_{\mathrm{ref}}\)</span>, then w</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="burgers-results-for-upwind-scheme" class="title-slide slide level1 center">
@@ -1336,6 +1496,341 @@ $$ -->
 <div class="text-center">
 <video data-autoplay="" width="80%" src="videos/burgers/AMR_second_derivative_eps_100_upwind_with_portion.mp4">
 </video></div>
+<!-- {{< include sections/examples.qmd >}} -->
+</section></section>
+<section>
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes" class="title-slide slide level1 center">
+<h1>A dual Splitting/IMEX strategy for stiff PDEs</h1>
+
+</section>
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-1" class="slide level2 fs-4">
+<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
+<div class="row fs-6">
+<div class="col-7 align-self-center">
+<ul>
+<li>A strategy has been designed (PhD M. Duarte) relying on time-adaptive operator splitting with dynamically adapted mesh (multiresolution) with error control:
+<ul>
+<li>optimal computational cost and parallelization properties when large splitting time steps compared to the smallest time scale can be taken without impairing precision</li>
+</ul></li>
+<li>We aim at resolving stiff PDEs with samurai and ponio (time integrators) libraries with the same computation favorable properties:
+<ul>
+<li>the same computational properties (local implicitation of the source term - allowing for very stiff source with local time integration in space)</li>
+<li>explicit diffusion integration without von Neumann stability limit (ROCK)</li>
+<li>high-order in space and time integration of convection, including shocks</li>
+<li>strong acceleration through adaptation in space and time</li>
+</ul></li>
+<li>Stumbling block: what to do when reaction and diffusion coupled to the smallest time scale (complex chemistry)</li>
+</ul>
+</div>
+<div class="col align-self-center">
+<div>
+<video data-autoplay="" loop="true" src="videos/ignition_Re1000.mov">
+</video></div>
+<p><img data-src="figures/splitting_time_steps.jpg"></p>
+</div>
+</div>
+</section>
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-2" class="slide level2 fs-4">
+<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
+<div class="row">
+<div class="col-8 align-self-center">
+<ul>
+<li>Keep reaction and diffusion coupled (IMEX)!</li>
+<li>No splitting time step limitation due to the coupling at small scale (complex chemistry and detailed transport in flames for example)</li>
+<li>Relying on the PIROCK strategy of G. Vilmart and A. Abdulle.</li>
+<li>Adaptation in space and time with error control</li>
+<li>Project with CEA on hydrogen risk - DNS combustion with detailed transport and CChem</li>
+</ul>
+</div>
+<div class="col text-center">
+<p><img data-src="figures/hpc@maths.png" style="width:50.0%"> <img data-src="figures/logo.png" style="width:50.0%"> <img data-src="figures/logo-cea.webp" style="width:50.0%"></p>
+</div>
+</div>
+</section>
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-3" class="slide level2 fs-4">
+<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
+<div class="row fs-5">
+<div class="col-6 align-self-center">
+<p>Ignition and Combustion (Verwer &amp; Hundsdorfer)</p>
+<p>Specific for RKC methods and ROCK</p>
+<p><span class="math display">\[
+u_t = d \Delta u + \frac{R}{\alpha \delta} (1 + \alpha - u) e^{\delta( 1 - 1/u )} \quad \text{in } [0,1]\times[0,1]
+\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/combustion2d.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+<div class="col text-center">
+<p><img data-src="figures/combustion.svg" style="width:80.0%"></p>
+</div>
+</div>
+</section>
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-4" class="slide level2 fs-4">
+<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
+<div class="row fs-5">
+<div class="col-6 align-self-center">
+<p>Ignition and Combustion (Verwer &amp; Hundsdorfer)</p>
+<p>Specific for RKC methods and ROCK</p>
+<p><span class="math display">\[
+u_t = d \Delta u + \frac{R}{\alpha \delta} (1 + \alpha - u) e^{\delta( 1 - 1/u )} \quad \text{in } [0,1]\times[0,1]
+\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/combustion2d.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+<div class="col text-center">
+<div class="fs-6 fragment">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th>PIROCK</th>
+<th>ROCK2</th>
+<th>ROCK4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tolerance used</td>
+<td>1e-5</td>
+<td>1e-6</td>
+<td>1e-5</td>
+</tr>
+<tr class="even">
+<td>L2 norm of error</td>
+<td>1.84e-4</td>
+<td>2.27e-4</td>
+<td>2.69e-4</td>
+</tr>
+<tr class="odd">
+<td>Elapsed time (s)</td>
+<td>7.97</td>
+<td>1.90</td>
+<td>0.42</td>
+</tr>
+<tr class="even">
+<td>Nb. time steps</td>
+<td>889</td>
+<td>157</td>
+<td>57</td>
+</tr>
+<tr class="odd">
+<td>Nb. time steps rejected</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Nb. function evaluation</td>
+<td>-</td>
+<td>6367</td>
+<td>1734</td>
+</tr>
+<tr class="odd">
+<td>Nb. function evaluation (diffusion)</td>
+<td>8304</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>Nb. function evaluation (reaction)</td>
+<td>360067655</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>between <span class="math inline">\(t=0.29\)</span> and <span class="math inline">\(t=0.32\)</span>.</p>
+</div>
+<div class="fs-6 fragment">
+<p>IMEX reasonable overhead compared to fully explicit methods (ROCK2 - ROCK4) even in this very difficult configuration</p>
+<ul class="list-unstyled text-center">
+<li class="my-1">
+Error control
+</li>
+<li class="my-1">
+Good BC treatment
+</li>
+<li class="my-1">
+No splitting errors
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-5" class="slide level2 fs-4">
+<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
+<div class="row fs-6">
+<div class="col-6 align-self-center">
+<p>Belousov-Zhabotinsky (very stiff source - 3 eq) <span class="math display">\[
+\left\{
+\begin{aligned}
+\partial_t a - D_a \, \Delta a &amp;= \frac{1}{\mu} ( -qa - ab
++
+fc) \\
+\partial_t b - D_b \, \Delta b &amp;= \frac{1}{\varepsilon} (
+qa
+- ab + b\,(1-b)) \\
+\partial_t c - D_c \, \Delta c &amp;= b - c
+\end{aligned}
+\right.
+\]</span></p>
+<ul>
+<li>Error to the reference quasi-exact solution is second order in time but not of the same origin (splitting error vs.&nbsp;IMEX error) - but still error control</li>
+<li>Larger time step can be taken with IMEX while keeping a proper solution (no disastrous splitting errors - wrong wave speed)</li>
+<li>When optimal large splitting time step is taken, IMEX as efficient as splitting, whereas it is advantageous for smaller time steps as well as larger time steps</li>
+<li>No boundary condition problems</li>
+<li>Same computational good properties</li>
+</ul>
+</div>
+<div class="col-6 text-center">
+<p><img data-src="figures/bz_b_t=0.png" style="width:48.0%"> <img data-src="figures/bz_b_t=1.png" style="width:48.0%"> <br> <img data-src="figures/bz_b_t=2.png" style="width:48.0%"></p>
+</div>
+</div>
+</section>
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-6" class="slide level2 fs-4">
+<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
+<div class="row fs-6">
+<div class="col-6 align-self-center">
+<p>Belousov-Zhabotinsky (very stiff source - 3 eq) <span class="math display">\[
+\left\{
+\begin{aligned}
+\partial_t a - D_a \, \Delta a &amp;= \frac{1}{\mu} ( -qa - ab
++
+fc) \\
+\partial_t b - D_b \, \Delta b &amp;= \frac{1}{\varepsilon} (
+qa
+- ab + b\,(1-b)) \\
+\partial_t c - D_c \, \Delta c &amp;= b - c
+\end{aligned}
+\right.
+\]</span></p>
+<ul>
+<li>Error to the reference quasi-exact solution is second order in time but not of the same origin (splitting error vs.&nbsp;IMEX error) - but still error control</li>
+<li>Larger time step can be taken with IMEX while keeping a proper solution (no disastrous splitting errors - wrong wave speed)</li>
+<li>When optimal large splitting time step is taken, IMEX as efficient as splitting, whereas it is advantageous for smaller time steps as well as larger time steps</li>
+<li>No boundary condition problems</li>
+<li>Same computational good properties</li>
+</ul>
+</div>
+<div class="col-6 text-center">
+<table class="caption-top">
+<colgroup>
+<col style="width: 41%">
+<col style="width: 27%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">PIROCK (tol=5e-3)</th>
+<th style="text-align: center;">STRANG (dt=2/128)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>L2 norm of error (variable b)</td>
+<td style="text-align: center;">3.31e-2</td>
+<td style="text-align: center;">1.14e-1</td>
+</tr>
+<tr class="even">
+<td>L2 norm of error (variable c)</td>
+<td style="text-align: center;">2.92e-3</td>
+<td style="text-align: center;">1.37e-2</td>
+</tr>
+<tr class="odd">
+<td>Elapsed time (s)</td>
+<td style="text-align: center;">6.91</td>
+<td style="text-align: center;">6.70</td>
+</tr>
+<tr class="even">
+<td>Nb. time steps.</td>
+<td style="text-align: center;">624</td>
+<td style="text-align: center;">128</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 41%">
+<col style="width: 27%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">PIROCK (tol=1e-3)</th>
+<th style="text-align: center;">STRANG (dt=2/512)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>L2 norm of error (variable b)</td>
+<td style="text-align: center;">4.94e-3</td>
+<td style="text-align: center;">1.55e-3</td>
+</tr>
+<tr class="even">
+<td>L2 norm of error (variable c)</td>
+<td style="text-align: center;">4.31e-4</td>
+<td style="text-align: center;">1.41e-4</td>
+</tr>
+<tr class="odd">
+<td>Elapsed time (s)</td>
+<td style="text-align: center;">13.33</td>
+<td style="text-align: center;">17.20</td>
+</tr>
+<tr class="even">
+<td>Nb. time steps.</td>
+<td style="text-align: center;">1528</td>
+<td style="text-align: center;">512</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 41%">
+<col style="width: 27%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">PIROCK (tol=1e-4)</th>
+<th style="text-align: center;">STRANG (dt=2/16384)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>L2 norm of error (variable b)</td>
+<td style="text-align: center;">7.72e-6</td>
+<td style="text-align: center;">1.81e-5</td>
+</tr>
+<tr class="even">
+<td>L2 norm of error (variable c)</td>
+<td style="text-align: center;">6.97e-7</td>
+<td style="text-align: center;">1.57e-6</td>
+</tr>
+<tr class="odd">
+<td>Elapsed time (s)</td>
+<td style="text-align: center;">165.12</td>
+<td style="text-align: center;">427.81</td>
+</tr>
+<tr class="even">
+<td>Nb. time steps.</td>
+<td style="text-align: center;">31728</td>
+<td style="text-align: center;">16384</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </section>
 <section id="bz" class="slide level2">
 <h2>BZ</h2>
