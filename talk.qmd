@@ -1220,7 +1220,7 @@ Let us start by discussing the assumption that we have placed in the statement o
     +  $\theta>2 \hat{s}+1$. The perturbation introduced by the adaptive scheme dominates the error of the reference scheme. Therefore, multiresolution introduces a large perturbation that yields a different convergence rate. We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{tr}} T \Delta x^{2 \hat{s}+1}+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$, thus $\epsilon \sim \Delta x^{2 \hat{s}+2}$ (AMR !)
 :::
 
-:::
+
 
 :::{.notes}
 Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_{\mathrm{tr}} \sim C_{\mathrm{ref}}$, then w
