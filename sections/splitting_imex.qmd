@@ -258,14 +258,13 @@ $$
 \left\{
 \begin{array}{l}
 \partial _{t_\star} Z +
-v_{x,\star}  \partial _{x_\star} Z +
-v_{y,\star}  \partial _{y_\star} Z -
+v_{x_\star}  \partial _{x_\star} Z +
+v_{y_\star}  \partial _{y_\star} Z -
 \left(\partial ^2_{x_\star} Z  +
 \partial ^2_{y_\star} Z \right)= 0, \\[2.5ex]
-a
 \partial _{t_\star} \theta +
-v_{x,\star}  \partial _{x_\star} \theta +
-v_{y,\star}  \partial _{y_\star} \theta -
+v_{x_\star}  \partial _{x_\star} \theta +
+v_{y_\star}  \partial _{y_\star} \theta -
 \left(\partial ^2_{x_\star} \theta  +
 \partial ^2_{y_\star} \theta \right)
 = F(Z,\theta),
