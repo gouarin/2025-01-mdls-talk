@@ -1,4 +1,4 @@
-# A dual Splitting/IMEX strategy for stiff PDEs
+# A dual Splitting/IMEX strategy for PDEs
 
 ## A dual Splitting/IMEX strategy for stiff PDEs {.fs-4}
 

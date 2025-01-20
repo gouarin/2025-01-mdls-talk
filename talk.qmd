@@ -1304,12 +1304,15 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 
 ## References
 
-List of papers for this part :
+**Courses**
 
-- Course AMS X02
-- Bellotti LBM -  High accuracy analysis of adaptive multiresolution-based lattice Boltzmann schemes via the equivalent equations T. Bellotti , L. Gouarin , B. Graille , M. Massot SMAI Journal of Computational Mathematics Volume 8 (2022), pp. 161-199
-- Bellotti PhD - TEL
-- papier Thomas 2025
+- Master "AMS" (*Analyse Modélisation Simulation*) Course MSX2TA **Méthodes Numériques Avancées et Calcul Haute performance pour la simulation de phénomènes complexes** (L. Séries, M. M.)
+
+**Publications**
+
+- T. Bellotti , L. G. , B. Graille , M. M.. **High accuracy analysis of adaptive multiresolution-based lattice Boltzmann schemes via the equivalent equations**, *SMAI Journal of Computational Mathematics*, Volume 8 (2022), pp. 161-199
+- T. Bellotti, **Numerical analysis of lattice Boltzmann schemes : from fundamental issues to efficient and accurate adaptive methods**, PhD Thesis, *Institut Polytechnique de Paris*, EDMH, Prix SMAI/GAMNI - Prix Paul Caseau 2024 - https://theses.hal.science/tel-04266822 
+- T. Bellotti, J. Massot, M. M., L. Séries, C. Tenaud, **Modified equation and error analyses of adaptive multiresolution Finite Volume schemes**, in preparation - to be submitted (2025) 
 
 
 
