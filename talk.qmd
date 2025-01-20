@@ -503,7 +503,7 @@ We use a Godunov flux for the small hat problem
 
 :::{.text-center}
 <div>
-<video data-autoplay width="80%" src="videos/upwind_without_portion.mp4" />
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.01-reg_0.mp4" />
 </div>
 :::
 
@@ -1208,19 +1208,43 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 <video data-autoplay src="videos/portions/portion_0003_unnamed.mp4" />
 :::
 
-## MRA $\epsilon = 1e-3$ without portion {.fs-6}
+## MRA $\epsilon = 1e-2$, $\underline{\ell} = 2$, $\bar{\ell} = 12$  without portion
 
 :::{.text-center}
-<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_without_portion.mp4" />
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.01-reg_0.mp4" />
 :::
 
-## MRA $\epsilon = 1e-3$ with portion {.fs-6}
+## MRA $\epsilon = 1e-3$, $\underline{\ell} = 2$, $\bar{\ell} = 12$  without portion
 
 :::{.text-center}
-<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_with_portion.mp4" />
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.001-reg_0.mp4" />
 :::
 
-## AMR with the modulus of the gradient $<1e-2$ as refinement criteria without portion {.fs-6}
+## MRA $\epsilon = 1e-4$, $\underline{\ell} = 2$, $\bar{\ell} = 12$  without portion
+
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.0001-reg_0.mp4" />
+:::
+
+## MRA $\epsilon = 1e-2$, $\underline{\ell} = 2$, $\bar{\ell} = 12$  with portion
+
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_with_portion-min_1-max_12-eps_0.01-reg_0.mp4" />
+:::
+
+## MRA $\epsilon = 1e-3$, $\underline{\ell} = 2$, $\bar{\ell} = 12$  with portion
+
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_with_portion-min_1-max_12-eps_0.001-reg_0.mp4" />
+:::
+
+## MRA $\epsilon = 1e-4$, $\underline{\ell} = 2$, $\bar{\ell} = 12$  with portion
+
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_with_portion-min_1-max_12-eps_0.0001-reg_0.mp4" />
+:::
+
+## AMR with the modulus of the gradient $<1e-2$ as refinement criteria without portion
 
 :::{.text-center}
 <video data-autoplay width="80%" src="videos/burgers/AMR_derivative_eps_1e-2_upwind_without_portion.mp4" />
