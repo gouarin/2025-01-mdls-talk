@@ -6,6 +6,8 @@ author:
 format:
   revealjs:
     css: css/light.css
+    logo: figures/logo_HPC@Maths.jpg
+    slide-number: true
 resources:
   - videos/**
 highlight-style: github
@@ -35,7 +37,7 @@ The present work is the result of a team work involving
 ::::
 :::
 
-Website + image + sponsors of the team - github - Fondation / Quantstack / CEA 
+Website + image + sponsors of the team - github - Fondation / Quantstack / CEA
 
 
 # Context
@@ -1123,8 +1125,8 @@ $$
 $$
 \Phi\left(\hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}-1 / 2}\right):=V \sum_{\alpha=\underline{\alpha}}^{\bar{\alpha}} \phi_\alpha \hat{\hat{\mathbf{w}}}_{\bar{\ell}, \bar{k}+\alpha}
 $$
- 
-:::: 
+
+::::
 
 ## How to include MRA II
 
@@ -1215,6 +1217,30 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 
 # Burgers results for upwind scheme
 
+## How to compute fluxes at the finest level
+
+:::{.text-center}
+<video data-autoplay src="videos/portions/portion_0000_autocreated.mp4" />
+:::
+
+## How to compute fluxes at the finest level
+
+:::{.text-center}
+<video data-autoplay src="videos/portions/portion_0001_unnamed.mp4" />
+:::
+
+## How to compute fluxes at the finest level
+
+:::{.text-center}
+<video data-autoplay src="videos/portions/portion_0002_unnamed.mp4" />
+:::
+
+## How to compute fluxes at the finest level
+
+:::{.text-center}
+<video data-autoplay src="videos/portions/portion_0003_unnamed.mp4" />
+:::
+
 ## MRA $\epsilon = 1e-3$ without portion {.fs-6}
 
 :::{.text-center}
@@ -1245,16 +1271,16 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 <video data-autoplay width="80%" src="videos/burgers/AMR_second_derivative_eps_10_upwind_without_portion.mp4" />
 :::
 
-## AMR with the modulus of the second derivative $<10$ as refinement criteria with portion {.fs-6}
-
-:::{.text-center}
-<video data-autoplay width="80%" src="videos/burgers/AMR_second_derivative_eps_10_upwind_with_portion.mp4" />
-:::
-
 ## AMR with the modulus of the second derivative $<100$ as refinement criteria without portion {.fs-6}
 
 :::{.text-center}
 <video data-autoplay width="80%" src="videos/burgers/AMR_second_derivative_eps_100_upwind_without_portion.mp4" />
+:::
+
+## AMR with the modulus of the second derivative $<10$ as refinement criteria with portion {.fs-6}
+
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/AMR_second_derivative_eps_10_upwind_with_portion.mp4" />
 :::
 
 ## AMR with the modulus of the second derivative $<100$ as refinement criteria with portion {.fs-6}
@@ -1264,11 +1290,11 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 :::
 
 
-## References 
+## References
 
 List of papers for this part :
 
-- Course AMS X02 
+- Course AMS X02
 - Bellotti LBM -  High accuracy analysis of adaptive multiresolution-based lattice Boltzmann schemes via the equivalent equations T. Bellotti , L. Gouarin , B. Graille , M. Massot SMAI Journal of Computational Mathematics Volume 8 (2022), pp. 161-199
 - Bellotti PhD - TEL
 - papier Thomas 2025
@@ -1287,11 +1313,11 @@ List of papers for this part :
 :::
 
 
-## References 
+## References
 
 List of papers for this part :
 
-- PhD Max 
+- PhD Max
 - Travaux Max
 - PhD Lecointre
 - CRAS Mecanique
