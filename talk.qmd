@@ -1203,7 +1203,7 @@ Let us start by discussing the assumption that we have placed in the statement o
 * The constant $C_{\mathrm{tr}}$ generally grows exponentially with $\bar{\ell}-\underline{\ell}$, sometimes also involving linear terms, i.e. $\hat{s}=1$. We have the following cases:
     + $\theta<2 \hat{s}+1$. The error of the reference scheme dominates the perturbation introduced by the adaptive scheme $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{ref}} T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$. A thresholding error of the same order as the reference error $\epsilon \sim \Delta x^{\theta+1}$.
     + $\theta=2 \hat{s}+1$.  The error of the reference scheme and the perturbation order are comparable (first example!) We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq\left(C_{\mathrm{ref}}+C_{\mathrm{tr}}\right) T \Delta x^\theta+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$.
-    +  $\theta>2 \hat{s}+1$. The perturbation introduced by the adaptive scheme dominates the error of the reference scheme. Therefore, multiresolution introduces a large perturbation that yields a different convergence rate. We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{tr}} T \Delta x^{2 \hat{s}+1}+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$, thus one takes $\epsilon \sim \Delta x^{2 \hat{s}+2}$ (AMR !)
+    +  $\theta>2 \hat{s}+1$. The perturbation introduced by the adaptive scheme dominates the error of the reference scheme. Therefore, multiresolution introduces a large perturbation that yields a different convergence rate. We have $\left\|\mathbf{u}_{\bar{\ell}}^N-\mathbf{w}_{\bar{\ell}}^N\right\| \leq C_{\mathrm{tr}} T \Delta x^{2 \hat{s}+1}+C_{\mathrm{mr}} \frac{T}{\lambda \Delta x} \epsilon$, thus $\epsilon \sim \Delta x^{2 \hat{s}+2}$ (AMR !)
 :::
 
 :::
@@ -1274,7 +1274,7 @@ List of papers for this part :
 - papier Thomas 2025
 
 
-<!-- {{< include sections/examples.qmd >}} -->
+
 {{< include sections/splitting_imex.qmd >}}
 
 
@@ -1343,3 +1343,20 @@ and
 ::::
 :::
 :::::
+
+## Scientific Collaborations
+
+
+
+- Lattice Boltzmann methods and multiresolution - Thomas Bellotti (EM2C/CNRS/CS) and Benjamin Graille (LMO/Université Paris-Saclay)
+- Plasma discharges and electric propulsion - Alejandro Alvarez (LPP/École polytechnique) and Louis Reboul (ONERA)
+- DNS of lithium-ion batteries based on high-resolution 3D images of porous electrode microstructures - Ali Asad (TotalEnergies) and Laurent François (ONERA)
+- Sharp interface method for low Mach two-phase flows - Nicolas Grenier (LISN/Université Paris-Saclay) and Christian Tenaud (EM2C/CNRS/CS)
+- Low-Mach reactive flows - Christian Tenaud (EM2C/CNRS/CS)
+- Interfacial flow simulation - Giuseppe Orlando and Ward Haegeman (CMAP/Ecole polytechnique), Joël Dupays and Clément Le Touze (ONERA), Marica Pelanti (ENSTA/IP Paris), Khaled Saleh (Aix-Marseille Université), Jean-Marc Hérard (EDF)
+- Mathematical modeling and simulation of non-equilibrium plasmas for the prediction of electric propulsion - Teddy Pichard and Zoubaïr Tazakkati (CMAP/École polytechnique)
+- Simulation analysis on the Hydrogen risk - Luc Lecointre, Pierre-Alexandre Masset, Etienne Studer (CEA) and Christian Tenaud (EM2C/CNRS/CS)
+
+
+
+<!-- {{< include sections/examples.qmd >}} -->
