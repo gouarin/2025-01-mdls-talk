@@ -46,17 +46,7 @@ section.has-dark-background h6 {
     --r-selection-background-color: #98bdef;
     --r-selection-color: #fff;
 }
-
-.math.inline:not(h2 span)
-{
-    font-size: 1rem;
-}
-
-.math:not(h2 span)
-{
-    font-size: 1.3rem;
-}
-
+    
 .reveal .center-page
 {
     position: absolute;
