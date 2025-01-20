@@ -738,7 +738,7 @@ error
 
 <div class="text-center">
 <div>
-<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.01-reg_0.mp4">
+<video data-autoplay="" width="80%" src="videos/upwind_without_portion.mp4">
 </video></div>
 </div>
 <div class="text-center mt-0">
@@ -1780,43 +1780,19 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 <video data-autoplay="" src="videos/portions/portion_0003_unnamed.mp4">
 </video></div>
 </section>
-<section id="mra-epsilon-1e-2-underlineell-2-barell-12-without-portion" class="slide level2">
-<h2>MRA <span class="math inline">\(\epsilon = 1e-2\)</span>, <span class="math inline">\(\underline{\ell} = 2\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span> without portion</h2>
+<section id="mra-epsilon-1e-3-without-portion" class="slide level2 fs-6">
+<h2>MRA <span class="math inline">\(\epsilon = 1e-3\)</span> without portion</h2>
 <div class="text-center">
-<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.01-reg_0.mp4">
+<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_without_portion.mp4">
 </video></div>
 </section>
-<section id="mra-epsilon-1e-3-underlineell-2-barell-12-without-portion" class="slide level2">
-<h2>MRA <span class="math inline">\(\epsilon = 1e-3\)</span>, <span class="math inline">\(\underline{\ell} = 2\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span> without portion</h2>
+<section id="mra-epsilon-1e-3-with-portion" class="slide level2 fs-6">
+<h2>MRA <span class="math inline">\(\epsilon = 1e-3\)</span> with portion</h2>
 <div class="text-center">
-<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.001-reg_0.mp4">
+<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_with_portion.mp4">
 </video></div>
 </section>
-<section id="mra-epsilon-1e-4-underlineell-2-barell-12-without-portion" class="slide level2">
-<h2>MRA <span class="math inline">\(\epsilon = 1e-4\)</span>, <span class="math inline">\(\underline{\ell} = 2\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span> without portion</h2>
-<div class="text-center">
-<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.0001-reg_0.mp4">
-</video></div>
-</section>
-<section id="mra-epsilon-1e-2-underlineell-2-barell-12-with-portion" class="slide level2">
-<h2>MRA <span class="math inline">\(\epsilon = 1e-2\)</span>, <span class="math inline">\(\underline{\ell} = 2\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span> with portion</h2>
-<div class="text-center">
-<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_with_portion-min_1-max_12-eps_0.01-reg_0.mp4">
-</video></div>
-</section>
-<section id="mra-epsilon-1e-3-underlineell-2-barell-12-with-portion" class="slide level2">
-<h2>MRA <span class="math inline">\(\epsilon = 1e-3\)</span>, <span class="math inline">\(\underline{\ell} = 2\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span> with portion</h2>
-<div class="text-center">
-<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_with_portion-min_1-max_12-eps_0.001-reg_0.mp4">
-</video></div>
-</section>
-<section id="mra-epsilon-1e-4-underlineell-2-barell-12-with-portion" class="slide level2">
-<h2>MRA <span class="math inline">\(\epsilon = 1e-4\)</span>, <span class="math inline">\(\underline{\ell} = 2\)</span>, <span class="math inline">\(\bar{\ell} = 12\)</span> with portion</h2>
-<div class="text-center">
-<video data-autoplay="" width="80%" src="videos/burgers/MRA_upwind_with_portion-min_1-max_12-eps_0.0001-reg_0.mp4">
-</video></div>
-</section>
-<section id="amr-with-the-modulus-of-the-gradient-1e-2-as-refinement-criteria-without-portion" class="slide level2">
+<section id="amr-with-the-modulus-of-the-gradient-1e-2-as-refinement-criteria-without-portion" class="slide level2 fs-6">
 <h2>AMR with the modulus of the gradient <span class="math inline">\(&lt;1e-2\)</span> as refinement criteria without portion</h2>
 <div class="text-center">
 <video data-autoplay="" width="80%" src="videos/burgers/AMR_derivative_eps_1e-2_upwind_without_portion.mp4">
@@ -1889,7 +1865,7 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 <li>high-order in space and time integration of convection, including shocks</li>
 <li>strong acceleration through adaptation in space and time</li>
 </ul></li>
-<li>Stumbling block: what to do when reaction and diffusion coupled to the smallest time scale (complex chemistry)</li>
+<li>Stumbling block: what to do when reaction and diffusion coupled to the smallest time scale (complex chemistry - ignition)</li>
 </ul>
 </div>
 <div class="col align-self-center">
@@ -1907,13 +1883,17 @@ C_{\ell, k}:=\left[2^{-\ell} k, 2^{-\ell}(k+1)\right], \quad k \in \{ 0,2^{\ell}
 <ul>
 <li>Keep reaction and diffusion coupled (IMEX)!</li>
 <li>No splitting time step limitation due to the coupling at small scale (complex chemistry and detailed transport in flames for example)</li>
-<li>Relying on the PIROCK strategy of G. Vilmart and A. Abdulle.</li>
+<li>Inspired from strategy of G. Vilmart and A. Abdulle (ponio library : J. Massot)</li>
 <li>Adaptation in space and time with error control</li>
-<li>Project with CEA on hydrogen risk - DNS combustion with detailed transport and CChem</li>
+<li>Project with CEA on hydrogen risk - DNS of hydrogen combustion with detailed transport and complex chemistry - Collaboration P.A. Masset and L. Lecointre</li>
 </ul>
 </div>
 <div class="col text-center">
-<p><img data-src="figures/hpc@maths.png" style="width:50.0%"> <img data-src="figures/logo.png" style="width:50.0%"> <img data-src="figures/logo-cea.webp" style="width:50.0%"></p>
+<p><img data-src="figures/hpc@maths.png" style="width:50.0%"></p>
+<div class="my-3">
+<p><img data-src="figures/logo.png" style="width:50.0%"></p>
+</div>
+<p><img data-src="figures/logo-cea.webp" style="width:50.0%"></p>
 </div>
 </div>
 </section>
@@ -2202,11 +2182,52 @@ qa
 </div>
 </div>
 </section>
-<section id="bz" class="slide level2">
-<h2>BZ</h2>
+<section id="a-dual-splittingimex-strategy-for-stiff-pdes-6" class="slide level2 fs-4">
+<h2>A dual Splitting/IMEX strategy for stiff PDEs</h2>
+<div class="row fs-6">
+<div class="col-6 align-self-center">
+<p>Belousov-Zhabotinsky (very stiff source - 3 eq) <span class="math display">\[
+\left\{
+\begin{aligned}
+\partial_t a - D_a \, \Delta a &amp;= \frac{1}{\mu} ( -qa - ab
++
+fc) \\
+\partial_t b - D_b \, \Delta b &amp;= \frac{1}{\varepsilon} (
+qa
+- ab + b\,(1-b)) \\
+\partial_t c - D_c \, \Delta c &amp;= b - c
+\end{aligned}
+\right.
+\]</span></p>
+<ul>
+<li>Error to the reference quasi-exact solution is second order in time but not of the same origin (splitting error vs.&nbsp;IMEX error) - but still error control</li>
+<li>Larger time step can be taken with IMEX while keeping a proper solution (no disastrous splitting errors - wrong wave speed)</li>
+<li>When optimal large splitting time step is taken, IMEX as efficient as splitting, whereas it is advantageous for smaller time steps as well as larger time steps</li>
+<li>No boundary condition problems</li>
+<li>Same computational good properties</li>
+</ul>
+<div title="Simulation with ponio / samurai">
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Simulation with ponio / samurai</strong></p>
+</div>
+<div class="callout-content">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-6 text-center">
 <div class="center-page-vertically">
-<video data-autoplay="" loop="true" src="videos/bz_pirock_animation.mp4" width="45%">
+<video data-autoplay="" loop="true" src="videos/bz_pirock_animation.mp4" width="90%">
 </video></div>
+<div class="text-center mt-0">
+<p><span class="math inline">\(\epsilon = 1e-3\)</span>, <span class="math inline">\(\underline{\ell} = 2\)</span>, <span class="math inline">\(\bar{\ell} = 10\)</span></p>
+</div>
+</div>
+</div>
 </section>
 <section id="references-1" class="slide level2">
 <h2>References</h2>
