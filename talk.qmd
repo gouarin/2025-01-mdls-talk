@@ -26,7 +26,7 @@ The present work is the result of a team work involving
 - Josselin Massot (IR École polytechnique, CMAP)
 - Pierre Matalon (IR École polytechnique, CMAP)
 - Laurent Séries (IR École polytechnique, CMAP)
-- Christian Tenaud (CR CNRS  - EM2C - Fédé Maths CS)
+- Christian Tenaud (DR CNRS  - EM2C - Fédé Maths CS)
 
 
 :::{.text-center}
