@@ -421,10 +421,273 @@ C_{\ell, k}:=\prod_{\alpha=1}^d\left[2^{-\ell} k_\alpha, 2^{-\ell}\left(k_\alpha
 </section>
 <section id="examples" class="slide level2">
 <h2>Examples</h2>
-<p>Donner ici les caracteristiques du cas : espilon / maillage le plus fin / norme - regularité</p>
+<div class="row">
+<div class="col">
+<div title="Equation">
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Equation</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[
+f(x) = exp(-50x^2) \; \text{for} \; x\in[-1, 1]
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col">
+<table>
+<tbody><tr>
+<td>
+min level
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<td>
+max level
+</td>
+<td>
+12
+</td>
+</tr>
+<tr>
+<td>
+ε
+</td>
+<td>
+10<sup>-3</sup>
+</td>
+</tr>
+<tr>
+<td>
+compression rate
+</td>
+<td>
+96.29%
+</td>
+</tr>
+<tr>
+<td>
+error
+</td>
+<td>
+0.00078
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
 
-<img data-src="figures/compression.png" class="quarto-figure quarto-figure-center r-stretch"><p>et les taux de compression</p>
-</section>
+<img data-src="figures/compression_exp.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="examples-1" class="slide level2">
+<h2>Examples</h2>
+<div class="row">
+<div class="col">
+<div title="Equation">
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Equation</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[
+f(x) = \left\{
+    \begin{array}{l}
+    1 - |2x| \; \text{if} \; -0.5 &lt; x &lt; 0.5,\\
+    0 \; \text{elsewhere}
+    \end{array}
+    \right.
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col">
+<table>
+<tbody><tr>
+<td>
+min level
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<td>
+max level
+</td>
+<td>
+12
+</td>
+</tr>
+<tr>
+<td>
+ε
+</td>
+<td>
+10<sup>-3</sup>
+</td>
+</tr>
+<tr>
+<td>
+compression rate
+</td>
+<td>
+98.49%
+</td>
+</tr>
+<tr>
+<td>
+error
+</td>
+<td>
+0
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+
+<img data-src="figures/compression_abs.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="examples-2" class="slide level2">
+<h2>Examples</h2>
+<div class="row">
+<div class="col">
+<div title="Equation">
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Equation</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[
+f(x) = 1 - \sqrt{\left| sin \left( \frac{\pi}{2} x \right) \right|} \; \text{for} \; x\in[-1, 1]
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col">
+<table>
+<tbody><tr>
+<td>
+min level
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<td>
+max level
+</td>
+<td>
+12
+</td>
+</tr>
+<tr>
+<td>
+ε
+</td>
+<td>
+10<sup>-3</sup>
+</td>
+</tr>
+<tr>
+<td>
+compression rate
+</td>
+<td>
+96.29%
+</td>
+</tr>
+<tr>
+<td>
+error
+</td>
+<td>
+0.00053
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+
+<img data-src="figures/compression_sqrt.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="examples-3" class="slide level2">
+<h2>Examples</h2>
+<div class="row">
+<div class="col">
+<div title="Equation">
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Equation</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[
+f(x) = \tanh(50 |x|) - 1 \; \text{for} \; x\in[-1, 1]
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col">
+<table>
+<tbody><tr>
+<td>
+min level
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<td>
+max level
+</td>
+<td>
+12
+</td>
+</tr>
+<tr>
+<td>
+ε
+</td>
+<td>
+10<sup>-3</sup>
+</td>
+</tr>
+<tr>
+<td>
+compression rate
+</td>
+<td>
+97.46%
+</td>
+</tr>
+<tr>
+<td>
+error
+</td>
+<td>
+0.002
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+
+<img data-src="figures/compression_tanh.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="time-evolution-of-pdes" class="slide level2">
 <h2>Time evolution of PDEs</h2>
 <ul>
