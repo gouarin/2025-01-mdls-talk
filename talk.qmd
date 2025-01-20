@@ -503,7 +503,7 @@ We use a Godunov flux for the small hat problem
 
 :::{.text-center}
 <div>
-<video data-autoplay width="80%" src="videos/upwind_without_portion.mp4" />
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.01-reg_0.mp4" />
 </div>
 :::
 
@@ -762,6 +762,12 @@ The available operators in samurai are for now
 - the <span>extension</span> of a set.
 :::
 
+:::{.notes}
+The search for an admissible set is completely recursive. We'll start by searching in the largest dimension and if we don't find anything we'll stop.
+
+If an admissible interval is found, we look at it in the lower dimension, which means we manipulate very few intervals because we're only looking at a subset.
+:::
+
 ## Algebra of sets: Usage to MRA
 
 <div>
@@ -982,8 +988,6 @@ for(std::size_t level = min_level; level < max_level; ++level)
 }
 ```
 
-
-
 ## Compression rates
 
 ![](figures/p4est_3.png)
@@ -999,6 +1003,14 @@ for(std::size_t level = min_level; level < max_level; ++level)
 | $12$  | 4200559       | 163.75 Mb   | 263.6 Kb         | 927 Kb        | 176.64 |
 | $13$  | 16789627      | 654.86 Mb   | 525.9 Kb         | 1.85 Mb       | 353.98 |
 | $14$  | 67133575      | 2.61 Gb     | 1.05 Mb          | 3.68 Mb       | 709.24 |
+:::
+
+:::{.notes}
+We can see here that the mesh is very compressed compared to a version using a tree structure.
+
+The total size of the mesh is multiplied by just under 4, as we build different meshes to handle ghost cells and prediction cells.
+
+What's important to note is that in a parallel context, it doesn't cost much for each process to have the meshes of its neighboring domains.
 :::
 
 ## Other features
@@ -1190,10 +1202,20 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 <video data-autoplay src="videos/portions/portion_0000_autocreated.mp4" />
 :::
 
+:::{.notes}
+As we have seen, calculating the flow at the finest level is crucial to obtaining good error estimates. But how does this work in practice?
+
+Let's take a simple example.
+:::
+
 ## How to compute fluxes at the finest level
 
 :::{.text-center}
 <video data-autoplay src="videos/portions/portion_0001_unnamed.mp4" />
+:::
+
+:::{.notes}
+Let's imagine that our finest level is 4 levels away from where we are.
 :::
 
 ## How to compute fluxes at the finest level
@@ -1202,22 +1224,60 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 <video data-autoplay src="videos/portions/portion_0002_unnamed.mp4" />
 :::
 
+:::{.notes}
+Now let's imagine that we want to calculate the flow using this small cell on the left.
+We use an operator with s = 1, so we need 3 cells on the level below to calculate it. These 3 cells need 4 cells on the level below to be calculated. We can repeat the process indefinitely and we'll still need 4 cells on the bottom level.
+
+We can determine the coefficients of our linear application to go from our level to any cell on a higher level. There's no need for an intermediate level.
+:::
+
 ## How to compute fluxes at the finest level
 
 :::{.text-center}
 <video data-autoplay src="videos/portions/portion_0003_unnamed.mp4" />
 :::
 
-## MRA $\epsilon = 1e-3$ without portion {.fs-6}
+:::{.notes}
+We can do the same for the right-hand cell.
+We can see that the cells used are not exactly the same.
 
-:::{.text-center}
-<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_without_portion.mp4" />
+Now, if we wanted to reconstruct all the cells of the finest level, we'd only need these 5 cells, with different coefficients depending on the cell we're trying to reconstruct.
 :::
 
-## MRA $\epsilon = 1e-3$ with portion {.fs-6}
+## MRA $\epsilon = 1e-2$, $\underline{\ell} = 1$, $\bar{\ell} = 12$ without portion {.fs-6}
 
 :::{.text-center}
-<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_with_portion.mp4" />
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.01-reg_0.mp4" />
+:::
+
+## MRA $\epsilon = 1e-3$, $\underline{\ell} = 1$, $\bar{\ell} = 12$ without portion {.fs-6}
+
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.001-reg_0.mp4" />
+:::
+
+## MRA $\epsilon = 1e-4$, $\underline{\ell} = 1$, $\bar{\ell} = 12$ without portion {.fs-6}
+
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_without_portion-min_1-max_12-eps_0.0001-reg_0.mp4" />
+:::
+
+## MRA $\epsilon = 1e-2$, $\underline{\ell} = 1$, $\bar{\ell} = 12$ with portion {.fs-6}
+
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_with_portion-min_1-max_12-eps_0.01-reg_0.mp4" />
+:::
+
+## MRA $\epsilon = 1e-3$, $\underline{\ell} = 1$, $\bar{\ell} = 12$ with portion {.fs-6}
+
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_with_portion-min_1-max_12-eps_0.001-reg_0.mp4" />
+:::
+
+## MRA $\epsilon = 1e-4$, $\underline{\ell} = 1$, $\bar{\ell} = 12$ with portion {.fs-6}
+
+:::{.text-center}
+<video data-autoplay width="80%" src="videos/burgers/MRA_upwind_with_portion-min_1-max_12-eps_0.0001-reg_0.mp4" />
 :::
 
 ## AMR with the modulus of the gradient $<1e-2$ as refinement criteria without portion {.fs-6}
