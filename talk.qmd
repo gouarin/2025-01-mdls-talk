@@ -1352,9 +1352,13 @@ Now, if we wanted to reconstruct all the cells of the finest level, we'd only ne
 ![](figures/quantstack.png){height="50px"}
 ::::
 ::::{.col}
-![](figures/cea.png){height="100px"}
+![](figures/cea.png){height="80px"}
+::::
+::::{.col}
+![](figures/logo_nasa.jpg){height="95px"}
 ::::
 :::
+
 
 :::{.notes}
 Here's the samurai roadmap for the coming months and probably years.
