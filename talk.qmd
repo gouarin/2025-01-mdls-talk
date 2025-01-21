@@ -11,7 +11,7 @@ format:
 resources:
   - videos/**
 highlight-style: github
-footer: Maison de la Simulation - <img width="5%" src="figures/by.png"/> - 21 January 2025
+footer: Maison de la Simulation - <img width="5%" src="figures/by-sa.png"/> - 21 January 2025
 ---
 
 
@@ -1205,7 +1205,7 @@ Assume that for the choice of $\bar{\ell}-\underline{\ell}$ at hand, we have $C_
 :::
 
 :::{.notes}
-As we have seen, calculating the flow at the finest level is crucial to obtaining good error estimates. But how does this work in practice?
+As we have seen, calculating the flux at the finest level is crucial to obtaining good error estimates. But how does this work in practice?
 
 Let's take a simple example.
 :::
