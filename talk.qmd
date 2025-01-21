@@ -7,7 +7,7 @@ format:
   revealjs:
     css: css/light.css
     logo: figures/logo_HPC@Maths.jpg
-    slide-number: true
+    # slide-number: true
 resources:
   - videos/**
 highlight-style: github
