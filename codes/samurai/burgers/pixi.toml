@@ -1,0 +1,20 @@
+[project]
+authors = ["Loic Gouarin <loic.gouarin@gmail.com>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "burgers"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+samurai = "0.20.*"
+cmake = ">=3.31.4,<4"
+cxx-compiler = ">=1.9.0,<2"
+numpy = ">=1.6,<2"
+h5py = ">=3.12.1,<4"
+matplotlib = ">=3.10.0,<4"
+clang-format = ">=19.1.6,<20"
+manim = ">=0.18.1,<0.19"
+xtensor-blas = ">=0.21.0,<0.22"
