@@ -29,11 +29,12 @@ The present work is the result of a team work involving
 - Christian Tenaud (DR CNRS  - EM2C - Fédé Maths CS)
 
 
-:::{.text-center}
+:::{.text-center .mb-4}
 [site web de l'équipe](https://initiative-hpc-maths.gitlab.labos.polytechnique.fr/site/)
 
 [https://github.com/hpc-maths/](https://github.com/hpc-maths/)
 :::
+![](figures/logo_HPC@Maths.jpg){width=30%}
 ::::
 
 :::: {.col .text-center .align-self-center}
@@ -41,7 +42,8 @@ The present work is the result of a team work involving
 ![](figures/logo_polytechnique.png){width=70%}
 :::
 
-![](figures/logo_HPC@Maths.jpg){width=70%}
+![](figures/aid.png){width=70%}
+![](figures/cieds_ip_paris_logo.jpg){width=40%}
 ::::
 :::
 ::::
